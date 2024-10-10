@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@/styles/base/globals.scss';
 
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
@@ -12,6 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body>{children}</body>
     </html>
   );
