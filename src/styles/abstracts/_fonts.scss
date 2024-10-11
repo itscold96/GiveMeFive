@@ -4,12 +4,12 @@ $textStyles: (
   'text2XlBold' : (size: 24px, line-height: 32px, weight: 'Bold'),
   'text2XlSemibold' : (size: 24px, line-height: 32px, weight: 'Semibold'),
   'text2XlMedium' : (size: 24px, line-height: 32px, weight: 'Medium'),
-  'text2Xl' : (size: 24px, line-height: 32px, weight: 'Regular'),
+  'text2XlRegular' : (size: 24px, line-height: 32px, weight: 'Regular'),
   'textXlBold' : (size: 20px, line-height: 32px, weight: 'Bold'),
   'textXlSemibold' : (size: 20px, line-height: 32px, weight: 'Semibold'),
   'textXlMedium' : (size: 20px, line-height: 32px, weight: 'Medium'),
-  'textXl' : (size: 20px, line-height: 32px, weight: 'Regular'),
-  'text2Lg': (size: 18px, line-height: 26px, weight: 'Regular'),
+  'textXlRegular' : (size: 20px, line-height: 32px, weight: 'Regular'),
+  'text2LgRegular': (size: 18px, line-height: 26px, weight: 'Regular'),
   'text2LgBold': (size: 18px, line-height: 26px, weight: 'Bold'),
   'text2LgSemiBold': (size: 18px, line-height: 26px, weight: 'Semibold'),
   'text2LgMedium': (size: 18px, line-height: 26px, weight: 'Medium'),
@@ -106,7 +106,7 @@ $textStyles: (
     @include fontStyle('text2XlMedium');
   }
   &.regular {
-    @include fontStyle('text2Xl');
+    @include fontStyle('text2XlRegular');
   }
 }
 
@@ -121,6 +121,6 @@ $textStyles: (
     @include fontStyle('textXlMedium');
   }
   &.regular {
-    @include fontStyle('textXl');
+    @include fontStyle('textXlRegular');
   }
 }
