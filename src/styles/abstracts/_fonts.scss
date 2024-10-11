@@ -1,18 +1,65 @@
-$font-family: 'Pretendard', sans-serif;
-
-$text-styles: (
-  'text-2lg': (size: 18px, line-height: 26px, weight: 'Regular'),
-  'text-lg-bold': (size: 16px, line-height: 26px, weight: 'Bold'),
-  'text-lg-semibold': (size: 16px, line-height: 26px, weight: 'Semibold'),
-  'text-lg-medium': (size: 16px, line-height: 26px, weight: 'Medium'),
-  'text-lg-regular': (size: 16px, line-height: 26px, weight: 'regular'),
-  'text-md-bold': (size: 14px, line-height: 24px, weight: 'Bold'),
-  'text-md-semibold': (size: 14px, line-height: 24px, weight: 'Semibold'),
-  'text-md-medium': (size: 14px, line-height: 24px, weight: 'Medium'),
-  'text-md-regular': (size: 14px, line-height: 24px, weight: 'Regular'),
-  'text-sm-semibold': (size: 13px, line-height: 22px, weight: 'Semibold'),
-  'text-sm-medium': (size: 13px, line-height: 22px, weight: 'Medium'),
-  'text-xs-semibold': (size: 12px, line-height: 18px, weight: 'Semibold'),
-  'text-xs-medium': (size: 12px, line-height: 18px, weight: 'Medium'),
-  'text-xs-regular': (size: 12px, line-height: 18px, weight: 'Regular'),
+$textStyles: (
+  'text2Lg': (size: 18px, line-height: 26px, weight: 'Regular'),
+  'textLgBold': (size: 16px, line-height: 26px, weight: 'Bold'),
+  'textLgSemiBold': (size: 16px, line-height: 26px, weight: 'Semibold'),
+  'textLgMedium': (size: 16px, line-height: 26px, weight: 'Medium'),
+  'textLgRegular': (size: 16px, line-height: 26px, weight: 'Regular'),
+  'textMdBold': (size: 14px, line-height: 24px, weight: 'Bold'),
+  'textMdSemiBold': (size: 14px, line-height: 24px, weight: 'Semibold'),
+  'textMdMedium': (size: 14px, line-height: 24px, weight: 'Medium'),
+  'textMdRegular': (size: 14px, line-height: 24px, weight: 'Regular'),
+  'textSmSemiBold': (size: 13px, line-height: 22px, weight: 'Semibold'),
+  'textSmMedium': (size: 13px, line-height: 22px, weight: 'Medium'),
+  'textXsSemiBold': (size: 12px, line-height: 18px, weight: 'Semibold'),
+  'textXsMedium': (size: 12px, line-height: 18px, weight: 'Medium'),
+  'textXsRegular': (size: 12px, line-height: 18px, weight: 'Regular'),
 );
+
+.text2Lg {
+    @include fontStyle('text2Lg');
+  }
+  
+  .textLg {
+    &.bold {
+      @include fontStyle('textLgBold');
+    }
+    &.semiBold {
+      @include fontStyle('textLgSemiBold');
+    }
+    &.medium {
+      @include fontStyle('textLgMedium');
+    }
+  }
+  
+  .textMd {
+    &.bold {
+      @include fontStyle('textMdBold');
+    }
+    &.semiBold {
+      @include fontStyle('textMdSemiBold');
+    }
+    &.medium {
+      @include fontStyle('textMdMedium');
+    }
+  }
+  
+  .textSm {
+    &.semiBold {
+      @include fontStyle('textSmSemiBold');
+    }
+    &.medium {
+      @include fontStyle('textSmMedium');
+    }
+  }
+  
+  .textXs {
+    &.semiBold {
+      @include fontStyle('textXsSemiBold');
+    }
+    &.medium {
+      @include fontStyle('textXsMedium');
+    }
+    &.regular {
+      @include fontStyle('textXsRegular');
+  }
+}
