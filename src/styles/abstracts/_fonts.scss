@@ -29,7 +29,9 @@ $textStyles: (
 );
 
 .text2Lg {
-  @include fontStyle('text2Lg');
+  &.regular {
+    @include fontStyle('text2LgRegular');
+  }
   &.bold {
     @include fontStyle('text2LgBold');
   }
