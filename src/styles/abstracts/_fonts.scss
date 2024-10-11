@@ -1,1 +1,126 @@
+$textStyles: (
+  'text3XlBold' : (size: 32px, line-height: 42px, weight: 'Bold'),
+  'text3XlSemibold' : (size: 32px, line-height: 42px, weight: 'Semibold'),
+  'text2XlBold' : (size: 24px, line-height: 32px, weight: 'Bold'),
+  'text2XlSemibold' : (size: 24px, line-height: 32px, weight: 'Semibold'),
+  'text2XlMedium' : (size: 24px, line-height: 32px, weight: 'Medium'),
+  'text2Xl' : (size: 24px, line-height: 32px, weight: 'Regular'),
+  'textXlBold' : (size: 20px, line-height: 32px, weight: 'Bold'),
+  'textXlSemibold' : (size: 20px, line-height: 32px, weight: 'Semibold'),
+  'textXlMedium' : (size: 20px, line-height: 32px, weight: 'Medium'),
+  'textXl' : (size: 20px, line-height: 32px, weight: 'Regular'),
+  'text2Lg': (size: 18px, line-height: 26px, weight: 'Regular'),
+  'text2LgBold': (size: 18px, line-height: 26px, weight: 'Bold'),
+  'text2LgSemiBold': (size: 18px, line-height: 26px, weight: 'Semibold'),
+  'text2LgMedium': (size: 18px, line-height: 26px, weight: 'Medium'),
+  'textLgBold': (size: 16px, line-height: 26px, weight: 'Bold'),
+  'textLgSemiBold': (size: 16px, line-height: 26px, weight: 'Semibold'),
+  'textLgMedium': (size: 16px, line-height: 26px, weight: 'Medium'),
+  'textLgRegular': (size: 16px, line-height: 26px, weight: 'Regular'),
+  'textMdBold': (size: 14px, line-height: 24px, weight: 'Bold'),
+  'textMdSemiBold': (size: 14px, line-height: 24px, weight: 'Semibold'),
+  'textMdMedium': (size: 14px, line-height: 24px, weight: 'Medium'),
+  'textMdRegular': (size: 14px, line-height: 24px, weight: 'Regular'),
+  'textSmSemiBold': (size: 13px, line-height: 22px, weight: 'Semibold'),
+  'textSmMedium': (size: 13px, line-height: 22px, weight: 'Medium'),
+  'textXsSemiBold': (size: 12px, line-height: 18px, weight: 'Semibold'),
+  'textXsMedium': (size: 12px, line-height: 18px, weight: 'Medium'),
+  'textXsRegular': (size: 12px, line-height: 18px, weight: 'Regular'),
+);
 
+.text2Lg {
+  @include fontStyle('text2Lg');
+  &.bold {
+    @include fontStyle('text2LgBold');
+  }
+  &.semiBold {
+    @include fontStyle('text2LgSemiBold');
+  }
+  &.medium {
+    @include fontStyle('text2LgMedium');
+  }
+}
+
+.textLg {
+  &.bold {
+    @include fontStyle('textLgBold');
+  }
+  &.semiBold {
+    @include fontStyle('textLgSemiBold');
+  }
+  &.medium {
+    @include fontStyle('textLgMedium');
+  }
+}
+
+.textMd {
+  &.bold {
+    @include fontStyle('textMdBold');
+  }
+  &.semiBold {
+    @include fontStyle('textMdSemiBold');
+  }
+  &.medium {
+    @include fontStyle('textMdMedium');
+  }
+}
+
+.textSm {
+  &.semiBold {
+    @include fontStyle('textSmSemiBold');
+  }
+  &.medium {
+    @include fontStyle('textSmMedium');
+  }
+}
+
+.textXs {
+  &.semiBold {
+    @include fontStyle('textXsSemiBold');
+  }
+  &.medium {
+    @include fontStyle('textXsMedium');
+  }
+  &.regular {
+    @include fontStyle('textXsRegular');
+  }
+}
+
+.text3Xl {
+  &.bold {
+    @include fontStyle('text3XlBold');
+  }
+  &.semiBold {
+    @include fontStyle('text3XlSemibold');
+  }
+}
+
+.text2Xl {
+  &.bold {
+    @include fontStyle('text2XlBold');
+  }
+  &.semiBold {
+    @include fontStyle('text2XlSemibold');
+  }
+  &.medium {
+    @include fontStyle('text2XlMedium');
+  }
+  &.regular {
+    @include fontStyle('text2Xl');
+  }
+}
+
+.textXl {
+  &.bold {
+    @include fontStyle('textXlBold');
+  }
+  &.semiBold {
+    @include fontStyle('textXlSemibold');
+  }
+  &.medium {
+    @include fontStyle('textXlMedium');
+  }
+  &.regular {
+    @include fontStyle('textXl');
+  }
+}
