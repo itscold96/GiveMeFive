@@ -1,0 +1,21 @@
+@use '@/styles/abstracts/core' as *;
+
+.footerContainer {
+  background-color: $black;
+  color: $gray900;
+  padding: 32px 104px 64px 104px;
+  display: flex;
+  justify-content: space-between;
+  @include textLgRegular;
+  
+}
+
+.footerMiddleSection {
+  display: flex;
+  gap: 30px;
+}
+
+.footerSocialSection {
+  display: flex;
+  gap: 12px;
+}
