@@ -8,13 +8,16 @@
   justify-content: space-between;
   flex-wrap: wrap;
 
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   @include textLgRegular;
 
   @media (max-width: 743px) {
-    display: flex;
     padding: 32px 39px 66px 39px;
     gap: 24px;
-    align-items: center;
     justify-content: center;
   }
 }
