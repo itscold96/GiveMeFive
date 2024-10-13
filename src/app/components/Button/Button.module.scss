@@ -1,0 +1,5 @@
+@use '@/styles/abstracts/core' as *;
+
+.button {
+  @include textLgRegular;
+}
