@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import '@/styles/base/globals.scss';
-import Footer from '@/app/components/Footer/Footer';
 
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
@@ -22,10 +21,7 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body>
-        {children}
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
