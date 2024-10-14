@@ -1,5 +1,5 @@
 import React from 'react';
-import SideMenu from '../../components/SideMenu';
+import SideMenu from '../../components/mypage/SideMenu';
 import styles from '../mypage.module.scss';
 
 const MyExperiencemanagement: React.FC = () => {
