@@ -13,7 +13,9 @@ export const useValidForm = ({ validationConfig, mode = 'onChange' }: useValidFo
     trigger,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
+    reset,
   } = useForm({ mode });
 
   // 받은 config에 맞게 register를 생성하는 함수
@@ -24,7 +26,7 @@ export const useValidForm = ({ validationConfig, mode = 'onChange' }: useValidFo
         const { value } = event.target;
 
         if (Object.hasOwn(validationConfig, `${fieldName}Confirmation`)) {
-          // Confirmation이 붙어 확인이 필요한 인자가 formConfig에 존재한다면
+          // Confirmation이 postfix로 붙어 확인이 필요한 인자가 formConfig에 존재한다면
           // 해당 입력에 따라 확인 유효성 검사도 함께 작동하도록 구현
           trigger(`${fieldName}Confirmation`);
         }
@@ -49,6 +51,7 @@ export const useValidForm = ({ validationConfig, mode = 'onChange' }: useValidFo
     handleSubmit,
     register: createdRegisterObject,
     errors,
-    setValue,
+    getValues,
+    reset,
   };
 };
