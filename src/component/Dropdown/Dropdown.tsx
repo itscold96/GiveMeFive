@@ -1,7 +1,7 @@
 'use client';
 
 import S from '@/component/Dropdown/Dropdown.module.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import dropdownArrow from '@/images/dropdown-arrow.svg';
 import kebabIcon from '@/images/kebab-icon.svg';
 import Image from 'next/image';
@@ -9,10 +9,10 @@ interface DropdownProps {
   data: string[];
   kebabType?: boolean;
   onChange: (value: string) => void;
+  selectedValue?: string;
 }
 
-export default function Dropdown({ data, kebabType, onChange }: DropdownProps) {
-  const [dropdownValue, setDropdownValue] = useState(data[0]);
+export default function Dropdown({ data, kebabType, onChange, selectedValue }: DropdownProps) {
   const [isDropdownToggle, isSetDropdownToggle] = useState(false);
 
   // 드롭다운 열기/닫기 토글
@@ -22,15 +22,9 @@ export default function Dropdown({ data, kebabType, onChange }: DropdownProps) {
 
   // 항목 클릭 시 선택된 값 설정 및 상위 컴포넌트로 전달
   const handleSelectValue = (value: string) => {
-    setDropdownValue(value);
     onChange(value);
     isSetDropdownToggle(false);
   };
-
-  // 첫 렌더링 시, data 배열의 첫 번째 항목을 기본 값으로 설정
-  useEffect(() => {
-    handleSelectValue(data[0]);
-  }, []);
 
   return (
     <>
@@ -41,7 +35,7 @@ export default function Dropdown({ data, kebabType, onChange }: DropdownProps) {
           </div>
         ) : (
           <div className={S.dropdownButton} onClick={toggleDropdown}>
-            <div>{dropdownValue}</div>
+            <div>{selectedValue}</div>
             <Image src={dropdownArrow} alt="드롭다운 화살표" width={22} height={22} />
           </div>
         )}

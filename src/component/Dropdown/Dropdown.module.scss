@@ -32,12 +32,16 @@
   border-radius: 6px;
   border: 1px solid $gray300;
   background-color: $white;
+  min-width: 110px;
 }
 
 .dropdownInfo {
-  padding: 18px 12px;
+  padding: 18px 0;
+  display: flex;
+  justify-content: center;
   color: $green300;
   border-bottom: 1px solid $gray300;
   cursor: pointer;
-  width: max-content;
+  width: 100%;
+  white-space: nowrap;
 }
