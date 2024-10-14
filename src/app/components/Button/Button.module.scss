@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   border: none;
+  width: auto;
 
   &.nomadBlackButtonColor {
     background-color: $nomadBlack;
@@ -21,15 +22,6 @@
     background-color: $gray600;
     color: $white;
   }
-
-  &.fullButtonWidth {
-    width: 100%;
-  }
-
-  // &.autoButtonWidth {
-  //   // width: auto;
-  //   width: fit-content;
-  // }
 
   &.radius6BorderRadius {
     border-radius: 6px;
