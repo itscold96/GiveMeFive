@@ -1,13 +1,12 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import '@/styles/base/globals.scss';
-import Footer from '@/app/components/Footer/Footer';
 
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
   description: '즐거움을 나누는 이색 체험 플랫폼',
 };
 
-export default function RootLayout({
+export default function LayoutWithOutFooter({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -22,10 +21,7 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body>
-        {children}
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
