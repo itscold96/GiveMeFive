@@ -1,3 +1,5 @@
+@import '../../../styles/abstracts/_colors.scss';
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -28,28 +30,54 @@
 
 .modal-buttons {
   display: flex;
-  justify-content: center; /* 변경: 버튼을 중앙에 위치시키기 위해 수정 */
-  margin-top: 10px; /* 버튼과 메시지 사이의 간격 추가 */
+  justify-content: center;
+  margin-top: 10px;
+  gap: 8px;
 }
 
 .modal-button {
-  padding: 8px 16px;
-  margin: 0 10px; /* 양쪽 여백 추가 */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 80px;
+  height: 38px;
+  padding: 2px 8px;
+  border-radius: 6px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .modal-button.cancel {
-  background-color: #f0f0f0;
-  color: #333;
+  background: white;
+  border: 1px solid $nomadBlack;
 }
 
 .modal-button.alert {
-  background-color: #112211;
+  background-color: $nomadBlack;
   color: white;
 }
 
 .modal-button:hover {
   opacity: 0.8;
+}
+
+.modal-icon {
+  margin-bottom: 10px;
+}
+
+.icon-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.modal-check-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
 }
