@@ -22,6 +22,7 @@
 - register(UseFormRegisterReturn)?: useValidForm 훅에서 반환되는 register 객체입니다.
 - type(HTMLInputTypeAttribute, default: 'text')?: input 타입입니다.
 - placeholder(string)?: 플레이스홀더 텍스트입니다.
+- className(string)?: input을 감싸고 있는 div에 들어갈 className으로, 커스텀 스타일이 가능합니다.
 
 # useValidForm Custom Hook
 
@@ -48,10 +49,6 @@ import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import Input from './components/@shared/input/Input';
 import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
-
-const basicConfig: ValidationConfig = {
-  defaultTest: { required: '해당 입력란은 비워둘 수 없습니다.' },
-};
 
 const config: ValidationConfig = {
   // 키값이 입력 필드의 name이 됩니다.

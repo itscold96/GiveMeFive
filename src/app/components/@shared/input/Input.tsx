@@ -11,6 +11,7 @@ interface ValidInputProps {
   register?: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
+  className?: string;
 }
 
 export default function Input({
@@ -21,9 +22,10 @@ export default function Input({
   register,
   type = 'text',
   placeholder = '',
+  className,
 }: ValidInputProps) {
   return (
-    <div className={S.inputWrapper}>
+    <div className={classNames(S.inputWrapper, className)}>
       {label && <label htmlFor={htmlFor}>{label}</label>}
       <input
         id={htmlFor}
