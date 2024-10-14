@@ -11,7 +11,6 @@ interface ValidInputProps {
   register?: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
-  onChange?: () => void;
 }
 
 export default function Input({
