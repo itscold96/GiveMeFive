@@ -1,0 +1,47 @@
+@use '@/styles/abstracts/core' as *;
+.dropdownContainer {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.KebabIconWrapper {
+  cursor: pointer;
+}
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 15px;
+  border: 1px solid $green300;
+  color: $green300;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.doropdownInfoWrapper {
+  top: 60px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 6px;
+  border: 1px solid $gray300;
+  background-color: $white;
+  min-width: 110px;
+}
+
+.dropdownInfo {
+  padding: 18px 0;
+  display: flex;
+  justify-content: center;
+  color: $green300;
+  border-bottom: 1px solid $gray300;
+  cursor: pointer;
+  width: 100%;
+  white-space: nowrap;
+}
