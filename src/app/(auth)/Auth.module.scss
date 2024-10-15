@@ -1,0 +1,72 @@
+@import '../../styles/abstracts/core';
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 640px;
+  width: 100%;
+
+  text-align: center;
+
+  margin: 0 auto;
+  padding: 40px 13px;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 56px 0 32px;
+
+  button {
+    height: 48px;
+  }
+}
+
+.memberCheck {
+  // 제공된 타이포그라피 스타일에 없음
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.09px;
+  color: $gray900;
+  padding-bottom: 48px;
+
+  a {
+    color: $nomadBlack;
+  }
+}
+
+.socialLogin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $gray800;
+  padding-bottom: 40px;
+  @include textXlRegular;
+
+  @include mobile {
+    @include textMdRegular;
+    .text {
+      padding: 0 23.5px;
+    }
+  }
+
+  .text {
+    min-width: fit-content;
+    width: 100%;
+    padding: 0 37.5px;
+  }
+
+  .separator {
+    height: 1px;
+    width: 100%;
+    background-color: $gray300;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
