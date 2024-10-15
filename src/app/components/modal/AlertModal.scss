@@ -1,0 +1,83 @@
+@import '../../../styles/abstracts/_colors.scss';
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-message {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.modal-button {
+  width: 80px;
+  height: 38px;
+  padding: 2px 8px;
+  border-radius: 6px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.modal-button.cancel {
+  background: white;
+  border: 1px solid $nomadBlack;
+}
+
+.modal-button.alert {
+  background-color: $nomadBlack;
+  color: white;
+}
+
+.modal-button:hover {
+  opacity: 0.8;
+}
+
+.modal-icon {
+  margin-bottom: 10px;
+}
+
+.icon-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.modal-check-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+}
