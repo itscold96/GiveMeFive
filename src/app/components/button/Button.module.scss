@@ -1,0 +1,49 @@
+@use '@/styles/abstracts/core' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: auto;
+
+  &.nomadBlackButtonColor {
+    background-color: $nomadBlack;
+    color: $white;
+  }
+
+  &.whiteButtonColor {
+    background-color: $white;
+    border: 1px solid $nomadBlack;
+    color: $nomadBlack;
+  }
+
+  &.grayButtonColor {
+    background-color: $gray600;
+    color: $white;
+  }
+
+  &.radius6BorderRadius {
+    border-radius: 6px;
+  }
+
+  &.radius4BorderRadius {
+    border-radius: 4px;
+  }
+
+  &.mdTextSize {
+    @include textMdBold;
+  }
+
+  &.lgTextSize {
+    @include textLgBold;
+  }
+
+  &.padding8 {
+    padding: 8px;
+  }
+
+  &.padding14 {
+    padding: 14px;
+  }
+}
