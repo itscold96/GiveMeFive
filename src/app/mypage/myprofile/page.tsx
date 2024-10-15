@@ -5,6 +5,7 @@ import SideMenu from '../../components/mypage/SideMenu';
 import AlertModal from '../../components/modal/AlertModal';
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import styles from '../mypage.module.scss';
+import Footer from '../../components/footer/Footer';
 
 const Myprofile: React.FC = () => {
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
@@ -54,6 +55,7 @@ const Myprofile: React.FC = () => {
         message="가입이 완료되었습니다!"
         confirmButtonText="확인"
       />
+      <Footer />
     </div>
   );
 };
