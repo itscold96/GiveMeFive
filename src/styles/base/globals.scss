@@ -1,5 +1,9 @@
 @use 'reset.scss';
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   height: 100%;
   min-height: 100dvh;
@@ -20,4 +24,17 @@ body {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     sans-serif;
+}
+
+.modal {
+  display: flex; // 중앙 정렬을 위해 flexbox 사용
+  align-items: center; // 세로 중앙 정렬
+  justify-content: center; // 가로 중앙 정렬
+  position: fixed; // 화면 고정
+  top: 0; // 상단부터 시작
+  left: 0; // 좌측부터 시작
+  width: 100%; // 전체 너비
+  height: 100%; // 전체 높이
+  z-index: 1000; // 다른 요소 위에 표시
+  background-color: rgba(0, 0, 0, 0.5); // 배경 어둡게
 }
