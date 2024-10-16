@@ -10,7 +10,6 @@ const ReservationHistory: React.FC = () => {
       <div className={styles['side-menu-container']}>
         <SideMenu />
       </div>
-      <Footer />
     </div>
   );
 };
