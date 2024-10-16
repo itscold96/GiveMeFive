@@ -8,6 +8,7 @@ import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
 import { signup } from '@/fetches/signup';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 const signupConfig: ValidationConfig = {
   email: {
@@ -32,15 +33,15 @@ const signupConfig: ValidationConfig = {
 };
 
 export default function SignupForm() {
+  const router = useRouter();
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: signupConfig });
 
   const handleSignupFormSubmit = async (formData: FieldValues) => {
     if (formData.email && formData.password && formData.nickname) {
       const { email, password, nickname } = formData;
-
       try {
         const data = await signup({ email, password, nickname });
-
+        router.replace('/login');
         console.log('SignupForm:', data);
       } catch (error) {
         if (error instanceof AxiosError) {

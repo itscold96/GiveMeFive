@@ -8,6 +8,7 @@ import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
 import { login } from '@/fetches/login';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -21,14 +22,15 @@ const loginConfig: ValidationConfig = {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
 
   const handleSignupFormSubmit = async (formData: FieldValues) => {
     if (formData.email && formData.password) {
       const { email, password } = formData;
-
       try {
         const data = await login({ email, password });
+        router.replace('/');
 
         console.log('LoginForm:', data);
       } catch (error) {
