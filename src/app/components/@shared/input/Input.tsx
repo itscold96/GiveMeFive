@@ -12,6 +12,8 @@ interface ValidInputProps {
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   className?: string;
+  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 export default function Input({
@@ -23,6 +25,8 @@ export default function Input({
   type = 'text',
   placeholder = '',
   className,
+  onClick,
+  value,
 }: ValidInputProps) {
   return (
     <div className={classNames(S.inputWrapper, className)}>
@@ -33,6 +37,8 @@ export default function Input({
         className={classNames({ [S.error]: error })}
         placeholder={placeholder}
         {...register}
+        onClick={onClick}
+        value={value}
       />
       {message && <p className={S.message}>{message.toString()}</p>}
     </div>
