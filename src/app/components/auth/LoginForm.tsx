@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
 import ConfirmModal from '../modal/ConfirmModal';
+import { useUserStore } from '@/stores/useUserStore';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -26,6 +27,7 @@ const loginConfig: ValidationConfig = {
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUser } = useUserStore(state => state.action);
   const { toggleValue, toggleDispatch } = useToggle();
   const [errorMessage, setErrorMessage] = useState('');
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
@@ -34,8 +36,9 @@ export default function LoginForm() {
     if (formData.email && formData.password) {
       const { email, password } = formData;
       try {
-        const data = await login({ email, password });
-        console.log('LoginForm:', data);
+        const { user } = await login({ email, password });
+        const { nickname, profileImageUrl } = user;
+        setUser({ email, nickname, profileImageUrl });
         router.replace('/');
       } catch (error) {
         if (error instanceof AxiosError) {

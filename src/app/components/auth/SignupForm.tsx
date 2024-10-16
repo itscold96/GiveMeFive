@@ -45,8 +45,7 @@ export default function SignupForm() {
     if (formData.email && formData.password && formData.nickname) {
       const { email, password, nickname } = formData;
       try {
-        const data = await signup({ email, password, nickname });
-        console.log('SignupForm:', data);
+        await signup({ email, password, nickname });
         router.replace('/login');
       } catch (error) {
         if (error instanceof AxiosError) {
