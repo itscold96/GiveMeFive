@@ -9,6 +9,9 @@ import { FieldValues } from 'react-hook-form';
 import { login } from '@/fetches/login';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { useToggle } from '@/hooks/useToggle';
+import { useState } from 'react';
+import ConfirmModal from '../modal/ConfirmModal';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -23,6 +26,8 @@ const loginConfig: ValidationConfig = {
 
 export default function LoginForm() {
   const router = useRouter();
+  const { toggleValue, toggleDispatch } = useToggle();
+  const [errorMessage, setErrorMessage] = useState('');
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
 
   const handleSignupFormSubmit = async (formData: FieldValues) => {
@@ -30,13 +35,13 @@ export default function LoginForm() {
       const { email, password } = formData;
       try {
         const data = await login({ email, password });
-        router.replace('/');
-
         console.log('LoginForm:', data);
+        router.replace('/');
       } catch (error) {
         if (error instanceof AxiosError) {
           const message = error.response?.data.message;
-          console.log('LoginForm:', message);
+          setErrorMessage(message);
+          toggleDispatch({ type: 'on' });
         }
       }
     }
@@ -66,6 +71,12 @@ export default function LoginForm() {
       <Button buttonColor="gray" borderRadius="radius6" textSize="md" padding="padding8">
         로그인 하기
       </Button>
+      <ConfirmModal
+        isOpen={toggleValue}
+        onConfirm={() => toggleDispatch({ type: 'off' })}
+        onClose={() => toggleDispatch({ type: 'off' })}
+        message={errorMessage}
+      />
     </form>
   );
 }
