@@ -13,6 +13,7 @@ import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
 import ConfirmModal from '../modal/ConfirmModal';
 import { useUserStore } from '@/stores/useUserStore';
+import { setCookie } from 'cookies-next';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -36,9 +37,13 @@ export default function LoginForm() {
     if (formData.email && formData.password) {
       const { email, password } = formData;
       try {
-        const { user } = await login({ email, password });
+        const { user, accessToken, refreshToken } = await login({ email, password });
+        setCookie('accessToken', accessToken);
+        setCookie('refreshToken', refreshToken);
+
         const { nickname, profileImageUrl } = user;
         setUser({ email, nickname, profileImageUrl });
+
         router.replace('/');
       } catch (error) {
         if (error instanceof AxiosError) {
