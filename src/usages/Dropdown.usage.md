@@ -6,8 +6,6 @@
 
 이 컴포넌트는 사용자가 클릭할 수 있는 드롭다운 버튼을 제공합니다.
 
-## Dropdown 컴포넌트 Props
-
 <!-- 물음표가 없으면 필수값, 있으면 선택값이고, [default = 기본값]으로 기본값이 있다면 작성해주세요. -->
 
 - dropdownData:
@@ -21,10 +19,13 @@
   selectedValue: 현재 선택된 값 (string | null)
   onDropdownChange: 드롭다운 값이 변경될 때 호출되는 핸들러 함수 ((event: React.ChangeEvent<HTMLSelectElement>) => void)
 
+## Dropdown 컴포넌트 Props
+
+- data: string[] : 문자열 형식의 배열을 받습니다 드롭 다운을 클릭했을 때 나올 내용입니다.(필수)
 - onChange: (value: string) => void; : 사용하는 컴포넌트에서 선택된 값을 처리할 state와 onChange 함수를 정의해 사용하면 됩니다(필수)
 - selectedValue?: string; : 버튼 UI의 드롭다운이라면 data[0]을 기본값으로
   지정해 줍니다, 케밥 UI의 드롭다운인 경우 생략 가능합니다.(선택)
-- kebabType?: boolean; : 속성값으로 kebaType={true}를 넘기면 케밥 아이콘 드롭다운이 됩니다 이 속성은 생략 가능합니다(선택)
+- type?: 'kebab' | 'category' | 'default' : 드롭다운 타입을 지정할 수 있습니다.
 
 ## 사용 예시
 

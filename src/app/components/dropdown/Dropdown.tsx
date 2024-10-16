@@ -4,15 +4,16 @@ import S from '@/app/components/dropdown/Dropdown.module.scss';
 import { useState } from 'react';
 import dropdownArrow from '@/images/dropdown-arrow.svg';
 import kebabIcon from '@/images/kebab-icon.svg';
+import dropdownThinArrow from '@/images/dropdown-thin-arrow.svg';
 import Image from 'next/image';
 interface DropdownProps {
   data: string[];
-  kebabType?: boolean;
+  type?: 'kebab' | 'category' | 'default';
   onChange: (value: string) => void;
   selectedValue?: string;
 }
 
-export default function Dropdown({ data, kebabType, onChange, selectedValue }: DropdownProps) {
+export default function Dropdown({ data, type, onChange, selectedValue }: DropdownProps) {
   const [isDropdownToggle, isSetDropdownToggle] = useState(false);
 
   // 드롭다운 열기/닫기 토글
@@ -29,9 +30,14 @@ export default function Dropdown({ data, kebabType, onChange, selectedValue }: D
   return (
     <>
       <div className={S.dropdownContainer}>
-        {kebabType ? (
+        {type === 'kebab' ? (
           <div className={S.KebabIconWrapper}>
             <Image src={kebabIcon} alt="케밥 아이콘" width={40} height={40} onClick={toggleDropdown} />
+          </div>
+        ) : type === 'category' ? (
+          <div className={S.categoryWrapper} onClick={toggleDropdown}>
+            <div className={S.categoryValue}>{selectedValue}</div>
+            <Image src={dropdownThinArrow} alt="카테고리 아이콘" width={24} height={24} />
           </div>
         ) : (
           <div className={S.dropdownButton} onClick={toggleDropdown}>
@@ -39,8 +45,9 @@ export default function Dropdown({ data, kebabType, onChange, selectedValue }: D
             <Image src={dropdownArrow} alt="드롭다운 화살표" width={22} height={22} />
           </div>
         )}
+
         {isDropdownToggle && (
-          <div className={S.doropdownInfoWrapper}>
+          <div className={type === 'category' ? S.categoryDropdownInfo : S.dropdownInfo}>
             {data.map((item, index) => (
               <div
                 className={S.dropdownInfo}
