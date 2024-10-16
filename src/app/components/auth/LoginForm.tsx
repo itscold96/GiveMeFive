@@ -6,6 +6,8 @@ import Button from '../button/Button';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
+import { login } from '@/fetches/login';
+import { AxiosError } from 'axios';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -21,8 +23,21 @@ const loginConfig: ValidationConfig = {
 export default function LoginForm() {
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
 
-  const handleSignupFormSubmit = (formData: FieldValues) => {
-    console.log('formData:', formData);
+  const handleSignupFormSubmit = async (formData: FieldValues) => {
+    if (formData.email && formData.password) {
+      const { email, password } = formData;
+
+      try {
+        const data = await login({ email, password });
+
+        console.log('LoginForm:', data);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const message = error.response?.data.message;
+          console.log('LoginForm:', message);
+        }
+      }
+    }
   };
 
   return (
