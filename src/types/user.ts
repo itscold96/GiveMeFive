@@ -6,9 +6,7 @@ export interface User {
 
 export interface UserStore {
   user: User | null;
-  action: {
-    setUser: (newUser: User) => void;
-    updateProfileImageUrl: (url: string) => void;
-    resetUser: () => void;
-  };
+  setUser: (newUser: User) => void;
+  updateProfileImageUrl: (url: string) => void;
+  logout: () => void;
 }

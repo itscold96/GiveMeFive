@@ -28,7 +28,7 @@ const loginConfig: ValidationConfig = {
 
 export default function LoginForm() {
   const router = useRouter();
-  const { setUser } = useUserStore(state => state.action);
+  const { setUser } = useUserStore();
   const { toggleValue, toggleDispatch } = useToggle();
   const [errorMessage, setErrorMessage] = useState('');
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
