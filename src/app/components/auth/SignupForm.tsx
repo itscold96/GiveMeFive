@@ -6,6 +6,8 @@ import Button from '../button/Button';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
+import { signup } from '@/fetches/signup';
+import { AxiosError } from 'axios';
 
 const signupConfig: ValidationConfig = {
   email: {
@@ -32,8 +34,21 @@ const signupConfig: ValidationConfig = {
 export default function SignupForm() {
   const { register, handleSubmit, errors } = useValidForm({ validationConfig: signupConfig });
 
-  const handleSignupFormSubmit = (formData: FieldValues) => {
-    console.log('formData:', formData);
+  const handleSignupFormSubmit = async (formData: FieldValues) => {
+    if (formData.email && formData.password && formData.nickname) {
+      const { email, password, nickname } = formData;
+
+      try {
+        const data = await signup({ email, password, nickname });
+
+        console.log('SignupForm:', data);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const message = error.response?.data.message;
+          console.log('SignupForm:', message);
+        }
+      }
+    }
   };
 
   return (
@@ -73,7 +88,7 @@ export default function SignupForm() {
         type="password"
       />
       <Button buttonColor="gray" borderRadius="radius6" textSize="md" padding="padding8">
-        로그인 하기
+        회원가입 하기
       </Button>
     </form>
   );
