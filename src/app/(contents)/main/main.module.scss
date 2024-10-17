@@ -92,16 +92,13 @@
   margin-top: 60px;
 }
 
-// .pagination {
-//   //   width: 55px;
-//   //   height: 55px;
-//   padding: 17px 30px;
-//   //   gap: 10px;
-//   border-radius: 15px;
-//   border: 1px solid $green300;
-//   background-color: $white;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-//   &:hover {
-//     background-color: $green300;
-//   }
-// }
+  .mantine-Pagination-control {
+    background-color: $black;
+  }
+}

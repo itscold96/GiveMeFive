@@ -1,16 +1,38 @@
-import Card from './card/card';
+'use client';
+
+import Card from './card/Card';
 import S from './main.module.scss';
 import ArrowLeft from '../../../images/arrowleft-gray.svg';
 import ArrowRight from '../../../images/arrowright-gray.svg';
 import Image from 'next/image';
 import Input from '../../components/@shared/input/Input';
 import Button from '../../components/@shared/button/Button';
-import Category from './category/category';
-import Dropdown from '../../components/@shared/dropdown/Dropdown';
-import { Pagination } from '@mantine/core';
-import '@mantine/core/styles.css';
+import Category, { Category as CategoryType } from './category/Category';
+import { useEffect, useState } from 'react';
+import Pagination from './pagination/Pagination';
+import BestZoneCard from './card/bestzonecard/BestZoneCard';
+import { Activities, getActivities } from '@/api/activities';
 
 export default function Main() {
+  const [selectedSort, setSelectedSort] = useState<'most_reviewed' | 'price_asc' | 'price_desc' | 'latest'>(
+    'price_asc',
+  );
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('문화 · 예술');
+
+  const [activities, setActivities] = useState<Activities>({
+    cursorId: 0,
+    totalCount: 0,
+    activities: [],
+  });
+
+  const handleSortChange = (value: string) => {
+    setSelectedSort(value as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest');
+  };
+
+  useEffect(() => {
+    getActivities({ category: selectedCategory, sort: selectedSort }).then(setActivities);
+  }, [selectedCategory, selectedSort]);
+
   return (
     <div>
       <div className={S.bannerContainer} />
@@ -39,21 +61,27 @@ export default function Main() {
             <Image src={ArrowRight} alt="right" />
           </div>
         </div>
-        <Card />
 
-        <div className={S.categoryDropdownContainer}>
-          <Category />
-          <Dropdown />
-        </div>
+        <BestZoneCard activities={activities.activities} />
+
+        <Category
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          selectedSort={selectedSort}
+          handleSortChange={handleSortChange}
+        />
 
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <Card />
-        <div>
-          <Pagination total={5} />
-        </div>
+        <Card>
+          <div className={S.cardLarge}>
+            <div className={S.cardLargeImage} />
+            <div className={S.cardLargeText} />
+          </div>
+        </Card>
       </div>
+      <Pagination />
     </div>
   );
 }
