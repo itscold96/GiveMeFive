@@ -1,7 +1,7 @@
 import React from 'react';
 import { Title } from '@mantine/core';
 import Input from '../@shared/input/Input';
-import Button from '../button/Button';
+import Button from '../@shared/button/Button';
 import S from './UserInfoForm.module.scss';
 import { useValidForm } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';

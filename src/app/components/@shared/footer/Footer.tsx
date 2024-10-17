@@ -1,3 +1,5 @@
+'use client';
+
 import S from './Footer.module.scss';
 import Image from 'next/image';
 import facebook from '@/images/footerIcon/facebook-icon.svg';

@@ -2,7 +2,7 @@
 import React from 'react';
 import UserInfoForm from '../../components/mypage/UserInfoForm';
 import SideMenu from '../../components/mypage/SideMenu';
-import Footer from '../../components/footer/Footer';
+import Footer from '../../components/@shared/footer/Footer';
 import S from './myprofile.module.scss';
 
 function Myprofile() {

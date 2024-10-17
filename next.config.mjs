@@ -1,6 +1,8 @@
-import withSvgr from 'next-svgr';
+// next.config.mjs
+const nextConfig = {
+  images: {
+    domains: ['localhost'], // 여기에서 호스트 이름 추가
+  },
+};
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default withSvgr(nextConfig);
+export default nextConfig;
