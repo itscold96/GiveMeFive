@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import '@/styles/base/globals.scss';
 import Header from './components/@shared/header/Header';
+import Providers from './components/providers/Providers';
 
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
@@ -20,10 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <MantineProvider>
-          <Header />
-          <ModalsProvider>{children}</ModalsProvider>
-        </MantineProvider>
+        <Providers>
+          <MantineProvider>
+            <Header />
+            <ModalsProvider>{children}</ModalsProvider>
+          </MantineProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -5,44 +5,32 @@ import S from './Header.module.scss';
 import logoImg from '@/images/logos/logo-md.svg';
 import Link from 'next/link';
 
-import { usePersistStore } from '@/hooks/usePersistStore';
 import { useUserStore } from '@/stores/useUserStore';
 import defaultProfileImg from '@/images/profiles/default-profile.svg';
 import notificationIcon from '@/images/icons/Icon-notification.svg';
-import { getCookie } from 'cookies-next';
 import { useEffect } from 'react';
-import { getUserInfo } from '@/fetches/getUserInfo';
+import { useUserQuery } from '@/queries/useUserQuery';
 
 export default function Header() {
-  const user = usePersistStore(useUserStore, state => state.user);
+  const { data: user, isError } = useUserQuery();
   const { logout, setUser } = useUserStore();
-  const accessToken = getCookie('accessToken');
 
+  // 이전에 로그아웃을 하지 않고, 사이트에 재접속 한 경우
+  // 유저 정보는 로컬 스토리지에,
+  // accessToken, refreshToken은 쿠키에 그대로 남아있다.
+  // 이를 그대로 사용하게 되면 그 사이에 유저 정보가 바뀌었거나,
+  // accessToken이 만료되었을 수 있으므로 유저 정보를 업데이트하는 과정이 필요함
   useEffect(() => {
-    const updateUser = async () => {
-      if (!accessToken) {
-        // accessToken이 없다면 logout 시킴
-        // logout: 유저, 토큰 정보 초기화
-        logout();
-        return;
-      }
-
-      try {
-        // 새로운 유저 정보로 업데이트 시도
-        const userInfo = await getUserInfo();
-        const { email, nickname, profileImageUrl } = userInfo;
-
-        setUser({ email, nickname, profileImageUrl });
-      } catch (error) {
-        if (error) {
-          // 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
-          logout();
-        }
-      }
-    };
-
-    updateUser();
-  }, []);
+    if (user) {
+      // 새로 유저 정보를 받아왔으므로 전역 상태 업데이트
+      const { email, nickname, profileImageUrl } = user;
+      setUser({ email, nickname, profileImageUrl });
+    }
+    if (isError) {
+      // 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
+      logout();
+    }
+  }, [user, isError]);
 
   return (
     <header className={S.headerContainer}>
@@ -58,13 +46,13 @@ export default function Header() {
             <article className={S.verticalSeparator} />
             <div className={S.profileContainer}>
               <Image
-                src={user?.profileImageUrl || defaultProfileImg}
+                src={user.profileImageUrl || defaultProfileImg}
                 alt="프로필 이미지"
                 width={32}
                 height={32}
                 priority
               />
-              <p>{user?.nickname}</p>
+              <p className={S.nickname}>{user.nickname}</p>
             </div>
           </div>
         ) : (
