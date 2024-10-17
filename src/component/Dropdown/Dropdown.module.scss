@@ -9,6 +9,17 @@
   cursor: pointer;
 }
 
+.categoryWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid $gray800;
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+.categoryValue {
+}
 .dropdownButton {
   display: flex;
   align-items: center;
@@ -20,8 +31,17 @@
   gap: 10px;
   cursor: pointer;
 }
-
-.doropdownInfoWrapper {
+.DropdownInfo {
+  padding: 18px 0;
+  display: flex;
+  justify-content: center;
+  color: $green300;
+  border-bottom: 1px solid $gray300;
+  cursor: pointer;
+  width: 100%;
+  white-space: nowrap;
+}
+.categoryDropdownInfo {
   top: 60px;
   position: absolute;
   display: flex;
@@ -32,16 +52,33 @@
   border-radius: 6px;
   border: 1px solid $gray300;
   background-color: $white;
-  min-width: 110px;
-}
-
-.dropdownInfo {
-  padding: 18px 0;
-  display: flex;
-  justify-content: center;
-  color: $green300;
-  border-bottom: 1px solid $gray300;
-  cursor: pointer;
   width: 100%;
-  white-space: nowrap;
+}
+.kebabDropdownInfo {
+  top: 50px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 6px;
+  border: 1px solid $gray300;
+  background-color: $white;
+  min-width: 160px;
+  width: 100%;
+}
+.hideDropdownInfo {
+  top: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 6px;
+  border: 1px solid $gray300;
+  background-color: $white;
+  min-width: 160px;
+  width: 100%;
 }
