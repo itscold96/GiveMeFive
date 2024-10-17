@@ -5,20 +5,20 @@ import SideMenu from '../../components/mypage/SideMenu';
 import Footer from '../../components/footer/Footer';
 import S from './myprofile.module.scss';
 
-const Myprofile: React.FC = () => {
+function Myprofile() {
   return (
-    <div className={S['myprofile']}>
-      <div className={S['container']}>
-        <div className={S['sideMenuContainer']}>
+    <div className={S.myprofile}>
+      <div className={S.container}>
+        <div className={S.sideMenuContainer}>
           <SideMenu />
         </div>
-        <div className={S['formContainer']}>
+        <div className={S.formContainer}>
           <UserInfoForm />
         </div>
       </div>
       <Footer />
     </div>
   );
-};
+}
 
 export default Myprofile;
