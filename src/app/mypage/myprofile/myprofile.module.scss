@@ -1,18 +1,20 @@
+@use '@/styles/abstracts/core' as *;
+
 .myprofile {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; // 최소 높이를 뷰포트 높이로 설정
-  background-color: #fafafa;
+  min-height: 100vh;
+  background-color: $gray100;
 }
 
 .container {
-  flex: 1; // 남은 공간을 모두 차지하도록 설정
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start; // 상단 정렬로 변경
+  align-items: flex-start;
   padding: 20px;
   max-width: 1200px;
-  margin: 0 auto; // 중앙 정렬
+  margin: 0 auto;
   width: 100%;
   gap: 20px;
 }

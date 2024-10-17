@@ -1,4 +1,4 @@
-@import '../../../styles/abstracts/_colors.scss';
+@use '@/styles/abstracts/core' as *;
 
 .modalOverlay {
   position: fixed;
