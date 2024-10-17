@@ -4,9 +4,9 @@ import ArrowLeft from '../../../images/arrowleft-gray.svg';
 import ArrowRight from '../../../images/arrowright-gray.svg';
 import Image from 'next/image';
 import Input from '../../components/@shared/input/Input';
-import Button from '../../components/button/Button';
+import Button from '../../components/@shared/button/Button';
 import Category from './category/category';
-import Dropdown from '../../components/dropdown/Dropdown';
+import Dropdown from '../../components/@shared/dropdown/Dropdown';
 import { Pagination } from '@mantine/core';
 import '@mantine/core/styles.css';
 

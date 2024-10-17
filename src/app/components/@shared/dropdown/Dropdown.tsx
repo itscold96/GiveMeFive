@@ -1,6 +1,6 @@
 'use client';
 
-import S from '@/app/components/dropdown/Dropdown.module.scss';
+import S from '@/app/components/@shared/dropdown/Dropdown.module.scss';
 import { useState } from 'react';
 import dropdownArrow from '@/images/dropdown-arrow.svg';
 import kebabIcon from '@/images/kebab-icon.svg';
