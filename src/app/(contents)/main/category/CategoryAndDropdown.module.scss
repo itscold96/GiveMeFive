@@ -1,5 +1,10 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
+.categoryDropdownContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .categoryContainer {
   display: flex;
   gap: 24px;

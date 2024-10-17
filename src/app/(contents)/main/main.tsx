@@ -7,7 +7,7 @@ import ArrowRight from '../../../images/arrowright-gray.svg';
 import Image from 'next/image';
 import Input from '../../components/@shared/input/Input';
 import Button from '../../components/@shared/button/Button';
-import Category, { Category as CategoryType } from './category/Category';
+import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
 import { useEffect, useState } from 'react';
 import Pagination from './pagination/Pagination';
 import BestZoneCard from './card/bestzonecard/BestZoneCard';
@@ -64,7 +64,7 @@ export default function Main() {
 
         <BestZoneCard activities={activities.activities} />
 
-        <Category
+        <CategoryAndDropdown
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           selectedSort={selectedSort}

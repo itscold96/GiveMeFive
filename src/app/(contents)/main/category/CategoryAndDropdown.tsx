@@ -1,4 +1,4 @@
-import S from './Category.module.scss';
+import S from './CategoryAndDropdown.module.scss';
 import Dropdown from '../../../components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 
@@ -12,7 +12,7 @@ interface CategoryProps {
   handleSortChange: (value: string) => void;
 }
 
-export default function Category({ selectedCategory, setSelectedCategory }: CategoryProps) {
+export default function CategoryAndDropdown({ selectedCategory, setSelectedCategory }: CategoryProps) {
   const dropdownData = ['가격이 낮은 순', '가격이 높은 순'];
   const { data, selectedValue, onDropdownChange } = useDropdown(dropdownData);
 
