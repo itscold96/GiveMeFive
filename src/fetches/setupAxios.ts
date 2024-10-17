@@ -6,8 +6,13 @@ export const axiosInstance = axios.create({
   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 });
 
+export const axiosAuth = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+});
+
 // 요청 interceptor
-axiosInstance.interceptors.request.use(config => {
+axiosAuth.interceptors.request.use(config => {
   const accessToken = getCookie('accessToken');
 
   // accessToken이 없다면 그대로 전송
@@ -21,7 +26,7 @@ axiosInstance.interceptors.request.use(config => {
 });
 
 // 응답 interceptor
-axiosInstance.interceptors.response.use(
+axiosAuth.interceptors.response.use(
   response => {
     // 응답이 올바르게 온다면 그대로 return
     return response;
