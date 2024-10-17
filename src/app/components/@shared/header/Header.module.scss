@@ -59,5 +59,31 @@
     img {
       border-radius: 50%;
     }
+
+    .nickname {
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+@include mobile {
+  .loggedInContainer {
+    gap: 12px;
+  }
+
+  .nickname {
+    width: 50px;
+  }
+
+  .headerLogo {
+    img {
+      @include mobile {
+        width: 140px;
+        height: auto;
+      }
+    }
   }
 }
