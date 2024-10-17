@@ -8,6 +8,7 @@ import Button from '../../components/button/Button';
 import Category from './category/category';
 import Dropdown from '../../components/dropdown/Dropdown';
 import { Pagination } from '@mantine/core';
+import '@mantine/core/styles.css';
 
 export default function Main() {
   return (
