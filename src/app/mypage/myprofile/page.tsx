@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import UserInfoForm from '../../components/mypage/UserInfoForm';
 import SideMenu from '../../components/mypage/SideMenu';
-import AlertModal from '../../components/modal/AlertModal';
-import ConfirmModal from '../../components/modal/ConfirmModal';
+import AlertModal from '../../components/@shared/modal/AlertModal';
+import ConfirmModal from '../../components/@shared/modal/ConfirmModal';
 import styles from '../mypage.module.scss';
 
 const Myprofile: React.FC = () => {

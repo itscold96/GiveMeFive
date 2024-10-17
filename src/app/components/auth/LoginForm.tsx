@@ -2,7 +2,7 @@
 
 import S from './Auth.module.scss';
 import Input from '../@shared/input/Input';
-import Button from '../button/Button';
+import Button from '../@shared/button/Button';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';
 import { FieldValues } from 'react-hook-form';
@@ -11,7 +11,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
-import ConfirmModal from '../modal/ConfirmModal';
+import ConfirmModal from '../@shared/modal/ConfirmModal';
 import { useUserStore } from '@/stores/useUserStore';
 import { setCookie } from 'cookies-next';
 
