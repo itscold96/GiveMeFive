@@ -6,10 +6,9 @@ import logoImg from '@/images/logos/logo-md.svg';
 import Link from 'next/link';
 
 import { useUserStore } from '@/stores/useUserStore';
-import defaultProfileImg from '@/images/profiles/default-profile.svg';
-import notificationIcon from '@/images/icons/Icon-notification.svg';
 import { useEffect } from 'react';
 import { useUserQuery } from '@/queries/useUserQuery';
+import LoggedInContainer from './LoggedInContainer';
 
 export default function Header() {
   const { data: user, isError } = useUserQuery();
@@ -39,22 +38,7 @@ export default function Header() {
           <Image src={logoImg} alt="로고 이미지" width={172} height={30} priority />
         </Link>
         {user ? (
-          <div className={S.loggedInContainer}>
-            <button className={S.notification}>
-              <Image src={notificationIcon} alt="프로필 이미지" width={20} height={20} />
-            </button>
-            <article className={S.verticalSeparator} />
-            <div className={S.profileContainer}>
-              <Image
-                src={user.profileImageUrl || defaultProfileImg}
-                alt="프로필 이미지"
-                width={32}
-                height={32}
-                priority
-              />
-              <p className={S.nickname}>{user.nickname}</p>
-            </div>
-          </div>
+          <LoggedInContainer nickname={user.nickname} profileImageUrl={user.profileImageUrl} logout={logout} />
         ) : (
           <div className={S.notLoggedInContainer}>
             <Link href="/login">로그인</Link>
