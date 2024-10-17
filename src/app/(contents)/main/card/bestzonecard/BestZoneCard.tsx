@@ -1,7 +1,7 @@
 'use client';
 
 import S from './BestZoneCard.module.scss';
-import Card from '../Card';
+import CommonCard from '../CommonCard';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import { Activity } from '@/api/activities';
@@ -14,7 +14,7 @@ export default function BestZoneCard({ activities }: BestZoneCardProps) {
   return (
     <>
       {activities.map(activity => (
-        <Card key={activity.id}>
+        <CommonCard key={activity.id}>
           <div className={S.bestZoneCard}>
             <Image src={activity.bannerImageUrl} alt={activity.title} />
             <div className={S.bestZoneCardRating}>
@@ -24,7 +24,7 @@ export default function BestZoneCard({ activities }: BestZoneCardProps) {
               <span>{activity.price}</span>
             </div>
           </div>
-        </Card>
+        </CommonCard>
       ))}
     </>
   );

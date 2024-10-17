@@ -1,6 +1,6 @@
 'use client';
 
-import Card from './card/Card';
+import CommonCard from './card/CommonCard';
 import S from './main.module.scss';
 import ArrowLeft from '../../../images/arrowleft-gray.svg';
 import ArrowRight from '../../../images/arrowright-gray.svg';
@@ -74,12 +74,12 @@ export default function Main() {
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <Card>
+        <CommonCard>
           <div className={S.cardLarge}>
             <div className={S.cardLargeImage} />
             <div className={S.cardLargeText} />
           </div>
-        </Card>
+        </CommonCard>
       </div>
       <Pagination />
     </div>
