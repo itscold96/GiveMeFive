@@ -24,7 +24,7 @@ export const useUserStore = create(
       },
     }),
     {
-      name: 'authStore',
+      name: 'userStore',
     },
   ),
 );
