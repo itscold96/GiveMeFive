@@ -38,25 +38,13 @@ export default function RedirectGoogle() {
         setCookie('refreshToken', refreshToken);
         router.replace('/');
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.status === 403) {
-            const { data } = await axiosInstance.post('oauth/sign-up/google', {
-              nickname: '',
-              redirectUri: 'http://localhost:3000/oauth/google',
-              token: token.id_token,
-            });
-            const { user, accessToken, refreshToken } = data as LoginReturn;
-            const { email, nickname, profileImageUrl } = user;
-            setUser({ email, nickname, profileImageUrl });
-            setCookie('accessToken', accessToken);
-            setCookie('refreshToken', refreshToken);
-            router.replace('/');
-          }
+        if (error instanceof AxiosError && error.status === 403) {
+          router.replace(`/oauth/google/signup/${token.id_token}`);
         }
       }
     };
 
     fetcher();
   }, []);
-  return <div>RedirectGoogle</div>;
+  return <></>;
 }
