@@ -28,20 +28,8 @@ export default function RedirectKakao() {
         setCookie('refreshToken', refreshToken);
         router.replace('/');
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.status === 404) {
-            const { data } = await axiosInstance.post('oauth/sign-up/kakao', {
-              nickname: '',
-              redirectUri: 'http://localhost:3000/oauth/kakao',
-              token: code,
-            });
-            const { user, accessToken, refreshToken } = data as LoginReturn;
-            const { email, nickname, profileImageUrl } = user;
-            setUser({ email, nickname, profileImageUrl });
-            setCookie('accessToken', accessToken);
-            setCookie('refreshToken', refreshToken);
-            router.replace('/');
-          }
+        if (error instanceof AxiosError && error.status === 403) {
+          router.replace(`/oauth/kakao/signup/${code}`);
         }
       }
     };
