@@ -44,8 +44,7 @@ export default function AllZoneCard() {
 
             <div className={S.allZoneCardTitle}>{activity.title}</div>
             <div className={S.allZoneCardPrice}>
-              {activity.price}
-              <span className={S.allZoneCardPriceUnit}> / 인</span>
+              ₩ {Number(activity.price).toLocaleString()} <span className={S.allZoneCardPriceUnit}> / 인</span>
             </div>
           </div>
         </div>
