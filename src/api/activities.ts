@@ -15,27 +15,31 @@ export interface Activity {
   updatedAt: Date;
 }
 export interface Activities {
-  cursorId: number;
+  cursorId: number | null;
   totalCount: number;
+  method: 'offset' | 'cursor';
   activities: Activity[];
 }
 
 const getActivities = async ({
   category,
   sort,
-  // method: 'offset',
+  method,
+  cursorId,
   keyword,
 }: {
   category: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
   sort: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
-  // method: 'offset' | 'cursor';
+  method: 'offset' | 'cursor';
+  cursorId: number | null;
   keyword?: string;
 }): Promise<Activities> => {
   const response = await axiosInstance.get(`/activities`, {
     params: {
       category,
       sort,
-      method: 'offset',
+      method,
+      cursorId,
       keyword,
     },
   });
