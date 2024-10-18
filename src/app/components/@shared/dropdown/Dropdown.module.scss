@@ -1,4 +1,5 @@
 @use '@/styles/abstracts/core' as *;
+
 .dropdownContainer {
   display: inline-flex;
   flex-direction: column;
@@ -18,8 +19,10 @@
   border-radius: 6px;
   padding: 16px 20px;
 }
+
 .categoryValue {
 }
+
 .dropdownButton {
   display: flex;
   align-items: center;
@@ -31,6 +34,7 @@
   gap: 10px;
   cursor: pointer;
 }
+
 .DropdownInfo {
   padding: 18px 0;
   display: flex;
@@ -41,6 +45,7 @@
   width: 100%;
   white-space: nowrap;
 }
+
 .categoryDropdownInfo {
   top: 60px;
   position: absolute;
@@ -54,6 +59,7 @@
   background-color: $white;
   width: 100%;
 }
+
 .kebabDropdownInfo {
   top: 50px;
   position: absolute;
@@ -68,6 +74,7 @@
   min-width: 160px;
   width: 100%;
 }
+
 .hideDropdownInfo {
   top: 10px;
   position: absolute;

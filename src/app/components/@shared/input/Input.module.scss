@@ -1,4 +1,4 @@
-@import '../../../../styles/abstracts/core';
+@use '@/styles/abstracts/core' as *;
 
 .inputWrapper {
   display: flex;
