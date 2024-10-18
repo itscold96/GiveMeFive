@@ -1,0 +1,37 @@
+@import '../../../styles/abstracts/core';
+
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: start;
+  width: 100%;
+  @include textLgRegular();
+  color: $black;
+  padding: 0;
+
+  & .error {
+    outline: 1px solid $red300;
+  }
+
+  textarea {
+    padding: 16px;
+    min-height: 346px;
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 6px;
+    outline: 1px solid $gray800;
+    border: none;
+  }
+
+  p {
+    display: none;
+    padding-left: 8px;
+    @include textXsMedium();
+
+    &.message {
+      display: block;
+      color: $red300;
+    }
+  }
+}

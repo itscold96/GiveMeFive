@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import '@/styles/base/globals.scss';
-
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
   description: '즐거움을 나누는 이색 체험 플랫폼',
