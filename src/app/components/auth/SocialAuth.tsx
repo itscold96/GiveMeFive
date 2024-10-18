@@ -1,7 +1,7 @@
 import S from './SocialAuth.module.scss';
 import Image from 'next/image';
-import google from '@/images/logo/logo-google.svg';
-import kakao from '@/images/logo/logo-kakao.svg';
+import google from '@/images/logos/logo-google.svg';
+import kakao from '@/images/logos/logo-kakao.svg';
 import Link from 'next/link';
 import { KAKAO_OAUTH_URL } from '@/constants/oauth';
 
