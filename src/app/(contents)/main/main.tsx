@@ -1,6 +1,5 @@
 'use client';
 
-import CommonCard from './card/CommonCard';
 import S from './main.module.scss';
 import ArrowLeft from '../../../images/arrowleft-gray.svg';
 import ArrowRight from '../../../images/arrowright-gray.svg';
@@ -12,26 +11,25 @@ import { useEffect, useState } from 'react';
 import Pagination from './pagination/Pagination';
 import BestZoneCard from './card/bestzonecard/BestZoneCard';
 import { Activities, getActivities } from '@/api/activities';
+import { useActivityStore } from '@/stores/useActivityStore';
 
 export default function Main() {
-  const [selectedSort, setSelectedSort] = useState<'most_reviewed' | 'price_asc' | 'price_desc' | 'latest'>(
-    'price_asc',
-  );
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('문화 · 예술');
+  const { activities, setActivities } = useActivityStore();
+  const [selectedCategory, setSelectedCategory] = useState<string>('투어');
+  const [selectedSort, setSelectedSort] = useState<string>('price_asc');
 
-  const [activities, setActivities] = useState<Activities>({
-    cursorId: 0,
-    totalCount: 0,
-    activities: [],
-  });
+  useEffect(() => {
+    getActivities({
+      category: selectedCategory as CategoryType,
+      sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+      method: 'cursor',
+      cursorId: null,
+    }).then(setActivities);
+  }, [selectedCategory, selectedSort, setActivities]);
 
   const handleSortChange = (value: string) => {
     setSelectedSort(value as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest');
   };
-
-  useEffect(() => {
-    getActivities({ category: selectedCategory, sort: selectedSort }).then(setActivities);
-  }, [selectedCategory, selectedSort]);
 
   return (
     <div>
@@ -62,10 +60,10 @@ export default function Main() {
           </div>
         </div>
 
-        <BestZoneCard activities={activities.activities} />
+        <BestZoneCard />
 
         <CategoryAndDropdown
-          selectedCategory={selectedCategory}
+          selectedCategory={selectedCategory as CategoryType}
           setSelectedCategory={setSelectedCategory}
           selectedSort={selectedSort}
           handleSortChange={handleSortChange}
@@ -74,12 +72,7 @@ export default function Main() {
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <CommonCard>
-          <div className={S.cardLarge}>
-            <div className={S.cardLargeImage} />
-            <div className={S.cardLargeText} />
-          </div>
-        </CommonCard>
+        <BestZoneCard />
       </div>
       <Pagination />
     </div>
