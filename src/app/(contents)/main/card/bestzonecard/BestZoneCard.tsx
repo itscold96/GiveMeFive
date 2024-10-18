@@ -22,7 +22,7 @@ export default function BestZoneCard({ activities: propActivities }: BestZoneCar
 
   return (
     <div className={S.bestZoneCardContainer}>
-      {sortedActivities.map(activity => (
+      {sortedActivities.slice(0, 3).map(activity => (
         <div key={activity.id} className={S.bestZoneCard}>
           <div className={S.bestZoneCardImage}>
             <Image

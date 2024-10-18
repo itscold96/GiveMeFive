@@ -16,7 +16,7 @@ import AllZoneCard from './card/allzonecard/AllZoneCard';
 import Banner from './banner/Banner';
 
 export default function Main() {
-  const { activities, setActivities } = useActivityStore();
+  const { activities, setActivities, bestActivities, setBestActivities } = useActivityStore();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
 
@@ -30,24 +30,21 @@ export default function Main() {
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
       method: 'cursor',
       cursorId: null,
+      limit: 8,
     }).then(setActivities);
   }, [selectedCategory, selectedSort, setActivities]);
 
-  // BestZone 정렬
-  const bestZoneActivities = [...activities].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 4);
-
-  // AllZone 필더링 및 정렬
-  const filteredAndSortedActivities = activities
-    .filter(activity => (selectedCategory ? activity.category === selectedCategory : true))
-    .sort((a, b) => {
-      if (selectedSort === '가격이 낮은 순') {
-        return a.price - b.price;
-      }
-      if (selectedSort === '가격이 높은 순') {
-        return b.price - a.price;
-      }
-      return b.reviewCount - a.reviewCount;
-    });
+  useEffect(() => {
+    // 베스트존 활동을 따로 가져와서 상태로 관리
+    if (bestActivities.length === 0) {
+      getActivities({
+        sort: 'most_reviewed',
+        method: 'cursor',
+        cursorId: null,
+        limit: 3,
+      }).then(response => setBestActivities(response.activities.slice(0, 3)));
+    }
+  }, [bestActivities.length, setBestActivities]);
 
   return (
     <div>
@@ -78,7 +75,7 @@ export default function Main() {
           </div>
         </div>
 
-        <BestZoneCard activities={bestZoneActivities} />
+        <BestZoneCard activities={bestActivities.slice(0, 3)} />
 
         <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}
@@ -90,7 +87,7 @@ export default function Main() {
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <AllZoneCard activities={filteredAndSortedActivities} />
+        <AllZoneCard activities={activities} />
       </div>
       <Pagination />
     </div>
