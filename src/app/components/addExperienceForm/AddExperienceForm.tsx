@@ -10,6 +10,10 @@ import DaumAddress from '../daumAdress/DaumAddress';
 import Textarea from '../textarea/Textarea';
 import { useEffect } from 'react';
 import DatePickerInput from '../dateTimeInput/DateTimeInput';
+import BannerImageInput from '../bannerImageInput/BannerImageInput';
+import SubImageInput from '../subImageInput/SubImageInput';
+import Button from '../@shared/button/Button';
+const CATEGORY = ['문화·예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 const config: ValidationConfig = {
   // 키값이 입력 필드의 name이 됩니다.
   title: {
@@ -50,13 +54,17 @@ const config: ValidationConfig = {
   schedules: {
     required: '최소 1개 이상의 예약 가능한 시간대가 필요합니다.',
   },
+  bannerImageUrl: {
+    required: '최소 1개 이상의 배너 이미지가 필요합니다.',
+  },
+  subImageUrls: {
+    required: '최소 1개 이상의 소개 이미지가 필요합니다.',
+  },
 };
 
 export default function AddExperienceForm() {
-  const CATEGORY = ['문화·예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
   const { data, onDropdownChange, toggleDropdown, isDropdownToggle, selectedValue } = useDropdown(CATEGORY);
   const { errors, register, handleSubmit, reset, getValues, setValue } = useValidForm({ validationConfig: config });
-  console.log(errors);
   const handleFormSubmit = async (formData: FieldValues) => {
     if (formData.validTest && formData.validTestConfirmation) {
       const { validTest, validTestConfirmation } = formData;
@@ -71,8 +79,6 @@ export default function AddExperienceForm() {
   const checkFieldClick = () => {
     const values = getValues(); // 필드 전체 객체 반환
     console.log('values:', values);
-    const nodate = getValues('schedules');
-    console.log(nodate);
   };
 
   useEffect(() => {
@@ -86,8 +92,22 @@ export default function AddExperienceForm() {
     <div>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '50px' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '50px' }}
       >
+        <div className={S.head}>
+          <div className={S.headText}>내 체험 등록</div>
+          <Button
+            buttonColor="nomadBlack"
+            textSize="md"
+            padding="padding14"
+            borderRadius="radius4"
+            className={S.submitButton}
+            type="submit"
+            onClick={checkFieldClick}
+          >
+            등록하기
+          </Button>
+        </div>
         <Input placeholder="제목" error={errors.title} register={register.title} message={errors.title?.message} />
         <Dropdown
           data={data}
@@ -122,11 +142,8 @@ export default function AddExperienceForm() {
           error={errors.schedules}
           message={errors.schedules?.message}
         />
-        <button type="submit">submit</button> {/* 버튼이 하나만 있을 경우에는, 자동으로 type="submit" 입니다.*/}
-        {/* 버튼이 여러 개거나, submit 버튼으로 만들고 싶지 않다면 따로 지정해주세요*/}
-        <button type="button" onClick={checkFieldClick}>
-          check
-        </button>
+        <BannerImageInput error={errors.bannerImageUrl} message={errors.bannerImageUrl?.message} setValue={setValue} />
+        <SubImageInput error={errors.subImageUrls} message={errors.subImageUrls?.message} setValue={setValue} />
       </form>
     </div>
   );

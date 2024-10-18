@@ -1,1 +1,13 @@
+@use '@/styles/abstracts/core' as *;
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headText {
+  @include text3XlBold;
+}
 
+.submitButton {
+  @include textLgSemibold;
+}

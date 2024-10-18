@@ -23,7 +23,7 @@ type DateTimeType = {
   date: string;
 };
 
-export default function DateTimeInput({ setValue, getValues, id, error, message }: DateTimeInputProps) {
+export default function DateTimeInput({ setValue, id, error, message }: DateTimeInputProps) {
   const [dateTime, setDateTime] = useState<DateTimeType>({
     selectDate: null as Date | null,
     startTime: '',
@@ -87,7 +87,7 @@ export default function DateTimeInput({ setValue, getValues, id, error, message 
     }));
     setValue('schedules', filteredDateTimeBox);
   }, [dateTimeBox]);
-  console.log(error);
+
   return (
     <div className={S.container}>
       <div className={S.datePickerInputContainer}>

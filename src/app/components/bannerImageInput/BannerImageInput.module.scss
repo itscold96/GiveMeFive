@@ -1,0 +1,68 @@
+@use '@/styles/abstracts/core' as *;
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.box {
+  display: flex;
+}
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 180px;
+  max-height: 180px;
+  input {
+    display: none;
+  }
+}
+.labelWrapper {
+  display: inline-block;
+  cursor: pointer;
+  max-width: 180px;
+}
+.labelName {
+  margin-bottom: 24px;
+  display: inline-block;
+}
+.addImageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 180px;
+  height: 180px;
+  border: 1px dashed $gray900;
+  border-radius: 12px;
+  gap: 30px;
+  cursor: pointer;
+}
+.message {
+  color: $red300;
+  display: block;
+  margin-top: 10px;
+}
+.imagePreviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
+  width: 100%;
+}
+.imagePreviewWrapper {
+  display: flex;
+  position: relative;
+  width: 180px;
+  margin-left: 24px;
+}
+.imagePreview {
+  border-radius: 12px;
+}
+.deleteButton {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
