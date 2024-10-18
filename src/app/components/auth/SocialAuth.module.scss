@@ -4,6 +4,16 @@
   display: flex;
   justify-content: center;
   gap: 16px;
+
+  button {
+    border: none;
+    background-color: transparent;
+    border-radius: 50%;
+  }
+
+  img {
+    cursor: pointer;
+  }
 }
 
 .socialLogin {
