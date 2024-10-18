@@ -9,10 +9,7 @@ const nicknameConfig: ValidationConfig = {
   nickname: {
     required: '닉네임을 입력해주세요',
     minLength: VALID_OPTIONS.minLength2,
-    maxLength: {
-      value: 6,
-      message: '6자리 이하로 입력해주세요',
-    },
+    maxLength: VALID_OPTIONS.maxLength10,
   },
 };
 
