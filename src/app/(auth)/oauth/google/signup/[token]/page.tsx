@@ -15,7 +15,7 @@ export default function GoogleSignup({ params }: { params: { token: string } }) 
   const handleGoogleSignupSubmit = async (nickname: string) => {
     const { data } = await axiosInstance.post('oauth/sign-up/google', {
       nickname,
-      redirectUri: 'http://localhost:3000/oauth/google/signup',
+      redirectUri: 'http://localhost:3000/oauth/google',
       token,
     });
     const { user, accessToken, refreshToken } = data as LoginReturn;

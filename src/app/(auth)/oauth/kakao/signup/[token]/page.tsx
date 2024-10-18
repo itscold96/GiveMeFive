@@ -15,7 +15,7 @@ export default function KakaoSignup({ params }: { params: { token: string } }) {
   const handleKakaoSignupSubmit = async (nickname: string) => {
     const { data } = await axiosInstance.post('oauth/sign-up/kakao', {
       nickname,
-      redirectUri: 'http://localhost:3000/oauth/kakao/signup',
+      redirectUri: `http://localhost:3000/oauth/kakao`,
       token,
     });
     const { user, accessToken, refreshToken } = data as LoginReturn;
