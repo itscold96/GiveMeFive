@@ -3,7 +3,7 @@ import Image from 'next/image';
 import google from '@/images/logos/logo-google.svg';
 import kakao from '@/images/logos/logo-kakao.svg';
 import Link from 'next/link';
-import { KAKAO_OAUTH_URL } from '@/constants/oauth';
+import { GOOGLE_OAUTH_URL, KAKAO_OAUTH_URL } from '@/constants/oauth';
 
 interface SocialAuthProps {
   type: 'login' | 'signup';
@@ -19,7 +19,7 @@ export default function SocialAuth({ type }: SocialAuthProps) {
       </article>
 
       <article className={S.logoContainer}>
-        <Link href="/">
+        <Link href={GOOGLE_OAUTH_URL}>
           <Image src={google} alt="로고 이미지" height={72} width={72} />
         </Link>
         <Link href={KAKAO_OAUTH_URL}>
