@@ -10,30 +10,48 @@ import CategoryAndDropdown, { Category as CategoryType } from './category/Catego
 import { useEffect, useState } from 'react';
 import Pagination from './pagination/Pagination';
 import BestZoneCard from './card/bestzonecard/BestZoneCard';
-import { Activities, getActivities } from '@/api/activities';
+import { getActivities } from '@/api/activities';
 import { useActivityStore } from '@/stores/useActivityStore';
+import AllZoneCard from './card/allzonecard/AllZoneCard';
+import Banner from './banner/Banner';
 
 export default function Main() {
   const { activities, setActivities } = useActivityStore();
-  const [selectedCategory, setSelectedCategory] = useState<string>('투어');
-  const [selectedSort, setSelectedSort] = useState<string>('price_asc');
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
+  const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
+
+  const handleSortChange = (value: string) => {
+    setSelectedSort(value);
+  };
 
   useEffect(() => {
     getActivities({
-      category: selectedCategory as CategoryType,
+      category: selectedCategory ?? undefined,
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
       method: 'cursor',
       cursorId: null,
     }).then(setActivities);
   }, [selectedCategory, selectedSort, setActivities]);
 
-  const handleSortChange = (value: string) => {
-    setSelectedSort(value as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest');
-  };
+  // BestZone 정렬
+  const bestZoneActivities = [...activities].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 4);
+
+  // AllZone 필더링 및 정렬
+  const filteredAndSortedActivities = activities
+    .filter(activity => (selectedCategory ? activity.category === selectedCategory : true))
+    .sort((a, b) => {
+      if (selectedSort === '가격이 낮은 순') {
+        return a.price - b.price;
+      }
+      if (selectedSort === '가격이 높은 순') {
+        return b.price - a.price;
+      }
+      return b.reviewCount - a.reviewCount;
+    });
 
   return (
     <div>
-      <div className={S.bannerContainer} />
+      <Banner />
 
       <div className={S.mainContainer}>
         <div className={S.inputContainer}>
@@ -60,19 +78,19 @@ export default function Main() {
           </div>
         </div>
 
-        <BestZoneCard />
+        <BestZoneCard activities={bestZoneActivities} />
 
         <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}
           setSelectedCategory={setSelectedCategory}
-          selectedSort={selectedSort}
+          selectedSort={selectedSort as string}
           handleSortChange={handleSortChange}
         />
 
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <BestZoneCard />
+        <AllZoneCard activities={filteredAndSortedActivities} />
       </div>
       <Pagination />
     </div>

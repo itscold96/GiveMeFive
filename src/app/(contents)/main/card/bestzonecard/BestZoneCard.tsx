@@ -5,20 +5,24 @@ import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import React from 'react';
 import { useActivityStore } from '@/stores/useActivityStore';
+import { Activity } from '@/api/activities';
+interface BestZoneCardProps {
+  activities: Activity[];
+}
 
-export default function BestZoneCard() {
+export default function BestZoneCard({ activities: propActivities }: BestZoneCardProps) {
   const { activities } = useActivityStore();
   console.log('BestZoneCard 렌더링:', { activities });
 
-  if (!activities || activities.length === 0) {
+  if (!propActivities || propActivities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }
 
-  console.log(activities);
+  const sortedActivities = [...activities].sort((a, b) => b.reviewCount - a.reviewCount);
 
   return (
     <div className={S.bestZoneCardContainer}>
-      {activities.map(activity => (
+      {sortedActivities.map(activity => (
         <div key={activity.id} className={S.bestZoneCard}>
           <div className={S.bestZoneCardImage}>
             <Image

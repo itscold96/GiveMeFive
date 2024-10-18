@@ -28,7 +28,7 @@ const getActivities = async ({
   cursorId,
   keyword,
 }: {
-  category: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+  category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
   sort: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
   method: 'offset' | 'cursor';
   cursorId: number | null;
