@@ -29,6 +29,10 @@ export default function SocialSignupNicknameForm({ onSubmit }: SocialSignupNickn
 
   return (
     <div className={S.nicknameFormContainer}>
+      <div className={S.welcomeSignup}>
+        <p className={S.welcome}>가입을 환영합니다</p>
+        <p className={S.writeNickname}>어떻게 불러드리면 될까요?</p>
+      </div>
       <form className={S.nicknameForm} onSubmit={handleSubmit(handleNicknameFormSubmit)}>
         <Input
           htmlFor="nickname"

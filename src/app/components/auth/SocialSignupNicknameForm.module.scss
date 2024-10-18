@@ -2,11 +2,25 @@
 
 .nicknameFormContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
   height: calc(100dvh - $headerHeight);
   width: 100dvw;
+}
+
+.welcomeSignup {
+  text-align: center;
+  color: $black;
+  .welcome {
+    @include text3XlSemibold;
+    padding-bottom: 20px;
+  }
+  .writeNickname {
+    @include textXlRegular;
+    padding-bottom: 10px;
+  }
 }
 
 .nicknameForm {
