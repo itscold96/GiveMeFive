@@ -3,6 +3,7 @@
 import S from './Dropdown.module.scss';
 import dropdownArrow from '@/images/dropdown-arrow.svg';
 import kebabIcon from '@/images/kebab-icon.svg';
+import dropdownThinArrow from '@/images/dropdown-thin-arrow.svg';
 import Image from 'next/image';
 interface DropdownProps {
   data: string[];
