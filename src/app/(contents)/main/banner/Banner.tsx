@@ -5,12 +5,13 @@ import { useActivityStore } from '@/stores/useActivityStore';
 export default function Banner() {
   const { activities } = useActivityStore();
 
-  // 리뷰 수가 가장 많은 활동 찾기
+  // 리뷰 수가 가장 많은 엑티비티 찾기
   const bestActivity = activities.length > 0 ? [...activities].sort((a, b) => b.reviewCount - a.reviewCount)[0] : null;
 
   if (!bestActivity) {
-    return null; // 활동이 없는 경우 아무것도 렌더링하지 않음
+    return null;
   }
+
   return (
     <div className={S.bannerContainer}>
       <div className={S.bannerImageWrapper}>
