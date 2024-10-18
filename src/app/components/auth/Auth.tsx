@@ -1,3 +1,5 @@
+'use client';
+
 import S from './Auth.module.scss';
 import Image from 'next/image';
 import logo from '@/images/logos/logo-big.svg';
