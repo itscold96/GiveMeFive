@@ -22,8 +22,7 @@ export default function Header() {
   useEffect(() => {
     if (user) {
       // 새로 유저 정보를 받아왔으므로 전역 상태 업데이트
-      const { email, nickname, profileImageUrl } = user;
-      setUser({ email, nickname, profileImageUrl });
+      setUser({ user });
     }
     if (isError) {
       // 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
