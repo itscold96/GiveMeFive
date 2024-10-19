@@ -15,10 +15,13 @@ export default function Header() {
   const { logout, setUser } = useUserStore();
 
   // 이전에 로그아웃을 하지 않고, 사이트에 재접속 한 경우
-  // 유저 정보는 로컬 스토리지에,
+  // 유저 전역 상태는 없지만,
   // accessToken, refreshToken은 쿠키에 그대로 남아있다.
-  // 이를 그대로 사용하게 되면 그 사이에 유저 정보가 바뀌었거나,
-  // accessToken이 만료되었을 수 있으므로 유저 정보를 업데이트하는 과정이 필요함
+  // 이를 통해 자동 로그인을 시키는 기능을 위해,
+  // 서버에 유저 정보를 요청하는 과정이 필요하다.
+  // 만약, 그 사이에 accessToken이 만료되었다면 refreshToken으로 토큰을 업데이트하고,
+  // refreshToken까지 만료되었다면 쿠기를 제거하여 완전히 로그아웃한다.
+  // useEffect를 통해 페이지 새로 고침 시에도 마찬가지로 작동한다.
   useEffect(() => {
     if (user) {
       // 새로 유저 정보를 받아왔으므로 전역 상태 업데이트
