@@ -12,7 +12,7 @@ export default function GoogleSignup({ params }: { params: { token: string } }) 
   const { token } = params;
 
   const handleGoogleSignupNicknameSubmit = async (nickname: string) => {
-    const { data } = await oauthSignup({ provider: 'google', nickname, code: token });
+    const data = await oauthSignup({ provider: 'google', nickname, code: token });
     const { user, accessToken, refreshToken } = data as LoginReturn;
     setUser({ user, accessToken, refreshToken });
     router.replace('/');

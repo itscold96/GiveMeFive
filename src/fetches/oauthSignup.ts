@@ -8,5 +8,5 @@ export const oauthSignup = async ({ provider, nickname, code }: OauthSignupParam
     token: code,
   });
 
-  return { data };
+  return data;
 };

@@ -20,7 +20,7 @@ export default function RedirectGoogle() {
       const token = await getGoogleJWT(code);
 
       try {
-        const { data } = await oauthSignin({ provider: 'google', code: token });
+        const data = await oauthSignin({ provider: 'google', code: token });
         const { user, accessToken, refreshToken } = data as LoginReturn;
         setUser({ user, accessToken, refreshToken });
 

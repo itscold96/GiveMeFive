@@ -16,7 +16,7 @@ export default function RedirectKakao() {
   useEffect(() => {
     const fetcher = async () => {
       try {
-        const { data } = await oauthSignin({ provider: 'kakao', code: code });
+        const data = await oauthSignin({ provider: 'kakao', code: code });
         const { user, accessToken, refreshToken } = data as LoginReturn;
         setUser({ user, accessToken, refreshToken });
         router.replace('/');
