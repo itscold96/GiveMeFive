@@ -4,7 +4,6 @@ import SocialSignupNicknameForm from '@/app/components/auth/SocialSignupNickname
 import { axiosInstance } from '@/fetches/setupAxios';
 import { useUserStore } from '@/stores/useUserStore';
 import { LoginReturn } from '@/types/auth';
-import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
 export default function GoogleSignup({ params }: { params: { token: string } }) {
@@ -19,10 +18,7 @@ export default function GoogleSignup({ params }: { params: { token: string } }) 
       token,
     });
     const { user, accessToken, refreshToken } = data as LoginReturn;
-    const { email, profileImageUrl } = user;
-    setUser({ email, nickname, profileImageUrl });
-    setCookie('accessToken', accessToken);
-    setCookie('refreshToken', refreshToken);
+    setUser({ user, accessToken, refreshToken });
     router.replace('/');
   };
 

@@ -1,3 +1,5 @@
+import { LoginReturn } from './auth';
+
 export interface User {
   email: string;
   nickname: string;
@@ -6,7 +8,7 @@ export interface User {
 
 export interface UserStore {
   user: User | null;
-  setUser: (newUser: User) => void;
+  setUser: (userInfo: LoginReturn) => void;
   updateProfileImageUrl: (url: string) => void;
   logout: () => void;
 }

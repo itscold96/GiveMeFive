@@ -4,7 +4,6 @@ import { axiosInstance } from '@/fetches/setupAxios';
 import { useUserStore } from '@/stores/useUserStore';
 import { LoginReturn } from '@/types/auth';
 import { AxiosError } from 'axios';
-import { setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -22,10 +21,7 @@ export default function RedirectKakao() {
           token: code,
         });
         const { user, accessToken, refreshToken } = data as LoginReturn;
-        const { email, nickname, profileImageUrl } = user;
-        setUser({ email, nickname, profileImageUrl });
-        setCookie('accessToken', accessToken);
-        setCookie('refreshToken', refreshToken);
+        setUser({ user, accessToken, refreshToken });
         router.replace('/');
       } catch (error) {
         if (error instanceof AxiosError && error.status === 403) {

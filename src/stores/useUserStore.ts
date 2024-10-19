@@ -1,11 +1,17 @@
+import { LoginReturn } from '@/types/auth';
 import { UserStore } from '@/types/user';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, setCookie } from 'cookies-next';
 import { create } from 'zustand';
 
 export const useUserStore = create<UserStore>(set => ({
   user: null,
-  setUser: newUser => {
-    set(() => ({ user: newUser }));
+  setUser: (userInfo: LoginReturn) => {
+    set(() => {
+      const { user, accessToken, refreshToken } = userInfo;
+      setCookie('accessToken', accessToken);
+      setCookie('refreshToken', refreshToken);
+      return { user };
+    });
   },
   updateProfileImageUrl: newImageUrl => {
     set(prevState => ({
