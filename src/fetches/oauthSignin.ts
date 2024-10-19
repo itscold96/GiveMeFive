@@ -1,4 +1,4 @@
-import { OauthSigninParams } from '@/types/auth';
+import { OauthSigninParams } from '@/types/oauth';
 import { axiosInstance } from './setupAxios';
 
 export const oauthSignin = async ({ provider, code }: OauthSigninParams) => {
