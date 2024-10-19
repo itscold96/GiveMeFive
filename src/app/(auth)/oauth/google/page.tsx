@@ -1,6 +1,6 @@
 'use client';
 
-import { axiosInstance } from '@/fetches/setupAxios';
+import { oauthSignin } from '@/fetches/oauthSignin';
 import { useUserStore } from '@/stores/useUserStore';
 import { LoginReturn } from '@/types/auth';
 import axios, { AxiosError } from 'axios';
@@ -26,10 +26,7 @@ export default function RedirectGoogle() {
       });
 
       try {
-        const { data } = await axiosInstance.post('oauth/sign-in/google', {
-          redirectUri: 'http://localhost:3000/oauth/google',
-          token: token.id_token,
-        });
+        const { data } = await oauthSignin({ provider: 'google', code: token.id_token });
         const { user, accessToken, refreshToken } = data as LoginReturn;
         setUser({ user, accessToken, refreshToken });
 

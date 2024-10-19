@@ -1,6 +1,6 @@
 'use client';
 
-import { axiosInstance } from '@/fetches/setupAxios';
+import { oauthSignin } from '@/fetches/oauthSignin';
 import { useUserStore } from '@/stores/useUserStore';
 import { LoginReturn } from '@/types/auth';
 import { AxiosError } from 'axios';
@@ -16,10 +16,7 @@ export default function RedirectKakao() {
   useEffect(() => {
     const fetcher = async () => {
       try {
-        const { data } = await axiosInstance.post('oauth/sign-in/kakao', {
-          redirectUri: 'http://localhost:3000/oauth/kakao',
-          token: code,
-        });
+        const { data } = await oauthSignin({ provider: 'kakao', code: code });
         const { user, accessToken, refreshToken } = data as LoginReturn;
         setUser({ user, accessToken, refreshToken });
         router.replace('/');
