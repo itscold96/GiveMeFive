@@ -20,10 +20,10 @@ export default function SocialAuth({ type }: SocialAuthProps) {
 
       <article className={S.logoContainer}>
         <Link href={GOOGLE_OAUTH_URL}>
-          <Image src={google} alt="로고 이미지" height={72} width={72} />
+          <Image src={google} alt="로고 이미지" height={72} width={72} priority />
         </Link>
         <Link href={KAKAO_OAUTH_URL}>
-          <Image src={kakao} alt="로고 이미지" height={72} width={72} />
+          <Image src={kakao} alt="로고 이미지" height={72} width={72} priority />
         </Link>
       </article>
     </section>
