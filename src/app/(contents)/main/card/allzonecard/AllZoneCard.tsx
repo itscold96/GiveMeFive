@@ -7,25 +7,16 @@ import React from 'react';
 import { useActivityStore } from '@/stores/useActivityStore';
 import { Activity } from '@/api/activities';
 
-interface AllZoneCardProps {
-  activities: Activity[];
-}
+export default function AllZoneCard() {
+  const activities = useActivityStore(state => state.activities);
 
-export default function AllZoneCard({ activities: propActivities }: AllZoneCardProps) {
-  const { activities: storeActivities } = useActivityStore();
-  const displayActivities = propActivities.length > 0 ? propActivities : storeActivities;
-
-  console.log('AllZoneCard 렌더링:', { activities: storeActivities });
-
-  if (!displayActivities || displayActivities.length === 0) {
+  if (!activities || activities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }
 
-  console.log(displayActivities);
-
   return (
     <div className={S.allZoneCardContainer}>
-      {displayActivities.map(activity => (
+      {activities.map(activity => (
         <div key={activity.id}>
           <div className={S.allZoneCardImage}>
             <Image
