@@ -2,7 +2,7 @@ import Image from 'next/image';
 import S from './SubImageInput.module.scss';
 import plusIcon from '@/images/plus-icon.svg';
 import deleteButton from '@/images/delete-button.svg';
-import { FieldError, FieldErrorsImpl, Merge, UseFormRegisterReturn } from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 interface BannerImageInputProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
