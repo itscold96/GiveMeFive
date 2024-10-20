@@ -7,15 +7,15 @@ import React from 'react';
 import { useActivityStore } from '@/stores/useActivityStore';
 
 export default function AllZoneCard() {
-  const activities = useActivityStore(state => state.activities);
+  const activitiesResponse = useActivityStore(state => state.activitiesResponse);
 
-  if (!activities || activities.length === 0) {
+  if (!activitiesResponse.activities || activitiesResponse.activities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }
 
   return (
     <div className={S.allZoneCardContainer}>
-      {activities.map(activity => (
+      {activitiesResponse.activities.map(activity => (
         <div key={activity.id}>
           <div className={S.allZoneCardImage}>
             <Image

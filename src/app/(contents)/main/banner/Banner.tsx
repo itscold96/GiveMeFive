@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Activity } from '@/api/activities';
 
 interface BannerProps {
-  bestActivity: Activity;
+  bestActivity: Activity | null;
 }
 
 export default function Banner({ bestActivity }: BannerProps) {
