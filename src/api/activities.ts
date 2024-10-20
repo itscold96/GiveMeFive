@@ -14,37 +14,25 @@ export interface Activity {
   createdAt: Date;
   updatedAt: Date;
 }
-export interface Activities {
+export interface GetActivitiesResponse {
   cursorId: number | null;
   totalCount: number;
   method: 'offset' | 'cursor';
   activities: Activity[];
 }
 
-const getActivities = async ({
-  category,
-  sort,
-  method,
-  cursorId,
-  limit,
-  keyword,
-}: {
+interface GetActivitiesProps {
   category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
   sort: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
   method: 'offset' | 'cursor';
   cursorId: number | null;
   limit: number;
   keyword?: string;
-}): Promise<Activities> => {
-  const response = await axiosInstance.get(`/activities`, {
-    params: {
-      category,
-      sort,
-      method,
-      cursorId,
-      limit,
-      keyword,
-    },
+}
+
+const getActivities = async (option: GetActivitiesProps) => {
+  const response = await axiosInstance.get<GetActivitiesResponse>(`/activities`, {
+    params: option,
   });
   return response.data;
 };
