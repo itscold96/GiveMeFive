@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import React from 'react';
 import { useActivityStore } from '@/stores/useActivityStore';
-import { Activity } from '@/api/activities';
 
 export default function AllZoneCard() {
   const activities = useActivityStore(state => state.activities);
@@ -28,10 +27,6 @@ export default function AllZoneCard() {
               width={283}
               height={283}
               className={S.allZoneCardImage}
-              onError={e => {
-                console.error('이미지 로드 에러:', e);
-                console.log('에러가 발생한 이미지 URL:', activity.bannerImageUrl);
-              }}
             />
           </div>
           <div className={S.allZoneCardContent}>

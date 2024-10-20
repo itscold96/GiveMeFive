@@ -24,10 +24,6 @@ export default function BestZoneCard() {
               width={384}
               height={384}
               className={S.bestZoneCardImage}
-              onError={e => {
-                console.error('이미지 로드 에러:', e);
-                console.log('에러가 발생한 이미지 URL:', activity.bannerImageUrl);
-              }}
             />
 
             <div className={S.bestZoneCardContent}>
