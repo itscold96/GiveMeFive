@@ -1,4 +1,4 @@
-import { Activity, getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/api/activities';
+import { Activity, getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/fetches/activities';
 import { create } from 'zustand';
 
 interface ActivityState {

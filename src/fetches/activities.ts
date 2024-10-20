@@ -1,4 +1,4 @@
-import { axiosInstance } from './axiosInstance';
+import { axiosInstance } from './setupAxios';
 
 export interface Activity {
   id: number;
