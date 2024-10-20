@@ -14,17 +14,14 @@ import ArrowButton from './arrowButton/ArrowButton';
 
 export default function Main() {
   const getActivities = useActivityStore(state => state.getActivities);
-  const getBestActivities = useActivityStore(state => state.getBestActivities);
-  const bestActivities = useActivityStore(state => state.bestActivities);
-
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
 
   const handleSortChange = (value: string) => {
     setSelectedSort(value);
   };
-  const totalCount = useActivityStore(state => state.totalCount);
-  const pageCount = useMemo(() => Math.max(1, Math.ceil(totalCount / 8)), [totalCount]);
+  const activityTotalCount = useActivityStore(state => state.activitiesResponse.totalCount);
+  const pageCount = useMemo(() => Math.max(1, Math.ceil(activityTotalCount / 8)), [activityTotalCount]);
   const [page, setPage] = useState(1);
 
   const onChangePage = (page: number) => {
@@ -41,13 +38,11 @@ export default function Main() {
     });
   }, [selectedCategory, selectedSort, page]);
 
-  useEffect(() => {
-    getBestActivities();
-  }, []);
+  const firstBestActivity = useActivityStore(state => state.firstBestActivity);
 
   return (
     <div>
-      <Banner bestActivity={bestActivities[0]} />
+      <Banner bestActivity={firstBestActivity} />
 
       <div className={S.mainContainer}>
         <div className={S.inputContainer}>
@@ -73,7 +68,7 @@ export default function Main() {
           </div>
         </div>
 
-        <BestZoneCard bestActivities={bestActivities} />
+        <BestZoneCard />
 
         <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}
