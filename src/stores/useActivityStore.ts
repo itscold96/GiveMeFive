@@ -1,4 +1,4 @@
-import { Activity, GetActivitiesResponse } from '@/api/activities';
+import { getActivities, GetActivitiesProps, Activity, GetActivitiesResponse } from '@/api/activities';
 import { create } from 'zustand';
 
 interface ActivityState {
@@ -6,8 +6,8 @@ interface ActivityState {
   bestActivities: Activity[];
   cursorId: number | null;
   totalCount: number;
-  setActivities: (activities: GetActivitiesResponse) => void;
-  setBestActivities: (activities: Activity[]) => void;
+  getActivities: (param: GetActivitiesProps) => Promise<void>;
+  getBestActivities: () => Promise<void>;
 }
 
 export const useActivityStore = create<ActivityState>(set => ({
@@ -15,6 +15,17 @@ export const useActivityStore = create<ActivityState>(set => ({
   bestActivities: [],
   cursorId: null,
   totalCount: 0,
-  setActivities: (activitiesData: GetActivitiesResponse) => set(activitiesData),
-  setBestActivities: (activities: Activity[]) => set({ bestActivities: activities }),
+  getActivities: async (param: GetActivitiesProps) => {
+    const response: GetActivitiesResponse = await getActivities(param);
+    set({ ...response });
+  },
+  getBestActivities: async () => {
+    const response: GetActivitiesResponse = await getActivities({
+      sort: 'most_reviewed',
+      method: 'cursor',
+      cursorId: null,
+      size: 3,
+    });
+    set({ bestActivities: response.activities });
+  },
 }));

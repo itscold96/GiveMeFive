@@ -10,15 +10,16 @@ import CategoryAndDropdown, { Category as CategoryType } from './category/Catego
 import { useEffect, useState } from 'react';
 import Pagination from './pagination/Pagination';
 import BestZoneCard from './card/bestzonecard/BestZoneCard';
-import { getActivities } from '@/api/activities';
 import { useActivityStore } from '@/stores/useActivityStore';
 import AllZoneCard from './card/allzonecard/AllZoneCard';
 import Banner from './banner/Banner';
 
 export default function Main() {
-  const { activities, setActivities, bestActivities, setBestActivities } = useActivityStore();
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
+  const getActivities = useActivityStore(state => state.getActivities);
+  const getBestActivities = useActivityStore(state => state.getBestActivities);
+
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
 
   const handleSortChange = (value: string) => {
     setSelectedSort(value);
@@ -30,21 +31,13 @@ export default function Main() {
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
       method: 'cursor',
       cursorId: null,
-      limit: 8,
-    }).then(setActivities);
-  }, [selectedCategory, selectedSort, setActivities]);
+      size: 8, // TODO: 페이지 사이즈에 맞춰서 개수 제한 추가
+    });
+  }, [selectedCategory, selectedSort]);
 
   useEffect(() => {
-    // 베스트존 활동을 따로 가져와서 상태로 관리
-    if (bestActivities.length === 0) {
-      getActivities({
-        sort: 'most_reviewed',
-        method: 'cursor',
-        cursorId: null,
-        limit: 3,
-      }).then(response => setBestActivities(response.activities.slice(0, 3)));
-    }
-  }, [bestActivities.length, setBestActivities]);
+    getBestActivities();
+  }, []);
 
   return (
     <div>
@@ -75,7 +68,7 @@ export default function Main() {
           </div>
         </div>
 
-        <BestZoneCard activities={bestActivities.slice(0, 3)} />
+        <BestZoneCard />
 
         <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}
@@ -87,7 +80,7 @@ export default function Main() {
         <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
         </div>
-        <AllZoneCard activities={activities} />
+        <AllZoneCard />
       </div>
       <Pagination />
     </div>
