@@ -1,33 +1,54 @@
-import { getActivities, GetActivitiesProps, Activity, GetActivitiesResponse } from '@/api/activities';
+import { Activity, getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/api/activities';
 import { create } from 'zustand';
 
 interface ActivityState {
-  activities: Activity[];
-  totalCount: number;
-  bestActivities: Activity[];
+  activitiesResponse: GetActivitiesResponse;
+  bestActivitiesResponse: GetActivitiesResponse;
+  firstBestActivity: Activity | null;
 
   getActivities: (param: GetActivitiesProps) => Promise<void>;
-  getBestActivities: () => Promise<void>;
+  getBestActivities: (cursorId: number | null) => Promise<void>;
 }
 
 export const useActivityStore = create<ActivityState>((set, get) => ({
-  activities: [],
-  totalCount: 0,
+  activitiesResponse: {
+    totalCount: 0,
+    activities: [],
+  },
 
-  bestActivities: [],
+  bestActivitiesResponse: {
+    cursorId: null,
+    totalCount: 0,
+    activities: [],
+  },
+
+  firstBestActivity: null,
 
   getActivities: async (param: GetActivitiesProps) => {
     const response: GetActivitiesResponse = await getActivities(param);
-    set({ ...response });
+    set({ activitiesResponse: response });
   },
 
-  getBestActivities: async () => {
+  getBestActivities: async (cursorId: number | null) => {
     const response: GetActivitiesResponse = await getActivities({
       sort: 'most_reviewed',
-      method: 'offset',
-      page: 1,
+      method: 'cursor',
+      cursorId,
       size: 3,
     });
-    set({ bestActivities: response.activities });
+    if (response.cursorId !== null) {
+      set({ bestActivitiesResponse: response });
+    } else {
+      const response: GetActivitiesResponse = await getActivities({
+        sort: 'most_reviewed',
+        method: 'cursor',
+        cursorId: null,
+        size: 3,
+      });
+      set({ bestActivitiesResponse: response });
+    }
+    if (!get().firstBestActivity) {
+      set({ firstBestActivity: response.activities[0] });
+    }
   },
 }));
