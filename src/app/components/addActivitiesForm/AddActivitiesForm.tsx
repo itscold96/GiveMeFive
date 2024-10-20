@@ -1,11 +1,11 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';
-import { FieldValues } from 'react-hook-form';
 import Input from '../@shared/input/Input';
 import Dropdown from '../@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
-import S from '@/app/components/addexperienceform/AddExperienceForm.module.scss';
+import S from './AddActivitiesForm.module.scss';
 import DaumAddress from '../daumAdress/DaumAddress';
 import Textarea from '../textarea/Textarea';
 import { useEffect } from 'react';
@@ -13,7 +13,11 @@ import DatePickerInput from '../dateTimeInput/DateTimeInput';
 import BannerImageInput from '../bannerImageInput/BannerImageInput';
 import SubImageInput from '../subImageInput/SubImageInput';
 import Button from '../@shared/button/Button';
-const CATEGORY = ['문화·예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+import { postActivities } from '@/fetches/postActivities';
+import { SubmitActivitiesParams } from '@/types/addActivities';
+import { createImageUrl, createImageUrls } from '@/fetches/createImageUrl';
+
+const CATEGORY = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 const config: ValidationConfig = {
   // 키값이 입력 필드의 name이 됩니다.
   title: {
@@ -62,23 +66,38 @@ const config: ValidationConfig = {
   },
 };
 
-export default function AddExperienceForm() {
+export default function AddActivitiesForm() {
   const { data, onDropdownChange, toggleDropdown, isDropdownToggle, selectedValue } = useDropdown(CATEGORY);
-  const { errors, register, handleSubmit, reset, getValues, setValue } = useValidForm({ validationConfig: config });
-  const handleFormSubmit = async (formData: FieldValues) => {
-    if (formData.validTest && formData.validTestConfirmation) {
-      const { validTest, validTestConfirmation } = formData;
-      console.log('validTest:', validTest);
-      console.log('validTestConfirmation:', validTestConfirmation);
+  const { errors, register, handleSubmit, reset, getValues, setValue } = useValidForm({
+    validationConfig: config,
+  });
+  const router = useRouter();
 
-      reset(); // 모든 입력 필드를 기본값으로 되돌립니다.
-      // reset({ validTest: 'reset' }); // 각 입력 필드의 이름과 바꾸고 싶은 값을 줄 수도 있습니다.
+  const handleFormSubmit = async (formData: any) => {
+    const typedData: SubmitActivitiesParams = {
+      ...formData,
+      price: Number(formData.price), // 가격을 숫자로 변환
+      bannerImageUrl: await createImageUrl(formData.bannerImageUrl),
+      subImageUrls: await createImageUrls(formData.subImageUrls),
+    };
+    try {
+      const data = await postActivities(typedData);
+      console.log(data);
+      router.push('/');
+    } catch (error: any) {
+      if (error.response) {
+        // 서버에서 보낸 응답이 있는 경우
+        console.error('Response data:', error.response.data); // 서버가 반환한 에러 메시지
+        console.error('Response status:', error.response.status); // 상태 코드
+      } else if (error.request) {
+        // 요청이 전송되었지만 응답이 수신되지 않은 경우
+        console.error('Request data:', error.request);
+      } else {
+        // 요청을 설정하는 동안 문제가 발생한 경우
+        console.error('Error message:', error.message);
+      }
     }
-  };
-
-  const checkFieldClick = () => {
-    const values = getValues(); // 필드 전체 객체 반환
-    console.log('values:', values);
+    reset();
   };
 
   useEffect(() => {
@@ -103,7 +122,6 @@ export default function AddExperienceForm() {
             borderRadius="radius4"
             className={S.submitButton}
             type="submit"
-            onClick={checkFieldClick}
           >
             등록하기
           </Button>

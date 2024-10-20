@@ -15,7 +15,7 @@ export default function BannerImageInput({ error, message, setValue }: BannerIma
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setValue('bannerImageUrl', file.name);
+      setValue('bannerImageUrl', file);
       const fileUrl = URL.createObjectURL(file);
       setImagePreview(fileUrl);
     }

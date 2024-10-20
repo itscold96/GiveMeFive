@@ -11,14 +11,14 @@ interface BannerImageInputProps {
 }
 export default function SubImageInput({ error, message, setValue }: BannerImageInputProps) {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [imagePreviewFiles, setImagePreviewFiles] = useState<string[]>([]);
+  const [imagePreviewFiles, setImagePreviewFiles] = useState<File[]>([]);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length > 0 && imagePreviews.length < 4) {
       const newPreviews = files.map(file => URL.createObjectURL(file));
       setImagePreviews(prev => [...prev, ...newPreviews]);
-      const fileNames = files.map(file => file.name);
-      setImagePreviewFiles(prev => [...prev, ...fileNames]);
+      const newFiles = files.map(file => file);
+      setImagePreviewFiles(prev => [...prev, ...newFiles]);
     }
   };
   const onRemoveImage = (index: number) => {
