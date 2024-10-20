@@ -7,7 +7,7 @@ interface ActivityState {
   firstBestActivity: Activity | null;
 
   getActivities: (param: GetActivitiesProps) => Promise<void>;
-  getBestActivities: (cursorId: number | null) => Promise<void>;
+  getBestActivities: (page: number) => Promise<void>;
 }
 
 export const useActivityStore = create<ActivityState>((set, get) => ({
@@ -29,24 +29,14 @@ export const useActivityStore = create<ActivityState>((set, get) => ({
     set({ activitiesResponse: response });
   },
 
-  getBestActivities: async (cursorId: number | null) => {
+  getBestActivities: async (page: number) => {
     const response: GetActivitiesResponse = await getActivities({
       sort: 'most_reviewed',
-      method: 'cursor',
-      cursorId,
+      method: 'offset',
+      page,
       size: 3,
     });
-    if (response.cursorId !== null) {
-      set({ bestActivitiesResponse: response });
-    } else {
-      const response: GetActivitiesResponse = await getActivities({
-        sort: 'most_reviewed',
-        method: 'cursor',
-        cursorId: null,
-        size: 3,
-      });
-      set({ bestActivitiesResponse: response });
-    }
+    set({ bestActivitiesResponse: response });
     if (!get().firstBestActivity) {
       set({ firstBestActivity: response.activities[0] });
     }

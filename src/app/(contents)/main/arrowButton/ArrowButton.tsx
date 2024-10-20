@@ -4,34 +4,50 @@ import ArrowLeftBlack from '../../../../images/arrowleft-black.svg';
 import ArrowRightGray from '../../../../images/arrowright-gray.svg';
 import ArrowRightBlack from '../../../../images/arrowright-black.svg';
 import Image from 'next/image';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useActivityStore } from '@/stores/useActivityStore';
 
 export default function ArrowButton() {
   const getBestActivities = useActivityStore(state => state.getBestActivities);
   const bestActivitiesResponse = useActivityStore(state => state.bestActivitiesResponse);
+  const [page, setPage] = useState(1);
+
+  const totalPage = useMemo(() => {
+    return Math.ceil(bestActivitiesResponse.totalCount / 3);
+  }, [bestActivitiesResponse.totalCount]);
 
   useEffect(() => {
-    getBestActivities(null);
-  }, []);
+    getBestActivities(page);
+  }, [page]);
 
   const onClickBtn = useCallback(
     (type: 'left' | 'right') => {
       if (type === 'left') {
-        getBestActivities(bestActivitiesResponse.activities[0].id);
+        setPage(prev => {
+          if (prev === 1) {
+            return totalPage;
+          }
+          return prev - 1;
+        });
       } else {
-        getBestActivities(bestActivitiesResponse.cursorId || null);
+        setPage(prev => {
+          if (prev === totalPage) {
+            return 1;
+          }
+          return prev + 1;
+        });
       }
     },
-    [bestActivitiesResponse.activities, bestActivitiesResponse.cursorId],
+    [totalPage],
   );
 
   const disabled = useMemo(() => {
-    return bestActivitiesResponse.activities.length <= 3;
-  }, [bestActivitiesResponse.activities]);
+    return (bestActivitiesResponse.totalCount || 0) <= 3;
+  }, [bestActivitiesResponse.totalCount]);
 
   return (
     <div className={S.arrowButtonContainer}>
+      {disabled}
       <button className={S.arrowButton} onClick={() => onClickBtn('left')}>
         <Image src={disabled ? ArrowLeftGray : ArrowLeftBlack} alt="left" />
       </button>
