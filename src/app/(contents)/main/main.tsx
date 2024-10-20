@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Input from '../../components/@shared/input/Input';
 import Button from '../../components/@shared/button/Button';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Pagination from './pagination/Pagination';
 import BestZoneCard from './card/bestzonecard/BestZoneCard';
 import { useActivityStore } from '@/stores/useActivityStore';
@@ -24,16 +24,23 @@ export default function Main() {
   const handleSortChange = (value: string) => {
     setSelectedSort(value);
   };
+  const totalCount = useActivityStore(state => state.totalCount);
+  const pageCount = useMemo(() => Math.max(1, Math.ceil(totalCount / 8)), [totalCount]);
+  const [page, setPage] = useState(1);
+
+  const onChangePage = (page: number) => {
+    setPage(page);
+  };
 
   useEffect(() => {
     getActivities({
       category: selectedCategory ?? undefined,
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
-      method: 'cursor',
-      cursorId: null,
-      size: 8, // TODO: 페이지 사이즈에 맞춰서 개수 제한 추가
+      size: 8,
+      method: 'offset',
+      page,
     });
-  }, [selectedCategory, selectedSort]);
+  }, [selectedCategory, selectedSort, page]);
 
   useEffect(() => {
     getBestActivities();
@@ -82,7 +89,7 @@ export default function Main() {
         </div>
         <AllZoneCard />
       </div>
-      <Pagination />
+      <Pagination onChangePage={onChangePage} pageCount={pageCount} defaultValue={1} />
     </div>
   );
 }
