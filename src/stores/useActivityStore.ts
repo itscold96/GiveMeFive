@@ -3,27 +3,29 @@ import { create } from 'zustand';
 
 interface ActivityState {
   activities: Activity[];
-  bestActivities: Activity[];
-  cursorId: number | null;
   totalCount: number;
+  bestActivities: Activity[];
+
   getActivities: (param: GetActivitiesProps) => Promise<void>;
   getBestActivities: () => Promise<void>;
 }
 
-export const useActivityStore = create<ActivityState>(set => ({
+export const useActivityStore = create<ActivityState>((set, get) => ({
   activities: [],
-  bestActivities: [],
-  cursorId: null,
   totalCount: 0,
+
+  bestActivities: [],
+
   getActivities: async (param: GetActivitiesProps) => {
     const response: GetActivitiesResponse = await getActivities(param);
     set({ ...response });
   },
+
   getBestActivities: async () => {
     const response: GetActivitiesResponse = await getActivities({
       sort: 'most_reviewed',
-      method: 'cursor',
-      cursorId: null,
+      method: 'offset',
+      page: 1,
       size: 3,
     });
     set({ bestActivities: response.activities });
