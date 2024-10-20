@@ -22,4 +22,9 @@
   background-color: $white;
   @include text2LgMedium;
   color: $green300;
+
+  &.selected {
+    background-color: $green300;
+    color: $white;
+  }
 }
