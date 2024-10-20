@@ -4,11 +4,13 @@ import S from './BestZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import React from 'react';
-import { useActivityStore } from '@/stores/useActivityStore';
+import { Activity } from '@/api/activities';
 
-export default function BestZoneCard() {
-  const bestActivities = useActivityStore(state => state.bestActivities);
+interface BestZoneCardProps {
+  bestActivities: Activity[];
+}
 
+export default function BestZoneCard({ bestActivities }: BestZoneCardProps) {
   if (!bestActivities || bestActivities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }

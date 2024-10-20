@@ -1,9 +1,6 @@
 'use client';
 
 import S from './main.module.scss';
-import ArrowLeft from '../../../images/arrowleft-gray.svg';
-import ArrowRight from '../../../images/arrowright-gray.svg';
-import Image from 'next/image';
 import Input from '../../components/@shared/input/Input';
 import Button from '../../components/@shared/button/Button';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
@@ -13,10 +10,12 @@ import BestZoneCard from './card/bestzonecard/BestZoneCard';
 import { useActivityStore } from '@/stores/useActivityStore';
 import AllZoneCard from './card/allzonecard/AllZoneCard';
 import Banner from './banner/Banner';
+import ArrowButton from './arrowButton/ArrowButton';
 
 export default function Main() {
   const getActivities = useActivityStore(state => state.getActivities);
   const getBestActivities = useActivityStore(state => state.getBestActivities);
+  const bestActivities = useActivityStore(state => state.bestActivities);
 
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
@@ -48,7 +47,7 @@ export default function Main() {
 
   return (
     <div>
-      <Banner />
+      <Banner bestActivity={bestActivities[0]} />
 
       <div className={S.mainContainer}>
         <div className={S.inputContainer}>
@@ -70,12 +69,11 @@ export default function Main() {
         <div className={S.bestExperienceContainer}>
           <span className={S.experienceText}>🔥 인기체험</span>
           <div className={S.experienceArrowContainer}>
-            <Image src={ArrowLeft} alt="left" />
-            <Image src={ArrowRight} alt="right" />
+            <ArrowButton />
           </div>
         </div>
 
-        <BestZoneCard />
+        <BestZoneCard bestActivities={bestActivities} />
 
         <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}

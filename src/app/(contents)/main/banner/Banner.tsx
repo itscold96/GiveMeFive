@@ -1,13 +1,12 @@
 import S from './Banner.module.scss';
 import Image from 'next/image';
-import { useActivityStore } from '@/stores/useActivityStore';
+import { Activity } from '@/api/activities';
 
-export default function Banner() {
-  const { activities } = useActivityStore();
+interface BannerProps {
+  bestActivity: Activity;
+}
 
-  // 리뷰 수가 가장 많은 엑티비티 찾기
-  const bestActivity = activities.length > 0 ? [...activities].sort((a, b) => b.reviewCount - a.reviewCount)[0] : null;
-
+export default function Banner({ bestActivity }: BannerProps) {
   if (!bestActivity) {
     return null;
   }
