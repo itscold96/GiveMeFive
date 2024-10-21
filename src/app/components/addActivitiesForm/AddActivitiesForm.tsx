@@ -83,7 +83,7 @@ export default function AddActivitiesForm() {
     try {
       const data = await postActivities(typedData);
       console.log(data);
-      router.push('/');
+      router.replace('/');
     } catch (error: any) {
       if (error.response) {
         // 서버에서 보낸 응답이 있는 경우
