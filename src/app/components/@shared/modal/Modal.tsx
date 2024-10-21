@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = function Modal({
             <Image src={CloseButtonIcon} alt="Close" />
           </button>
         )}
-        {children}
+        <div className={S.modalBody}>{children}</div>
       </div>
     </div>
   );
