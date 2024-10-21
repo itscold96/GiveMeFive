@@ -10,6 +10,7 @@ interface ModalProps {
   height?: string;
   showCloseButton?: boolean;
   children?: ReactNode;
+  className?: string;
 }
 
 const Modal: React.FC<ModalProps> = function Modal({
@@ -19,6 +20,7 @@ const Modal: React.FC<ModalProps> = function Modal({
   height = 'auto',
   showCloseButton = true,
   children,
+  className,
 }) {
   if (!isOpen) {
     return null;
@@ -27,7 +29,7 @@ const Modal: React.FC<ModalProps> = function Modal({
   return (
     <div className={S.modalOverlay} onClick={onClose}>
       <div
-        className={S.modalContent}
+        className={`${S.modalContent} ${className}`}
         style={{ width, height }}
         onClick={function (e) {
           e.stopPropagation();
