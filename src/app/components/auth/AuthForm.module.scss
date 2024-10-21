@@ -1,0 +1,10 @@
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 56px 0 32px;
+
+  button {
+    height: 48px;
+  }
+}
