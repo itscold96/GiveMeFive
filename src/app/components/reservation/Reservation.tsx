@@ -8,6 +8,9 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useAvailableSchedule } from '@/queries/useAvailableScheduleQuery';
+import addIcon from '@/images/icons/icon-add.svg';
+import subtractIcon from '@/images/icons/icon-subtract.svg';
+import Image from 'next/image';
 
 interface ReservationProps {
   price: number;
@@ -18,6 +21,7 @@ interface ReservationProps {
 export default function Reservation({ price }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
+  const [headCount, setHeadCount] = useState(1);
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth() + 1; // 달이 0부터 시작함
   const date = selectedDate.getDate();
@@ -33,15 +37,23 @@ export default function Reservation({ price }: ReservationProps) {
 
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
-  const handleSelectDate = (date: Date) => {
+  const handleDateSelect = (date: Date) => {
     if (availableDates?.includes(dayjs(date).format('YYYY-MM-DD'))) {
       setSelectedDate(date); // 예약 가능일일 때만 선택 가능하게 설정
       setSelectedTimeId(null); // 날짜 바꾸면 기존 선택된 예약 시간 초기화
     }
   };
 
-  const handleSelectTime = (id: number) => {
+  const handleTimeSelect = (id: number) => {
     setSelectedTimeId(id);
+  };
+
+  const handleSubtractHeadCountClick = () => {
+    setHeadCount(prevState => Math.max(prevState - 1, 1));
+  };
+
+  const handleIncreaseHeadCountClick = () => {
+    setHeadCount(prevState => prevState + 1);
   };
 
   const getDayProps = (date: Date) => {
@@ -51,7 +63,7 @@ export default function Reservation({ price }: ReservationProps) {
 
     return {
       selected: isSelected,
-      onClick: () => handleSelectDate(date),
+      onClick: () => handleDateSelect(date),
       className: classNames({ [S.availableDates]: isAvailable }), // 예약 가능 일에 스타일 부여
       disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
     };
@@ -89,7 +101,7 @@ export default function Reservation({ price }: ReservationProps) {
             <div
               key={time.id}
               className={classNames(S.availableTime, { [S.selectedTime]: selectedTimeId === time.id })}
-              onClick={() => handleSelectTime(time.id)}
+              onClick={() => handleTimeSelect(time.id)}
             >
               {time.startTime} ~ {time.endTime}
             </div>
@@ -100,6 +112,15 @@ export default function Reservation({ price }: ReservationProps) {
 
       <section className={S.headCountContainer}>
         <p className={S.sectionTitle}>참여 인원수</p>
+        <div className={S.headCountStepper}>
+          <button onClick={handleSubtractHeadCountClick}>
+            <Image src={subtractIcon} alt="인원수 감소 버튼" height={20} width={20} />
+          </button>
+          <p>{headCount}</p>
+          <button onClick={handleIncreaseHeadCountClick}>
+            <Image src={addIcon} alt="인원수 증가 버튼" height={20} width={20} />
+          </button>
+        </div>
       </section>
 
       <Button
