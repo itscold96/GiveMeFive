@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import S from './Textarea.module.scss';
 import { FieldError, FieldErrorsImpl, Merge, UseFormRegisterReturn } from 'react-hook-form';
+import S from './Textarea.module.scss';
 
 interface ValidInputProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;

@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
-import Input from '../@shared/input/Input';
+import Input from '../../@shared/input/Input';
+
 interface DaumAddressProps {
   errors: any;
   register: any;

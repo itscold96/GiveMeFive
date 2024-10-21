@@ -1,21 +1,22 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
+
 import { VALID_OPTIONS } from '@/constants/validOption';
-import Input from '../@shared/input/Input';
-import Dropdown from '../@shared/dropdown/Dropdown';
+import { createImageUrl, createImageUrls } from '@/fetches/createImageUrl';
+import { postActivities } from '@/fetches/postActivities';
 import useDropdown from '@/hooks/useDropdown';
-import S from './AddActivitiesForm.module.scss';
-import DaumAddress from '../daumAdress/DaumAddress';
-import Textarea from '../textarea/Textarea';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
+import { SubmitActivitiesParams } from '@/types/addActivities';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import DatePickerInput from '../dateTimeInput/DateTimeInput';
+import Button from '../../@shared/button/Button';
+import Input from '../../@shared/input/Input';
+import Dropdown from '../../@shared/dropdown/Dropdown';
+import Textarea from '../textarea/Textarea';
+import DaumAddress from '../daumAdress/DaumAddress';
+import DateTimeInput from '../dateTimeInput/DateTimeInput';
 import BannerImageInput from '../bannerImageInput/BannerImageInput';
 import SubImageInput from '../subImageInput/SubImageInput';
-import Button from '../@shared/button/Button';
-import { postActivities } from '@/fetches/postActivities';
-import { SubmitActivitiesParams } from '@/types/addActivities';
-import { createImageUrl, createImageUrls } from '@/fetches/createImageUrl';
+import S from './AddActivitiesForm.module.scss';
 
 const CATEGORY = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 const config: ValidationConfig = {
@@ -153,7 +154,7 @@ export default function AddActivitiesForm() {
         />
         <DaumAddress errors={errors} register={register} setValue={setValue} />
         <label htmlFor="availableTime">예약 가능한 시간대</label>
-        <DatePickerInput
+        <DateTimeInput
           setValue={setValue}
           getValues={getValues}
           id="availableTime"

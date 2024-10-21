@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { TimeInput, DatePickerInput } from '@mantine/dates';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { IconCalendar, IconClock } from '@tabler/icons-react';
 import { ActionIcon, rem } from '@mantine/core';
+import { DatePickerInput, TimeInput } from '@mantine/dates';
 import dayjs from 'dayjs';
-import S from './DateTimeInput.module.scss';
-import plusIcon from '../../../images/add-plus-button.svg';
-import minusIcon from '../../../images/delete-minus-button.svg';
 import Image from 'next/image';
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import S from './DateTimeInput.module.scss';
+import plusIcon from '@/images/add-plus-button.svg';
+import minusIcon from '@/images/delete-minus-button.svg';
+
 interface DateTimeInputProps {
   setValue: any;
   getValues: any;

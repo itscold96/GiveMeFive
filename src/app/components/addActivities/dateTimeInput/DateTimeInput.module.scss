@@ -1,5 +1,4 @@
-@import '../../../styles/abstracts/core';
-
+@use '@/styles/abstracts/core' as *;
 .container {
   display: flex;
   flex-direction: column;

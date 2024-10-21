@@ -1,5 +1,5 @@
 'use client';
-import AddActivitiesForm from './../components/addActivitiesForm/AddActivitiesForm';
+import AddActivitiesForm from './../components/addActivities/addActivitiesForm/AddActivitiesForm';
 
 export default function AddActivities() {
   return (

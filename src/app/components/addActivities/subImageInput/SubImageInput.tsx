@@ -1,14 +1,16 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import S from './SubImageInput.module.scss';
 import plusIcon from '@/images/plus-icon.svg';
 import deleteButton from '@/images/delete-button.svg';
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+
 interface BannerImageInputProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   message?: string | FieldError | Merge<FieldError, FieldErrorsImpl>;
   setValue?: any;
 }
+
 export default function SubImageInput({ error, message, setValue }: BannerImageInputProps) {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [imagePreviewFiles, setImagePreviewFiles] = useState<File[]>([]);
