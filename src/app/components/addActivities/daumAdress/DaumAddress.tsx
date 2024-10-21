@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
 import Input from '../../@shared/input/Input';
+import Modal from '../../@shared/modal/Modal';
 
 interface DaumAddressProps {
   errors: any;
@@ -32,14 +33,9 @@ const DaumAddress = ({ errors, register, setValue }: DaumAddressProps) => {
 
   return (
     <div>
-      {isVisible && (
-        <div>
-          <button type="button" onClick={() => setIsVisible(false)}>
-            닫기
-          </button>
-          <DaumPostcodeEmbed onComplete={handleComplete} />
-        </div>
-      )}
+      <Modal isOpen={isVisible} onClose={() => setIsVisible(false)}>
+        <DaumPostcodeEmbed onComplete={handleComplete} />
+      </Modal>
       <Input
         label="주소"
         htmlFor="address"
