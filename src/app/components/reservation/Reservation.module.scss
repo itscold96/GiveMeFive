@@ -26,6 +26,14 @@
     padding: 10px 27.33px;
   }
 
+  .availableDay {
+    background-color: $green100;
+    color: $green300;
+    &:hover {
+      background-color: rgba($green300, 0.3);
+    }
+  }
+
   .day {
     width: 35.71px;
     height: 32px;
@@ -37,11 +45,6 @@
 
     &[data-weekend] {
       color: $black;
-    }
-
-    &[data-today] {
-      background-color: $green100;
-      color: $green300;
     }
 
     &[data-selected] {

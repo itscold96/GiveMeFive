@@ -17,9 +17,25 @@ interface ReservationProps {
 export default function Reservation({ price }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
+  const availableDates = ['2024-10-25', '2024-10-28', '2024-10-30']; // 예약 가능일 예시
 
   const handleSelect = (date: Date) => {
-    setSelectedDate(date);
+    if (availableDates.includes(dayjs(date).format('YYYY-MM-DD'))) {
+      setSelectedDate(date); // 예약 가능일일 때만 선택 가능하게 설정
+    }
+  };
+
+  const getDayProps = (date: Date) => {
+    const formattedDate = dayjs(date).format('YYYY-MM-DD');
+    const isAvailable = availableDates.includes(formattedDate); // 해당 날짜가 선택 가능한 날짜 배열에 있는 지 검사
+    const isSelected = dayjs(selectedDate).isSame(dayjs(date), 'day');
+
+    return {
+      selected: isSelected,
+      onClick: () => handleSelect(date),
+      className: classNames({ [S.availableDay]: isAvailable }), // 예약 가능 일에 스타일 부여
+      disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
+    };
   };
 
   return (
@@ -40,10 +56,8 @@ export default function Reservation({ price }: ReservationProps) {
               levelsGroup: S.levelsGroup,
               day: S.day,
             }}
-            getDayProps={date => ({
-              selected: dayjs(selectedDate).isSame(dayjs(date), 'day'),
-              onClick: () => handleSelect(date),
-            })}
+            getDayProps={getDayProps}
+            highlightToday
           />
         </div>
       </section>
