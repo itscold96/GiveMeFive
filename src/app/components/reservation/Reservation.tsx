@@ -137,7 +137,7 @@ export default function Reservation({ price }: ReservationProps) {
         <div className={S.separator} />
         <div className={S.totalPrice}>
           <p>총 합계</p>
-          <p>{perPersonPrice}</p>
+          <p>{getCurrencyFormat(price * headCount)}</p>
         </div>
       </section>
     </div>
