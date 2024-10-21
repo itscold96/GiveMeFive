@@ -7,6 +7,7 @@ import { Calendar } from '@mantine/dates';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import classNames from 'classnames';
+import { useAvailableSchedule } from '@/queries/useAvailableScheduleQuery';
 
 interface ReservationProps {
   price: number;
@@ -16,39 +17,58 @@ interface ReservationProps {
 
 export default function Reservation({ price }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
-  const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
-  const availableDates = ['2024-10-25', '2024-10-28', '2024-10-30']; // 예약 가능일 예시
+  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth() + 1; // 달이 0부터 시작함
+  const date = selectedDate.getDate();
 
-  const handleSelect = (date: Date) => {
-    if (availableDates.includes(dayjs(date).format('YYYY-MM-DD'))) {
+  const { data: schedule } = useAvailableSchedule({ activityId: 2962, year, month, date });
+  const availableDates = schedule?.map(schedule => schedule.date) || []; // 예약 가능일자 배열
+
+  const availableTimesOfSelectedDate =
+    schedule
+      ?.filter(schedule => schedule.date === dayjs(selectedDate).format('YYYY-MM-DD')) // 스케쥴 배열에서 선택된 날짜에 맞는 스케쥴만 필터링한 뒤, times 프로퍼티의 값만 걸러낸다.
+      .map(schedule => schedule.times) // times가 배열이라 times끼리 모으면 2차원 배열이되므로 flat으로 한 겹 벗겨내어 1차원 객체 배열로 만들어준다.
+      .flat() || [];
+
+  const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
+
+  const handleSelectDate = (date: Date) => {
+    if (availableDates?.includes(dayjs(date).format('YYYY-MM-DD'))) {
       setSelectedDate(date); // 예약 가능일일 때만 선택 가능하게 설정
+      setSelectedTimeId(null); // 날짜 바꾸면 기존 선택된 예약 시간 초기화
     }
+  };
+
+  const handleSelectTime = (id: number) => {
+    setSelectedTimeId(id);
   };
 
   const getDayProps = (date: Date) => {
     const formattedDate = dayjs(date).format('YYYY-MM-DD');
-    const isAvailable = availableDates.includes(formattedDate); // 해당 날짜가 선택 가능한 날짜 배열에 있는 지 검사
+    const isAvailable = availableDates?.includes(formattedDate); // 해당 날짜가 선택 가능한 날짜 배열에 있는 지 검사
     const isSelected = dayjs(selectedDate).isSame(dayjs(date), 'day');
 
     return {
       selected: isSelected,
-      onClick: () => handleSelect(date),
-      className: classNames({ [S.availableDay]: isAvailable }), // 예약 가능 일에 스타일 부여
+      onClick: () => handleSelectDate(date),
+      className: classNames({ [S.availableDates]: isAvailable }), // 예약 가능 일에 스타일 부여
       disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
     };
   };
 
   return (
     <div className={S.reservationContainer}>
-      <section className={S.price}>
+      <section className={S.priceContainer}>
         <p>
           {perPersonPrice}
           <span className={S.perPerson}> /인</span>
         </p>
+        <div className={S.separator} />
       </section>
-      <div className={S.separator} />
-      <section>
-        <p className={S.calendarSectionTitle}>날짜</p>
+
+      <section className={S.calendarContainer}>
+        <p className={S.sectionTitle}>날짜</p>
         <div className={S.calendarWrapper}>
           <Calendar
             firstDayOfWeek={0}
@@ -61,13 +81,27 @@ export default function Reservation({ price }: ReservationProps) {
           />
         </div>
       </section>
-      <section>
-        <p className={S.calendarSectionTitle}>예약 가능한 시간</p>
+
+      <section className={S.availableTimeContainer}>
+        <p className={S.sectionTitle}>예약 가능한 시간</p>
+        <div className={S.availableTimeList}>
+          {availableTimesOfSelectedDate.map(time => (
+            <div
+              key={time.id}
+              className={classNames(S.availableTime, { [S.selectedTime]: selectedTimeId === time.id })}
+              onClick={() => handleSelectTime(time.id)}
+            >
+              {time.startTime} ~ {time.endTime}
+            </div>
+          ))}
+        </div>
+        <div className={S.separator} />
       </section>
-      <div className={S.separator} />
-      <section>
-        <p className={S.calendarSectionTitle}>참여 인원수</p>
+
+      <section className={S.headCountContainer}>
+        <p className={S.sectionTitle}>참여 인원수</p>
       </section>
+
       <Button
         borderRadius="radius4"
         buttonColor="nomadBlack"
@@ -77,10 +111,13 @@ export default function Reservation({ price }: ReservationProps) {
       >
         예약하기
       </Button>
-      <div className={S.separator} />
-      <section className={classNames(S.total, S.calendarSectionTitle)}>
-        <p>총 합계</p>
-        <p>{perPersonPrice}</p>
+
+      <section className={classNames(S.totalContainer, S.sectionTitle)}>
+        <div className={S.separator} />
+        <div className={S.totalPrice}>
+          <p>총 합계</p>
+          <p>{perPersonPrice}</p>
+        </div>
       </section>
     </div>
   );

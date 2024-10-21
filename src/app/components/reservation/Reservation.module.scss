@@ -14,47 +14,7 @@
   }
 }
 
-.calendarWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .levelsGroup {
-    border: 1px solid $gray200;
-    border-radius: 8px;
-    padding: 10px 27.33px;
-  }
-
-  .availableDay {
-    background-color: $green100;
-    color: $green300;
-    &:hover {
-      background-color: rgba($green300, 0.3);
-    }
-  }
-
-  .day {
-    width: 35.71px;
-    height: 32px;
-    border-radius: 8px;
-
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 17.7px;
-
-    &[data-weekend] {
-      color: $black;
-    }
-
-    &[data-selected] {
-      background-color: $green300;
-      color: $white;
-    }
-  }
-}
-
-.price {
+.priceContainer {
   @include text3XlBold;
   color: $black;
 
@@ -62,22 +22,117 @@
     @include textXlRegular;
     color: $gray900;
   }
+
+  .separator {
+    margin: 16px 0;
+  }
 }
 
-.total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.calendarContainer {
+  .sectionTitle {
+    padding-bottom: 16px;
+  }
+
+  .calendarWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .levelsGroup {
+      border: 1px solid $gray200;
+      border-radius: 8px;
+      padding: 10px 27.33px;
+    }
+
+    .availableDates {
+      background-color: $green100;
+      color: $green300;
+      &:hover {
+        background-color: rgba($green300, 0.3);
+      }
+    }
+
+    .day {
+      width: 35.71px;
+      height: 32px;
+      border-radius: 8px;
+
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 17.7px;
+
+      &[data-weekend] {
+        color: $black;
+      }
+
+      &[data-selected] {
+        background-color: $green300;
+        color: $white;
+      }
+    }
+  }
+}
+
+.availableTimeContainer {
+  .sectionTitle {
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  .availableTimeList {
+    display: flex;
+    gap: 12px;
+  }
+
+  .availableTime {
+    border: 1px solid $nomadBlack;
+    border-radius: 8px;
+    padding: 10px 12px;
+    @include textLgMedium;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.selectedTime {
+      background-color: $nomadBlack;
+      color: $white;
+    }
+  }
+
+  .separator {
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+}
+
+.headCountContainer {
+  .sectionTitle {
+    padding-bottom: 8px;
+  }
+}
+
+.totalContainer {
+  .separator {
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
+  .totalPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .separator {
   height: 1px;
   width: 100%;
   background-color: $gray300;
-  margin: 12px 0;
 }
 
-.calendarSectionTitle {
+.sectionTitle {
   @include textXlSemibold;
   color: $nomadBlack;
 }
