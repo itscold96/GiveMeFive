@@ -53,3 +53,34 @@ return (
   />
 );
 ```
+
+# Modal 컴포넌트
+
+이 코드는 Modal 컴포넌트를 정의합니다.
+
+## Props
+
+- isOpen: 모달이 열려 있는지 여부를 나타내는 boolean 값입니다.
+- onClose: 모달을 닫는 기능을 구현하는 함수입니다.
+- width, height: 모달의 크기를 설정하는 optional props입니다.
+- showCloseButton: 닫기 버튼을 보여줄지 여부를 결정하는 optional boolean입니다.
+- children: 모달의 내용을 삽입하는 prop입니다.
+
+## 사용 예시
+
+```tsx
+import Modal from './Modal';
+
+const ExampleComponent = () => {
+  const [isModalOpen, setModalOpen] = React.useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setModalOpen(true)}>모달 열기</button>
+      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+        <h2>모달 내용</h2>
+      </Modal>
+    </div>
+  );
+};
+```

@@ -8,12 +8,13 @@ import kakao from '@/images/logos/logo-kakao.svg';
 import Link from 'next/link';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import SocialAuth from './SocialAuth';
 
-interface AuthContainerProps {
+interface AuthProps {
   type: 'login' | 'signup';
 }
 
-export default function Auth({ type }: AuthContainerProps) {
+export default function Auth({ type }: AuthProps) {
   return (
     <div className={S.authContainer}>
       <Link href="/">
@@ -34,16 +35,7 @@ export default function Auth({ type }: AuthContainerProps) {
         )}
       </section>
 
-      <section className={S.socialLogin}>
-        <div className={S.separator} />
-        <div className={S.text}>SNS 계정으로 로그인하기</div>
-        <div className={S.separator} />
-      </section>
-
-      <section className={S.logoContainer}>
-        <Image src={google} alt="로고 이미지" height={72} width={72} />
-        <Image src={kakao} alt="로고 이미지" height={72} width={72} />
-      </section>
+      <SocialAuth type={type} />
     </div>
   );
 }

@@ -1,0 +1,45 @@
+@use '@/styles/abstracts/core' as *;
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+
+  button {
+    border: none;
+    background-color: transparent;
+    border-radius: 50%;
+  }
+
+  img {
+    cursor: pointer;
+  }
+}
+
+.socialLogin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $gray800;
+  padding-bottom: 40px;
+  @include textXlRegular;
+
+  @include mobile {
+    @include textMdRegular;
+    .text {
+      padding: 0 23.5px;
+    }
+  }
+
+  .text {
+    min-width: fit-content;
+    width: 100%;
+    padding: 0 37.5px;
+  }
+
+  .separator {
+    height: 1px;
+    width: 100%;
+    background-color: $gray300;
+  }
+}

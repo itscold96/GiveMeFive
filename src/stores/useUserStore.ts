@@ -1,11 +1,20 @@
+import { SignupReturn } from '@/types/auth';
 import { UserStore } from '@/types/user';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, setCookie } from 'cookies-next';
 import { create } from 'zustand';
 
 export const useUserStore = create<UserStore>(set => ({
   user: null,
-  setUser: newUser => {
-    set(() => ({ user: newUser }));
+  setUser: (userInfo: { user: SignupReturn; accessToken?: string; refreshToken?: string }) => {
+    set(() => {
+      const { user, accessToken, refreshToken } = userInfo;
+      const { email, profileImageUrl, nickname } = user;
+      if (accessToken && refreshToken) {
+        setCookie('accessToken', accessToken);
+        setCookie('refreshToken', refreshToken);
+      }
+      return { user: { email, profileImageUrl, nickname } };
+    });
   },
   updateProfileImageUrl: newImageUrl => {
     set(prevState => ({

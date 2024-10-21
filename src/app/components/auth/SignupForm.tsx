@@ -1,6 +1,6 @@
 'use client';
 
-import S from './Auth.module.scss';
+import S from './AuthForm.module.scss';
 import Input from '../@shared/input/Input';
 import Button from '../@shared/button/Button';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';

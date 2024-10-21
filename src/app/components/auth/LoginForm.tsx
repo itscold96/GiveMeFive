@@ -1,6 +1,6 @@
 'use client';
 
-import S from './Auth.module.scss';
+import S from './AuthForm.module.scss';
 import Input from '../@shared/input/Input';
 import Button from '../@shared/button/Button';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
@@ -13,7 +13,6 @@ import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
 import ConfirmModal from '../@shared/modal/ConfirmModal';
 import { useUserStore } from '@/stores/useUserStore';
-import { setCookie } from 'cookies-next';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -38,11 +37,7 @@ export default function LoginForm() {
       const { email, password } = formData;
       try {
         const { user, accessToken, refreshToken } = await login({ email, password });
-        setCookie('accessToken', accessToken);
-        setCookie('refreshToken', refreshToken);
-
-        const { nickname, profileImageUrl } = user;
-        setUser({ email, nickname, profileImageUrl });
+        setUser({ user, accessToken, refreshToken });
 
         router.replace('/');
       } catch (error) {
