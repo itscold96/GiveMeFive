@@ -9,7 +9,13 @@ interface AlertModalProps {
   alertButtonText?: string;
 }
 
-const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, onAlert, message, alertButtonText = '확인' }) => {
+const AlertModal: React.FC<AlertModalProps> = function AlertModal({
+  isOpen,
+  onClose,
+  onAlert,
+  message,
+  alertButtonText = '확인',
+}) {
   if (!isOpen) {
     return null;
   }
@@ -52,7 +58,7 @@ const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, onAlert, messa
           </button>
           <button
             className={`${S.modalButton} ${S.modalButtonAlert}`}
-            onClick={() => {
+            onClick={function () {
               onAlert();
               onClose();
             }}
