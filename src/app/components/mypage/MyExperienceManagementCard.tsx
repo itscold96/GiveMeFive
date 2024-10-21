@@ -18,11 +18,11 @@ interface MyExperienceManagementCardProps {
   experience: Experience;
 }
 
-const MyExperienceManagementCard: React.FC<MyExperienceManagementCardProps> = ({ experience }) => {
+function MyExperienceManagementCard({ experience }: MyExperienceManagementCardProps) {
   const actionList = ['수정하기', '삭제하기'];
   const { onDropdownChange, data, toggleDropdown, isDropdownToggle } = useDropdown(actionList);
 
-  const handleActionSelect = (action: string) => {
+  const handleActionSelect = function (action: string) {
     toggleDropdown(); // 액션을 선택할 때 드롭다운을 닫기
     if (action === '수정하기') {
       // 수정하기 로직 추가
@@ -54,6 +54,6 @@ const MyExperienceManagementCard: React.FC<MyExperienceManagementCardProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default MyExperienceManagementCard;

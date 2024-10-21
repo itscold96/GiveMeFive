@@ -1,4 +1,3 @@
-// MyExperienceManagementList.tsx
 import React, { useEffect, useState } from 'react';
 import MyExperienceManagementCard from './MyExperienceManagementCard';
 import S from './MyExperienceManagementList.module.scss';
@@ -18,11 +17,11 @@ interface Experience {
   updatedAt: string;
 }
 
-const MyExperienceManagementList: React.FC = () => {
+function MyExperienceManagementList() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async function () {
       try {
         // 실제 API 호출 대신, 예시 데이터 사용
         const data = {
@@ -93,6 +92,6 @@ const MyExperienceManagementList: React.FC = () => {
       ))}
     </div>
   );
-};
+}
 
 export default MyExperienceManagementList;

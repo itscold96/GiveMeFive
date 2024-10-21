@@ -7,7 +7,7 @@ import S from './myexperiencemanagement.module.scss';
 import Button from '../../components/@shared/button/Button';
 import { Title } from '@mantine/core';
 
-function MyExperienceManagement() {
+export default function MyExperienceManagement() {
   return (
     <div className={S.myExperienceManagement}>
       <div className={S.container}>
@@ -37,5 +37,3 @@ function MyExperienceManagement() {
     </div>
   );
 }
-
-export default MyExperienceManagement;
