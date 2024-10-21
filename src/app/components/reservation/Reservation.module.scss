@@ -1,0 +1,80 @@
+@use '@/styles/abstracts/core' as *;
+
+.reservationContainer {
+  width: 384px;
+
+  padding: 24px 24px 24px 18px;
+  border: 1px solid $gray300;
+  border-radius: 12px;
+
+  box-shadow: 0px 4px 16px 0px #1122110d;
+
+  .submitButton {
+    width: 100%;
+  }
+}
+
+.calendarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .levelsGroup {
+    border: 1px solid $gray200;
+    border-radius: 8px;
+    padding: 10px 27.33px;
+  }
+
+  .day {
+    width: 35.71px;
+    height: 32px;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17.7px;
+
+    &[data-weekend] {
+      color: $black;
+    }
+
+    &[data-today] {
+      background-color: $green100;
+      color: $green300;
+    }
+
+    &[data-selected] {
+      background-color: $green300;
+      color: $white;
+    }
+  }
+}
+
+.price {
+  @include text3XlBold;
+  color: $black;
+
+  .perPerson {
+    @include textXlRegular;
+    color: $gray900;
+  }
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $gray300;
+  margin: 12px 0;
+}
+
+.calendarSectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
