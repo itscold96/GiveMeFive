@@ -1,4 +1,5 @@
 @use '@/styles/abstracts/core' as *;
+
 .dropdownContainer {
   display: inline-flex;
   flex-direction: column;
@@ -7,6 +8,32 @@
 
 .KebabIconWrapper {
   cursor: pointer;
+}
+
+.categoryWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid $gray800;
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+
+.categoryValue {
+}
+
+.categoryWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid $gray800;
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+
+.categoryValue {
 }
 
 .categoryWrapper {
@@ -31,6 +58,7 @@
   gap: 10px;
   cursor: pointer;
 }
+
 .DropdownInfo {
   padding: 18px 0;
   display: flex;
@@ -41,6 +69,7 @@
   width: 100%;
   white-space: nowrap;
 }
+
 .categoryDropdownInfo {
   top: 60px;
   position: absolute;
@@ -54,6 +83,7 @@
   background-color: $white;
   width: 100%;
 }
+
 .kebabDropdownInfo {
   top: 50px;
   position: absolute;
@@ -68,6 +98,7 @@
   min-width: 160px;
   width: 100%;
 }
+
 .hideDropdownInfo {
   top: 10px;
   position: absolute;
