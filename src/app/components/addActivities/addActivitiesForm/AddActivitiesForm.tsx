@@ -7,7 +7,7 @@ import useDropdown from '@/hooks/useDropdown';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { SubmitActivitiesParams } from '@/types/addActivities';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../@shared/button/Button';
 import Input from '../../@shared/input/Input';
 import Dropdown from '../../@shared/dropdown/Dropdown';
@@ -68,6 +68,7 @@ const config: ValidationConfig = {
 };
 
 export default function AddActivitiesForm() {
+  const [loading, setLoading] = useState(false);
   const { data, onDropdownChange, toggleDropdown, isDropdownToggle, selectedValue } = useDropdown(CATEGORY);
   const { errors, register, handleSubmit, reset, getValues, setValue } = useValidForm({
     validationConfig: config,
@@ -75,6 +76,8 @@ export default function AddActivitiesForm() {
   const router = useRouter();
 
   const handleFormSubmit = async (formData: any) => {
+    if (loading) return;
+    setLoading(true);
     const typedData: SubmitActivitiesParams = {
       ...formData,
       price: Number(formData.price), // 가격을 숫자로 변환
@@ -97,8 +100,10 @@ export default function AddActivitiesForm() {
         // 요청을 설정하는 동안 문제가 발생한 경우
         console.error('Error message:', error.message);
       }
+    } finally {
+      setLoading(false);
+      reset();
     }
-    reset();
   };
 
   useEffect(() => {
