@@ -129,7 +129,7 @@ export default function AddActivitiesForm() {
             className={S.submitButton}
             type="submit"
           >
-            등록하기
+            {loading ? '처리 중...' : '등록하기'}
           </Button>
         </div>
         <Input placeholder="제목" error={errors.title} register={register.title} message={errors.title?.message} />
