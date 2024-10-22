@@ -68,3 +68,16 @@
   display: flex;
   justify-content: center;
 }
+
+.noActivityContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 64px;
+}
+
+.noActivityText {
+  @include text2LgMedium;
+  color: $gray800;
+}
