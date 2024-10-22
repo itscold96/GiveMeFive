@@ -21,15 +21,16 @@ export const useBestActivitiesQuery = (page: number) => {
   });
 };
 
-export const useSearchActivitiesQuery = (searchTerm: string, page: number) => {
+export const useSearchActivitiesQuery = (searchTerm: string, page: number, size: number) => {
   return useQuery<GetActivitiesResponse, Error>({
-    queryKey: ['searchActivities', searchTerm, page],
+    queryKey: ['searchActivities', searchTerm, page, size],
     queryFn: () =>
       getActivities({
         title: searchTerm,
         sort: 'latest',
         method: 'offset',
         page,
+        size,
       }),
     enabled: !!searchTerm,
   });
