@@ -26,56 +26,58 @@ export default function Reservation({ activityId, price }: ReservationProps) {
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
   return (
-    <div className={S.reservationContainer}>
-      <section className={S.priceContainer}>
-        <p>
-          {perPersonPrice}
-          <span className={S.perPerson}> /인</span>
-        </p>
-        <div className={S.separator} />
-      </section>
+    <div style={{}}>
+      <div className={S.reservationContainer}>
+        <section className={S.priceContainer}>
+          <p>
+            {perPersonPrice}
+            <span className={S.perPerson}> /인</span>
+          </p>
+          <div className={S.separator} />
+        </section>
 
-      {isTabletSize ? (
-        <CalendarModal
-          activityId={activityId}
-          selectedDate={selectedDate}
-          selectedTime={selectedTime}
-          handleDateSelect={handleDateSelect}
-          handleTimeSelect={handleTimeSelect}
+        {isTabletSize ? (
+          <CalendarModal
+            activityId={activityId}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            handleDateSelect={handleDateSelect}
+            handleTimeSelect={handleTimeSelect}
+          />
+        ) : (
+          <ReservationSelector
+            activityId={activityId}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            handleDateSelect={handleDateSelect}
+            handleTimeSelect={handleTimeSelect}
+          />
+        )}
+
+        <HeadCountStepper
+          headCount={headCount}
+          onDecreaseHeadCountClick={handleDecreaseHeadCountClick}
+          onIncreaseHeadCountClick={handleIncreaseHeadCountClick}
         />
-      ) : (
-        <ReservationSelector
-          activityId={activityId}
-          selectedDate={selectedDate}
-          selectedTime={selectedTime}
-          handleDateSelect={handleDateSelect}
-          handleTimeSelect={handleTimeSelect}
-        />
-      )}
 
-      <HeadCountStepper
-        headCount={headCount}
-        onDecreaseHeadCountClick={handleDecreaseHeadCountClick}
-        onIncreaseHeadCountClick={handleIncreaseHeadCountClick}
-      />
+        <Button
+          borderRadius="radius4"
+          buttonColor="nomadBlack"
+          padding="padding14"
+          textSize="md"
+          className={S.submitButton}
+        >
+          예약하기
+        </Button>
 
-      <Button
-        borderRadius="radius4"
-        buttonColor="nomadBlack"
-        padding="padding14"
-        textSize="md"
-        className={S.submitButton}
-      >
-        예약하기
-      </Button>
-
-      <section className={classNames(S.totalContainer, S.sectionTitle)}>
-        <div className={S.separator} />
-        <div className={S.totalPrice}>
-          <p>총 합계</p>
-          <p>{getCurrencyFormat(price * headCount)}</p>
-        </div>
-      </section>
+        <section className={classNames(S.totalContainer, S.sectionTitle)}>
+          <div className={S.separator} />
+          <div className={S.totalPrice}>
+            <p>총 합계</p>
+            <p>{getCurrencyFormat(price * headCount)}</p>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

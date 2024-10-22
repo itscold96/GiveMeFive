@@ -8,12 +8,17 @@
   justify-content: space-between;
   flex-wrap: wrap;
 
+  @include mobile {
+    // 예약 컴포넌트가 화면 하단에 붙어있어야 하므로 그만큼 마진 추가
+    // 레퍼런스: 무신사 모바일 화면
+    margin-bottom: $mobileReservationHeight;
+  }
+
   // 하단 고정
   // position: fixed;
   // left: 0;
   // right: 0;
   // bottom: 0;
-
   @include textLgRegular;
 
   @media (max-width: 743px) {
