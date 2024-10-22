@@ -1,33 +1,23 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import SideMenu from '../../components/mypage/SideMenu';
-import S from '../mypage.module.scss';
+import S from './reservationhistory.module.scss';
 import Footer from '../../components/@shared/footer/Footer';
-import Modal from '../../components/@shared/modal/Modal';
-import UserInfoForm from '../../components/mypage/UserInfoForm';
+import ReservationHistoryCardList from '../../components/mypage/ReservationHistoryCardList';
+import { Title } from '@mantine/core';
+import Button from '../../components/@shared/button/Button';
 
 function ReservationHistory() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <div className={S.reservationhistory}>
-      <div className={S.sidemenuContainer}>
-        <SideMenu />
+    <div className={S.myExperienceManagement}>
+      <div className={S.container}>
+        <div className={S.sideMenuContainer}>
+          <SideMenu />
+        </div>
+        <div className={S.contentContainer}>
+          <ReservationHistoryCardList />
+        </div>
       </div>
-      <button onClick={openModal} className={S.openModalButton}>
-        모달 열기
-      </button>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <UserInfoForm />
-      </Modal>
       <Footer />
     </div>
   );
