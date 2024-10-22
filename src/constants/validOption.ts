@@ -9,4 +9,6 @@ export const VALID_OPTIONS = {
   },
   minLength2: { value: 2, message: '2자 이상으로 작성해주세요.' },
   maxLength10: { value: 10, message: '10자 이내로 작성해주세요.' },
+  maxLength20: { value: 20, message: '20자 이내로 작성해주세요.' },
+  maxLength50: { value: 50, message: '50자 이내로 작성해주세요.' },
 };

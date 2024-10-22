@@ -53,5 +53,6 @@ export const useValidForm = ({ validationConfig, mode = 'onChange' }: useValidFo
     errors,
     getValues,
     reset,
+    setValue,
   };
 };
