@@ -63,3 +63,8 @@
   @include textLgRegular;
   color: $gray900;
 }
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+}

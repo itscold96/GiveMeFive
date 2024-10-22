@@ -3,40 +3,42 @@
 import S from './AllZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
-// import React from 'react';
-import { useActivityStore } from '@/stores/useActivityStore';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import Pagination from './pagination/Pagination';
+import { useActivitiesQuery } from '@/stores/useActivityStore';
 
 export default function AllZoneCard() {
-  const activitiesResponse = useActivityStore(state => state.activitiesResponse);
-  const getActivities = useActivityStore(state => state.getActivities);
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
+  const [page, setPage] = useState(1);
+
+  const {
+    data: activitiesData,
+    isLoading,
+    error,
+  } = useActivitiesQuery({
+    category: selectedCategory ?? undefined,
+    sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+    size: 8,
+    method: 'offset',
+    page,
+  });
 
   const handleSortChange = (value: string) => {
     setSelectedSort(value);
-  };
-  const activityTotalCount = useActivityStore(state => state.activitiesResponse.totalCount);
-  const pageCount = useMemo(() => Math.max(1, Math.ceil(activityTotalCount / 8)), [activityTotalCount]);
-  const [page, setPage] = useState(1);
-
-  const onChangePage = (page: number) => {
-    setPage(page);
+    setPage(1);
   };
 
-  useEffect(() => {
-    getActivities({
-      category: selectedCategory ?? undefined,
-      sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
-      size: 8,
-      method: 'offset',
-      page,
-    });
-  }, [selectedCategory, selectedSort, page]);
+  const handleCategoryChange = (category: CategoryType) => {
+    setSelectedCategory(category);
+    setPage(1); // 카테고리 변경 시 페이지를 1로 리셋
+  };
 
-  if (!activitiesResponse.activities || activitiesResponse.activities.length === 0) {
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
+
+  if (!activitiesData?.activities || activitiesData.activities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }
 
@@ -44,7 +46,7 @@ export default function AllZoneCard() {
     <div>
       <CategoryAndDropdown
         selectedCategory={selectedCategory as CategoryType}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={handleCategoryChange}
         selectedSort={selectedSort as string}
         handleSortChange={handleSortChange}
       />
@@ -54,7 +56,7 @@ export default function AllZoneCard() {
       </div>
 
       <div className={S.allZoneCardContainer}>
-        {activitiesResponse.activities.map(activity => (
+        {activitiesData.activities.map(activity => (
           <div key={activity.id}>
             <div className={S.allZoneCardImage}>
               <Image
@@ -83,7 +85,9 @@ export default function AllZoneCard() {
           </div>
         ))}
       </div>
-      <Pagination onChangePage={onChangePage} pageCount={pageCount} defaultValue={1} />
+      <div className={S.paginationContainer}>
+        <Pagination onChangePage={setPage} totalItems={activitiesData.totalCount} itemsPerPage={8} currentPage={page} />
+      </div>
     </div>
   );
 }

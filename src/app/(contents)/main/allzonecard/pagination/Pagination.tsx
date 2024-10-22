@@ -5,14 +5,17 @@ import S from './Pagination.module.scss';
 
 interface PaginationProps {
   onChangePage: (page: number) => void;
-  pageCount: number;
-  defaultValue: number;
+  totalItems: number;
+  itemsPerPage: number;
+  currentPage: number;
 }
 
-export default function Pagination({ onChangePage, pageCount, defaultValue }: PaginationProps) {
+export default function Pagination({ onChangePage, totalItems, itemsPerPage, currentPage }: PaginationProps) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   return (
     <div className={`${styles.pagination} ${S.paginationWrapper}`}>
-      <MantinePagination total={pageCount} defaultValue={defaultValue} onChange={onChangePage} />
+      <MantinePagination total={totalPages} value={currentPage} onChange={onChangePage} />
     </div>
   );
 }
