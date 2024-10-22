@@ -27,6 +27,7 @@
     }
 
     .nickname {
+      width: fit-content;
       max-width: 100px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -38,9 +39,5 @@
 @include mobile {
   .loggedInContainer {
     gap: 12px;
-  }
-
-  .nickname {
-    width: 50px;
   }
 }
