@@ -4,45 +4,40 @@ import ArrowLeftBlack from '@/images/arrowleft-black.svg';
 import ArrowRightGray from '@/images/arrowright-gray.svg';
 import ArrowRightBlack from '@/images/arrowright-black.svg';
 import Image from 'next/image';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 interface ArrowButtonProps {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  totalCount: number;
+  totalItems: number;
+  size: number;
 }
 
-export default function ArrowButton({ setPage, totalCount }: ArrowButtonProps) {
-  const totalPage = useMemo(() => {
-    return Math.ceil(totalCount / 3);
-  }, [totalCount]);
-
-  const disabled = useMemo(() => {
-    return totalCount <= 3;
-  }, [totalCount]);
+export default function ArrowButton({ page, setPage, totalItems, size }: ArrowButtonProps) {
+  const isFirstPage = page === 1;
+  const isLastPage = page * size >= totalItems;
 
   const onClickBtn = useCallback(
     (type: 'left' | 'right') => {
-      if (disabled) return;
-
       setPage(prev => {
-        if (type === 'left') {
-          return prev === 1 ? totalPage : prev - 1;
-        } else {
-          return prev === totalPage ? 1 : prev + 1;
+        if (type === 'left' && !isFirstPage) {
+          return prev - 1;
+        } else if (type === 'right' && !isLastPage) {
+          return prev + 1;
         }
+        return prev;
       });
     },
-    [totalPage, disabled, setPage],
+    [setPage, isFirstPage, isLastPage],
   );
 
   return (
     <div className={S.arrowButtonContainer}>
-      <button className={S.arrowButton} onClick={() => onClickBtn('left')} disabled={disabled}>
-        <Image src={disabled ? ArrowLeftGray : ArrowLeftBlack} alt="left" />
+      <button className={S.arrowButton} onClick={() => onClickBtn('left')} disabled={isFirstPage}>
+        <Image src={isFirstPage ? ArrowLeftGray : ArrowLeftBlack} alt="left" />
       </button>
-      <button className={S.arrowButton} onClick={() => onClickBtn('right')} disabled={disabled}>
-        <Image src={disabled ? ArrowRightGray : ArrowRightBlack} alt="right" />
+      <button className={S.arrowButton} onClick={() => onClickBtn('right')} disabled={isLastPage}>
+        <Image src={isLastPage ? ArrowRightGray : ArrowRightBlack} alt="right" />
       </button>
     </div>
   );

@@ -21,7 +21,7 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
 
   const isSearchMode = !!searchTerm;
 
-  const itemsPerPage = isSearchMode ? 16 : 8;
+  const itemsPerPage = isSearchMode ? 16 : 9;
 
   const { data: normalActivitiesData } = useActivitiesQuery({
     category: selectedCategory ?? undefined,

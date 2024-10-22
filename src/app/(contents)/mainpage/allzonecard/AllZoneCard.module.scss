@@ -14,6 +14,17 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+
+  @include tablet {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 20px;
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 10px;
+  }
 }
 
 .allZoneCardImage {
@@ -25,11 +36,29 @@
   border-radius: 20px;
   border: 1px solid $gray300;
   background-color: $gray300;
+
+  @include tablet {
+    width: 221px;
+    height: 221px;
+  }
+
+  @include mobile {
+    width: 168px;
+    height: 168px;
+  }
 }
 
 .allZoneCardContent {
   position: relative;
   margin-top: 15px;
+
+  @include tablet {
+    width: 220px;
+  }
+
+  @include mobile {
+    width: 164px;
+  }
 }
 
 .allZoneCardRating {
@@ -51,7 +80,7 @@
 
 .allZoneCardTitle {
   margin-bottom: 5px;
-  @include text2LgSemibold;
+  @include text2XlSemibold;
   color: $black;
 }
 
