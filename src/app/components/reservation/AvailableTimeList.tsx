@@ -1,19 +1,19 @@
-import { Schedule } from '@/types/schedule';
+import { Schedule, Time } from '@/types/schedule';
 import S from './AvailableTimeList.module.scss';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
 interface AvailableTimeListProps {
   selectedDate: Date;
-  selectedTimeId: number | null;
+  selectedTime: Time | null;
   schedule: Schedule[] | undefined;
-  handleTimeSelect: (id: number) => void;
+  handleTimeSelect: (time: Time) => void;
 }
 
 export default function AvailableTimeList({
   schedule,
   selectedDate,
-  selectedTimeId,
+  selectedTime,
   handleTimeSelect,
 }: AvailableTimeListProps) {
   const availableTimesOfSelectedDate =
@@ -27,8 +27,8 @@ export default function AvailableTimeList({
       {availableTimesOfSelectedDate.map(time => (
         <div
           key={time.id}
-          className={classNames(S.availableTime, { [S.selectedTime]: selectedTimeId === time.id })}
-          onClick={() => handleTimeSelect(time.id)}
+          className={classNames(S.availableTime, { [S.selectedTime]: selectedTime?.id === time.id })}
+          onClick={() => handleTimeSelect(time)}
         >
           {time.startTime} ~ {time.endTime}
         </div>

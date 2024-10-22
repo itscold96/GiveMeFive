@@ -4,22 +4,15 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import ReservationCalendar from './ReservationCalendar';
 import AvailableTimeList from './AvailableTimeList';
-
-interface ReservationSelectorProps {
-  activityId: number;
-  selectedDate: Date;
-  selectedTimeId: number | null;
-  handleDateSelect: ({ date, availableDates }: { date: Date; availableDates: string[] }) => void;
-  handleTimeSelect: (id: number) => void;
-}
+import { ReservationComponentProps } from '@/types/reservation';
 
 export default function ReservationSelector({
   activityId,
   selectedDate,
-  selectedTimeId,
+  selectedTime,
   handleDateSelect,
   handleTimeSelect,
-}: ReservationSelectorProps) {
+}: ReservationComponentProps) {
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth() + 1; // 달이 0부터 시작함
   const date = selectedDate.getDate();
@@ -52,7 +45,7 @@ export default function ReservationSelector({
           selectedDate={selectedDate}
           schedule={schedule}
           handleTimeSelect={handleTimeSelect}
-          selectedTimeId={selectedTimeId}
+          selectedTime={selectedTime}
         />
         <div className={S.separator} />
       </section>

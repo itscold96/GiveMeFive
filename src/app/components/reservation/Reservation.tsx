@@ -9,35 +9,31 @@ import classNames from 'classnames';
 import ReservationSelector from './ReservationSelector';
 import HeadCountStepper from './HeadCountStepper';
 import { useMediaQuery } from '@mantine/hooks';
-import { useToggle } from '@/hooks/useToggle';
-import Modal from '../@shared/modal/Modal';
 import CalendarModal from './CalendarModal';
+import { Time } from '@/types/schedule';
 
 interface ReservationProps {
   activityId: number;
   price: number;
 }
 
-// 2962: 테스트용 체험 id
-
 export default function Reservation({ activityId, price }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
-  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
+  const [selectedTime, setSelectedTime] = useState<Time | null>(null);
   const [headCount, setHeadCount] = useState(1);
 
   const isTabletSize = useMediaQuery('(max-width: 1200px)');
-
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
   const handleDateSelect = ({ date, availableDates }: { date: Date; availableDates: string[] }) => {
     if (availableDates?.includes(dayjs(date).format('YYYY-MM-DD'))) {
       setSelectedDate(date); // 예약 가능일일 때만 선택 가능하게 설정
-      setSelectedTimeId(null); // 날짜 바꾸면 기존 선택된 예약 시간 초기화
+      setSelectedTime(null); // 날짜 바꾸면 기존 선택된 예약 시간 초기화
     }
   };
 
-  const handleTimeSelect = (id: number) => {
-    setSelectedTimeId(id);
+  const handleTimeSelect = (time: Time) => {
+    setSelectedTime(time);
   };
 
   const handleDecreaseHeadCountClick = () => {
@@ -62,7 +58,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
         <CalendarModal
           activityId={activityId}
           selectedDate={selectedDate}
-          selectedTimeId={selectedTimeId}
+          selectedTime={selectedTime}
           handleDateSelect={handleDateSelect}
           handleTimeSelect={handleTimeSelect}
         />
@@ -70,7 +66,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
         <ReservationSelector
           activityId={activityId}
           selectedDate={selectedDate}
-          selectedTimeId={selectedTimeId}
+          selectedTime={selectedTime}
           handleDateSelect={handleDateSelect}
           handleTimeSelect={handleTimeSelect}
         />

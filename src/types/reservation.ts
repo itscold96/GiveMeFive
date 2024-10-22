@@ -1,7 +1,9 @@
-export interface ReservationCalendarProps {
+import { Time } from './schedule';
+
+export interface ReservationComponentProps {
   activityId: number;
   selectedDate: Date;
-  selectedTimeId: number | null;
+  selectedTime: Time | null;
   handleDateSelect: ({ date, availableDates }: { date: Date; availableDates: string[] }) => void;
-  handleTimeSelect: (id: number) => void;
+  handleTimeSelect: (time: Time) => void;
 }
