@@ -28,3 +28,14 @@
     }
   }
 }
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $gray300;
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}

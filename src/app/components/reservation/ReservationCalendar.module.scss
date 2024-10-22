@@ -1,92 +1,41 @@
 @use '@/styles/abstracts/core' as *;
 
-.calendarContainer {
-  .sectionTitle {
-    padding-bottom: 16px;
-  }
+.calendarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  .calendarWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .levelsGroup {
-      border: 1px solid $gray200;
-      border-radius: 8px;
-      padding: 10px 27.33px;
-    }
-
-    .availableDates {
-      background-color: $green100;
-      color: $green300;
-      &:hover {
-        background-color: rgba($green300, 0.3);
-      }
-    }
-
-    .day {
-      width: 35.71px;
-      height: 32px;
-      border-radius: 8px;
-
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 17.7px;
-
-      &[data-weekend] {
-        color: $black;
-      }
-
-      &[data-selected] {
-        background-color: $green300;
-        color: $white;
-      }
-    }
-  }
-}
-
-.availableTimeContainer {
-  .sectionTitle {
-    padding-top: 16px;
-    padding-bottom: 14px;
-  }
-
-  .availableTimeList {
-    height: 48px;
-    width: 100%;
-    overflow-x: auto;
-
-    &::-webkit-scrollbar {
-      // 예약 가능 시간 좌우 스크롤 기능은 동작하되 스크롤은 숨김
-      display: none; /* Chrome, Safari, Opera*/
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
-
-    display: flex;
-    gap: 12px;
-  }
-
-  .availableTime {
-    min-width: fit-content;
-    border: 1px solid $nomadBlack;
+  .levelsGroup {
+    border: 1px solid $gray200;
     border-radius: 8px;
-    padding: 10px 12px;
-    @include textLgMedium;
+    padding: 10px 27.33px;
+  }
 
+  .availableDates {
+    background-color: $green100;
+    color: $green300;
     &:hover {
-      cursor: pointer;
+      background-color: rgba($green300, 0.3);
+    }
+  }
+
+  .day {
+    width: 35.71px;
+    height: 32px;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17.7px;
+
+    &[data-weekend] {
+      color: $black;
     }
 
-    &.selectedTime {
-      background-color: $nomadBlack;
+    &[data-selected] {
+      background-color: $green300;
       color: $white;
     }
-  }
-
-  .separator {
-    margin-top: 16px;
-    margin-bottom: 12px;
   }
 }

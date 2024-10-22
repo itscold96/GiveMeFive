@@ -1,5 +1,11 @@
 // media-query 관련 mixins
 // Media Query
+@mixin desktop {
+  @media (min-width: 1201px) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media (max-width: 1200px) {
     @content;

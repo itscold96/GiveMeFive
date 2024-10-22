@@ -6,8 +6,12 @@ import Button from '../@shared/button/Button';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import classNames from 'classnames';
-import ReservationCalendar from './ReservationCalendar';
+import ReservationSelector from './ReservationSelector';
 import HeadCountStepper from './HeadCountStepper';
+import { useMediaQuery } from '@mantine/hooks';
+import { useToggle } from '@/hooks/useToggle';
+import Modal from '../@shared/modal/Modal';
+import CalendarModal from './CalendarModal';
 
 interface ReservationProps {
   activityId: number;
@@ -20,6 +24,8 @@ export default function Reservation({ activityId, price }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [headCount, setHeadCount] = useState(1);
+
+  const isTabletSize = useMediaQuery('(max-width: 1200px)');
 
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
@@ -52,13 +58,23 @@ export default function Reservation({ activityId, price }: ReservationProps) {
         <div className={S.separator} />
       </section>
 
-      <ReservationCalendar
-        activityId={activityId}
-        selectedDate={selectedDate}
-        selectedTimeId={selectedTimeId}
-        handleDateSelect={handleDateSelect}
-        handleTimeSelect={handleTimeSelect}
-      />
+      {isTabletSize ? (
+        <CalendarModal
+          activityId={activityId}
+          selectedDate={selectedDate}
+          selectedTimeId={selectedTimeId}
+          handleDateSelect={handleDateSelect}
+          handleTimeSelect={handleTimeSelect}
+        />
+      ) : (
+        <ReservationSelector
+          activityId={activityId}
+          selectedDate={selectedDate}
+          selectedTimeId={selectedTimeId}
+          handleDateSelect={handleDateSelect}
+          handleTimeSelect={handleTimeSelect}
+        />
+      )}
 
       <HeadCountStepper
         headCount={headCount}

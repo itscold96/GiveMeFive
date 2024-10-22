@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-interface ToggleActionType {
+export interface ToggleActionType {
   type: 'switch' | 'on' | 'off';
 }
 

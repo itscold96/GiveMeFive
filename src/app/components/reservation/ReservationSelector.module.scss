@@ -1,0 +1,63 @@
+@use '@/styles/abstracts/core' as *;
+
+.calendarContainer {
+  .sectionTitle {
+    padding-bottom: 16px;
+  }
+}
+
+.availableTimeContainer {
+  .sectionTitle {
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  .availableTimeList {
+    height: 48px;
+    width: 100%;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      // 예약 가능 시간 좌우 스크롤 기능은 동작하되 스크롤은 숨김
+      display: none; /* Chrome, Safari, Opera*/
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    display: flex;
+    gap: 12px;
+  }
+
+  .availableTime {
+    min-width: fit-content;
+    border: 1px solid $nomadBlack;
+    border-radius: 8px;
+    padding: 10px 12px;
+    @include textLgMedium;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.selectedTime {
+      background-color: $nomadBlack;
+      color: $white;
+    }
+  }
+
+  @include desktop {
+    .separator {
+      height: 1px;
+      width: 100%;
+      background-color: $gray300;
+
+      margin-top: 16px;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
