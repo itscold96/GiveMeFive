@@ -8,7 +8,7 @@ const categoryList: Category[] = ['문화 · 예술', '식음료', '스포츠', 
 export type Sort = 'price_asc' | 'price_desc';
 const sortList: Sort[] = ['price_asc', 'price_desc'];
 interface CategoryProps {
-  selectedCategory: Category;
+  selectedCategory: Category | null;
   setSelectedCategory: (category: Category) => void;
   selectedSort: string;
   handleSortChange: (value: string) => void;
