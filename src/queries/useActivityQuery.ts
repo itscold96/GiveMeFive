@@ -20,3 +20,17 @@ export const useBestActivitiesQuery = (page: number) => {
       }),
   });
 };
+
+export const useSearchActivitiesQuery = (searchTerm: string, page: number) => {
+  return useQuery<GetActivitiesResponse, Error>({
+    queryKey: ['searchActivities', searchTerm, page],
+    queryFn: () =>
+      getActivities({
+        title: searchTerm,
+        sort: 'latest',
+        method: 'offset',
+        page,
+      }),
+    enabled: !!searchTerm,
+  });
+};
