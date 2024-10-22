@@ -1,0 +1,38 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.mainContainer {
+  max-width: 1200px;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.experienceTextContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoryContainer {
+  margin-top: 60px;
+}
+
+.categoryDropdownContainer {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  margin-top: 60px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .mantine-Pagination-control {
+    background-color: $black;
+  }
+}
