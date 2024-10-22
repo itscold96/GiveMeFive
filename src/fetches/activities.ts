@@ -29,6 +29,7 @@ export interface GetActivitiesProps {
   page?: number;
   cursorId?: number | null;
   keyword?: string;
+  title?: string;
 }
 
 const getActivities = async (option: GetActivitiesProps) => {
