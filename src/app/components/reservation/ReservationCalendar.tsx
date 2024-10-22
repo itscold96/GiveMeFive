@@ -3,6 +3,7 @@ import S from './ReservationCalendar.module.scss';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { Calendar } from '@mantine/dates';
+import { Skeleton } from '@mantine/core';
 
 interface ReservationCalendarProps {
   activityId: number;
@@ -22,7 +23,7 @@ export default function ReservationCalendar({
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth() + 1; // 달이 0부터 시작함
   const date = selectedDate.getDate();
-  const { data: schedule } = useAvailableSchedule({ activityId, year, month, date });
+  const { data: schedule, isLoading, isFetching } = useAvailableSchedule({ activityId, year, month, date });
   const availableDates = schedule?.map(schedule => schedule.date) || []; // 예약 가능일자 배열
 
   const availableTimesOfSelectedDate =
