@@ -1,21 +1,12 @@
-import { Schedule, Time } from '@/types/schedule';
+import { Schedule } from '@/types/schedule';
 import S from './AvailableTimeList.module.scss';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
+import { useReservationStore } from '@/stores/useReservationStore';
 
-interface AvailableTimeListProps {
-  selectedDate: Date;
-  selectedTime: Time | null;
-  schedule: Schedule[] | undefined;
-  handleTimeSelect: (time: Time) => void;
-}
-
-export default function AvailableTimeList({
-  schedule,
-  selectedDate,
-  selectedTime,
-  handleTimeSelect,
-}: AvailableTimeListProps) {
+export default function AvailableTimeList({ schedule }: { schedule: Schedule[] | undefined }) {
+  const { selectedDate, selectedTime } = useReservationStore(state => state.reservation);
+  const { setSelectedTime } = useReservationStore(state => state.action);
   const availableTimesOfSelectedDate =
     schedule
       ?.filter(schedule => schedule.date === dayjs(selectedDate).format('YYYY-MM-DD')) // 스케쥴 배열에서 선택된 날짜에 맞는 스케쥴만 필터링한 뒤, times 프로퍼티의 값만 걸러낸다.
@@ -28,7 +19,7 @@ export default function AvailableTimeList({
         <div
           key={time.id}
           className={classNames(S.availableTime, { [S.selectedTime]: selectedTime?.id === time.id })}
-          onClick={() => handleTimeSelect(time)}
+          onClick={() => setSelectedTime(time)}
         >
           {time.startTime} ~ {time.endTime}
         </div>

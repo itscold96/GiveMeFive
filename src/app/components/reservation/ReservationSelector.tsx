@@ -4,15 +4,11 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import ReservationCalendar from './ReservationCalendar';
 import AvailableTimeList from './AvailableTimeList';
-import { ReservationComponentProps } from '@/types/reservation';
+import { useReservationStore } from '@/stores/useReservationStore';
 
-export default function ReservationSelector({
-  activityId,
-  selectedDate,
-  selectedTime,
-  handleDateSelect,
-  handleTimeSelect,
-}: ReservationComponentProps) {
+export default function ReservationSelector({ activityId }: { activityId: number }) {
+  const { selectedDate } = useReservationStore(state => state.reservation);
+  const { setSelectedDate } = useReservationStore(state => state.action);
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth() + 1; // 달이 0부터 시작함
   const date = selectedDate.getDate();
@@ -26,7 +22,7 @@ export default function ReservationSelector({
 
     return {
       selected: isSelected,
-      onClick: () => handleDateSelect({ date, availableDates }),
+      onClick: () => setSelectedDate({ date, availableDates }),
       className: classNames({ [S.availableDates]: isAvailable }), // 예약 가능 일에 스타일 부여
       disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
     };
@@ -41,12 +37,7 @@ export default function ReservationSelector({
 
       <section className={S.availableTimeContainer}>
         <p className={S.sectionTitle}>예약 가능한 시간</p>
-        <AvailableTimeList
-          selectedDate={selectedDate}
-          schedule={schedule}
-          handleTimeSelect={handleTimeSelect}
-          selectedTime={selectedTime}
-        />
+        <AvailableTimeList schedule={schedule} />
         <div className={S.separator} />
       </section>
     </>

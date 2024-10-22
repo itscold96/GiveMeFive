@@ -8,20 +8,11 @@ import ReservationSelector from './ReservationSelector';
 import HeadCountStepper from './HeadCountStepper';
 import { useMediaQuery } from '@mantine/hooks';
 import CalendarModal from './CalendarModal';
-import { useReservation } from '@/hooks/useReservation';
 import { ReservationProps } from '@/types/reservation';
+import { useReservationStore } from '@/stores/useReservationStore';
 
 export default function Reservation({ activityId, price }: ReservationProps) {
-  const {
-    selectedDate,
-    selectedTime,
-    headCount,
-    handleDateSelect,
-    handleTimeSelect,
-    handleIncreaseHeadCountClick,
-    handleDecreaseHeadCountClick,
-  } = useReservation();
-
+  const { headCount } = useReservationStore(state => state.reservation);
   const isTabletSize = useMediaQuery('(max-width: 1200px)');
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
@@ -36,29 +27,9 @@ export default function Reservation({ activityId, price }: ReservationProps) {
           <div className={S.separator} />
         </section>
 
-        {isTabletSize ? (
-          <CalendarModal
-            activityId={activityId}
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            handleDateSelect={handleDateSelect}
-            handleTimeSelect={handleTimeSelect}
-          />
-        ) : (
-          <ReservationSelector
-            activityId={activityId}
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            handleDateSelect={handleDateSelect}
-            handleTimeSelect={handleTimeSelect}
-          />
-        )}
+        {isTabletSize ? <CalendarModal activityId={activityId} /> : <ReservationSelector activityId={activityId} />}
 
-        <HeadCountStepper
-          headCount={headCount}
-          onDecreaseHeadCountClick={handleDecreaseHeadCountClick}
-          onIncreaseHeadCountClick={handleIncreaseHeadCountClick}
-        />
+        <HeadCountStepper />
 
         <Button
           borderRadius="radius4"
@@ -74,7 +45,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
           <div className={S.separator} />
           <div className={S.totalPrice}>
             <p>총 합계</p>
-            <p>{getCurrencyFormat(price * headCount)}</p>
+            <p>{getCurrencyFormat(price * headCount)} 원</p>
           </div>
         </section>
       </div>

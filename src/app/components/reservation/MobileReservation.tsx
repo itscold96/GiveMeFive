@@ -1,5 +1,4 @@
 import S from './MobileReservation.module.scss';
-import { useReservation } from '@/hooks/useReservation';
 import { ReservationProps } from '@/types/reservation';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
 import HeadCountStepper from './HeadCountStepper';
@@ -8,26 +7,19 @@ import { useToggle } from '@/hooks/useToggle';
 import ReservationSelector from './ReservationSelector';
 import Modal from '../@shared/modal/Modal';
 import dayjs from 'dayjs';
+import { useReservationStore } from '@/stores/useReservationStore';
 
 export default function MobileReservation({ price, activityId }: ReservationProps) {
-  const {
-    selectedDate,
-    selectedTime,
-    headCount,
-    handleDateSelect,
-    handleTimeSelect,
-    handleIncreaseHeadCountClick,
-    handleDecreaseHeadCountClick,
-  } = useReservation();
+  const { headCount, selectedDate, selectedTime } = useReservationStore(state => state.reservation);
   const { toggleValue: isCalendarModalOpen, toggleDispatch: calendarModalToggleDispatch } = useToggle();
   const { toggleValue: isStepperModalOpen, toggleDispatch: stepperModalToggleDispatch } = useToggle();
 
-  const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
+  const totalPrice = `₩ ${getCurrencyFormat(price * headCount)}`;
   return (
     <div className={S.mobileReservationContainer}>
       <section className={S.selectorContainer}>
         <div className={S.priceAndHeadCount}>
-          <p className={S.price}>{perPersonPrice} /</p>
+          <p className={S.price}>{totalPrice} /</p>
           <button
             className={S.headCountButton}
             onClick={() => stepperModalToggleDispatch({ type: 'on' })}
@@ -48,13 +40,7 @@ export default function MobileReservation({ price, activityId }: ReservationProp
         className={S.modal}
       >
         <p className={S.modalTitle}>날짜 및 시간 선택</p>
-        <ReservationSelector
-          activityId={activityId}
-          selectedDate={selectedDate}
-          selectedTime={selectedTime}
-          handleDateSelect={handleDateSelect}
-          handleTimeSelect={handleTimeSelect}
-        />
+        <ReservationSelector activityId={activityId} />
 
         <Button
           borderRadius="radius4"
@@ -62,6 +48,7 @@ export default function MobileReservation({ price, activityId }: ReservationProp
           padding="padding14"
           textSize="md"
           className={S.modalCloseButton}
+          onClick={() => calendarModalToggleDispatch({ type: 'off' })}
         >
           확인
         </Button>
@@ -76,11 +63,7 @@ export default function MobileReservation({ price, activityId }: ReservationProp
         showCloseButton={true}
       >
         <p className={S.modalTitle}>인원 선택</p>
-        <HeadCountStepper
-          headCount={headCount}
-          onDecreaseHeadCountClick={handleDecreaseHeadCountClick}
-          onIncreaseHeadCountClick={handleIncreaseHeadCountClick}
-        />
+        <HeadCountStepper />
 
         <Button
           borderRadius="radius4"
@@ -88,6 +71,7 @@ export default function MobileReservation({ price, activityId }: ReservationProp
           padding="padding14"
           textSize="md"
           className={S.modalCloseButton}
+          onClick={() => stepperModalToggleDispatch({ type: 'off' })}
         >
           확인
         </Button>
