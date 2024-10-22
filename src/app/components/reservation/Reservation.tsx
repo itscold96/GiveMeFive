@@ -9,11 +9,7 @@ import HeadCountStepper from './HeadCountStepper';
 import { useMediaQuery } from '@mantine/hooks';
 import CalendarModal from './CalendarModal';
 import { useReservation } from '@/hooks/useReservation';
-
-interface ReservationProps {
-  activityId: number;
-  price: number;
-}
+import { ReservationProps } from '@/types/reservation';
 
 export default function Reservation({ activityId, price }: ReservationProps) {
   const {

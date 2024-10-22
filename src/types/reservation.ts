@@ -1,5 +1,8 @@
 import { Time } from './schedule';
-
+export interface ReservationProps {
+  activityId: number;
+  price: number;
+}
 export interface ReservationComponentProps {
   activityId: number;
   selectedDate: Date;
