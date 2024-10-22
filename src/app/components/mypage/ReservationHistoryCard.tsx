@@ -24,7 +24,7 @@ interface ReservationHistoryCardProps {
 function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
   const { activity, date, startTime, endTime, headCount, totalPrice, status, reviewSubmitted } = reservation;
 
-  const getStatusLabel = () => {
+  function getStatusLabel() {
     switch (status) {
       case 'pending':
         return '예약 신청';
@@ -39,9 +39,9 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
       default:
         return '예약 신청';
     }
-  };
+  }
 
-  const renderActionButton = () => {
+  function renderActionButton() {
     if (status === 'completed' && !reviewSubmitted) {
       return (
         <Button
@@ -50,7 +50,9 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
           textSize="md"
           padding="padding8"
           className={S.actionButton}
-          onClick={() => console.log('후기 작성 클릭됨')}
+          onClick={function () {
+            console.log('후기 작성 클릭됨');
+          }}
         >
           후기 작성
         </Button>
@@ -64,14 +66,16 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
           textSize="md"
           padding="padding8"
           className={S.actionButton}
-          onClick={() => console.log('예약 취소 클릭됨')}
+          onClick={function () {
+            console.log('예약 취소 클릭됨');
+          }}
         >
           예약 취소
         </Button>
       );
     }
     return null;
-  };
+  }
 
   return (
     <div className={S.card}>
