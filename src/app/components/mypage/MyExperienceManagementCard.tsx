@@ -23,7 +23,7 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
   const { onDropdownChange, data, toggleDropdown, isDropdownToggle } = useDropdown(actionList);
 
   const handleActionSelect = function (action: string) {
-    toggleDropdown(); // 액션을 선택할 때 드롭다운을 닫기
+    toggleDropdown();
     if (action === '수정하기') {
       // 수정하기 로직 추가
       console.log('수정하기 클릭');

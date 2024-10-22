@@ -4,8 +4,6 @@ import SideMenu from '../../components/mypage/SideMenu';
 import S from './reservationhistory.module.scss';
 import Footer from '../../components/@shared/footer/Footer';
 import ReservationHistoryCardList from '../../components/mypage/ReservationHistoryCardList';
-import { Title } from '@mantine/core';
-import Button from '../../components/@shared/button/Button';
 
 function ReservationHistory() {
   return (
