@@ -1,0 +1,39 @@
+import { axiosAuth } from './setupAxios';
+
+export interface MyActivity {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface GetMyActivitiesResponse {
+  cursorId?: number | null;
+  totalCount: number;
+  activities: MyActivity[];
+}
+
+export interface GetMyActivitiesProps {
+  page?: number;
+  size?: number;
+  sort?: 'latest' | 'most_reviewed';
+  category?: string;
+}
+
+export const getMyActivities = async (params: GetMyActivitiesProps) => {
+  const response = await axiosAuth.get<GetMyActivitiesResponse>('/my-activities', {
+    params: {
+      ...params,
+      method: 'offset',
+    },
+  });
+  return response.data;
+};
