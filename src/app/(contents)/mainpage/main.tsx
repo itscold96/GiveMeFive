@@ -10,13 +10,11 @@ import { useState } from 'react';
 
 export default function Main() {
   const [searchTerm, setSearchTerm] = useState('');
-  const { data: activitiesData, isLoading } = useActivitiesQuery({
+  const { data: activitiesData } = useActivitiesQuery({
     size: 8,
     method: 'offset',
     page: 1,
   });
-
-  if (isLoading) return <div>로딩 중...</div>;
 
   const firstBestActivity = activitiesData?.activities[0] || null;
 

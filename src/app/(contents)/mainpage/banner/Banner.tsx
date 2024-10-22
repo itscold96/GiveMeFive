@@ -1,12 +1,15 @@
 import S from './Banner.module.scss';
 import Image from 'next/image';
 import { Activity } from '@/fetches/activities';
+import { useState } from 'react';
 
 interface BannerProps {
   bestActivity: Activity | null;
 }
 
 export default function Banner({ bestActivity }: BannerProps) {
+  const [imgError, setImgError] = useState<Record<string, boolean>>({});
+
   if (!bestActivity) {
     return null;
   }
@@ -14,17 +17,18 @@ export default function Banner({ bestActivity }: BannerProps) {
   return (
     <div className={S.bannerContainer}>
       <div className={S.bannerImageWrapper}>
-        {/* <div className={S.bannerImageContainer}> */}
-        <Image
-          src={bestActivity.bannerImageUrl}
-          alt={bestActivity.title}
-          className={S.bannerImage}
-          width={0}
-          height={550}
-          objectFit="cover"
-          style={{ zIndex: -1 }}
-        />
-        {/* </div> */}
+        {!imgError[bestActivity.id] && (
+          <Image
+            src={bestActivity.bannerImageUrl}
+            alt=""
+            className={S.bannerImage}
+            width={0}
+            height={550}
+            objectFit="cover"
+            style={{ zIndex: -1 }}
+            onError={() => setImgError(prev => ({ ...prev, [bestActivity.id]: true }))}
+          />
+        )}
         <div className={S.bannerContentWrapper}>
           <div className={S.bannerContent}>
             <p className={S.bannerTitle}>{bestActivity.title}</p>

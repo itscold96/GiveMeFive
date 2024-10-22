@@ -17,29 +17,22 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
   const [page, setPage] = useState(1);
+  const [imgError, setImgError] = useState<Record<string, boolean>>({});
 
   const isSearchMode = !!searchTerm;
 
-  const {
-    data: normalActivitiesData,
-    isLoading: isNormalLoading,
-    error: normalError,
-  } = useActivitiesQuery({
+  const itemsPerPage = isSearchMode ? 16 : 8;
+
+  const { data: normalActivitiesData } = useActivitiesQuery({
     category: selectedCategory ?? undefined,
     sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
-    size: 8,
+    size: itemsPerPage,
     method: 'offset',
     page,
   });
 
-  const {
-    data: searchActivitiesData,
-    isLoading: isSearchLoading,
-    error: searchError,
-  } = useSearchActivitiesQuery(searchTerm, page);
+  const { data: searchActivitiesData } = useSearchActivitiesQuery(searchTerm, page, itemsPerPage);
 
-  const isLoading = isSearchMode ? isSearchLoading : isNormalLoading;
-  const error = isSearchMode ? searchError : normalError;
   const activitiesData = isSearchMode ? searchActivitiesData : normalActivitiesData;
 
   const filteredActivities = useMemo(() => {
@@ -48,6 +41,10 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
       ? activitiesData.activities.filter(activity => activity.title.toLowerCase().includes(searchTerm.toLowerCase()))
       : activitiesData.activities;
   }, [isSearchMode, searchTerm, activitiesData]);
+
+  const totalItems = useMemo(() => {
+    return isSearchMode ? filteredActivities.length : activitiesData?.totalCount || 0;
+  }, [isSearchMode, filteredActivities, activitiesData]);
 
   useEffect(() => {
     setPage(1);
@@ -58,7 +55,7 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
     setPage(1);
   };
 
-  const handleCategoryChange = (category: CategoryType) => {
+  const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
     setPage(1); // 카테고리 변경 시 페이지를 1로 리셋
   };
@@ -86,15 +83,11 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
             <span className={S.searchTerm}>{searchTerm}</span>
             (으)로 검색한 결과입니다.
           </span>
-          <span className={S.searchResultCount}>총 {filteredActivities.length}개의 결과</span>
+          <span className={S.searchResultCount}>총 {totalItems}개의 결과</span>
         </div>
       )}
 
-      {isLoading ? (
-        <div>로딩 중...</div>
-      ) : error ? (
-        <div>에러가 발생했습니다: {error.message}</div>
-      ) : !filteredActivities || filteredActivities.length === 0 ? (
+      {!filteredActivities || filteredActivities.length === 0 ? (
         <div className={S.noActivityContainer}>
           <Image src={NoActivity} alt="no activity" width={283} height={283} />
           <p className={S.noActivityText}>
@@ -106,16 +99,16 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
           {filteredActivities.map(activity => (
             <div key={activity.id}>
               <div className={S.allZoneCardImage}>
-                <Image
-                  src={activity.bannerImageUrl}
-                  alt={activity.title}
-                  style={{
-                    borderRadius: '20px',
-                  }}
-                  width={283}
-                  height={283}
-                  className={S.allZoneCardImage}
-                />
+                {!imgError[activity.id] && (
+                  <Image
+                    src={activity.bannerImageUrl}
+                    alt=""
+                    width={283}
+                    height={283}
+                    className={S.allZoneCardImage}
+                    onError={() => setImgError(prev => ({ ...prev, [activity.id]: true }))}
+                  />
+                )}
               </div>
               <div className={S.allZoneCardContent}>
                 <div className={S.allZoneCardRating}>
@@ -133,14 +126,9 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
           ))}
         </div>
       )}
-      {filteredActivities.length > 0 && (
+      {totalItems > 0 && (
         <div className={S.paginationContainer}>
-          <Pagination
-            onChangePage={setPage}
-            totalItems={filteredActivities.length}
-            itemsPerPage={8}
-            currentPage={page}
-          />
+          <Pagination onChangePage={setPage} totalItems={totalItems} itemsPerPage={itemsPerPage} currentPage={page} />
         </div>
       )}
     </div>

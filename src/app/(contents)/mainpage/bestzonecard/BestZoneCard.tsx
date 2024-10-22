@@ -3,14 +3,16 @@
 import S from './BestZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
-import React from 'react';
-import { useActivityStore } from '@/stores/useActivityStore';
-import ArrowButton from '../arrowButton/ArrowButton';
+import { useState } from 'react';
+import ArrowButton from './arrowButton/ArrowButton';
+import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
 
 export default function BestZoneCard() {
-  const bestActivitiesResponse = useActivityStore(state => state.bestActivitiesResponse);
+  const [page, setPage] = useState(1);
+  const { data: bestActivitiesData } = useBestActivitiesQuery(page);
+  const [imgError, setImgError] = useState<Record<string, boolean>>({});
 
-  if (!bestActivitiesResponse.activities || bestActivitiesResponse.activities.length === 0) {
+  if (!bestActivitiesData?.activities || bestActivitiesData.activities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
   }
 
@@ -19,21 +21,24 @@ export default function BestZoneCard() {
       <div className={S.bestExperienceContainer}>
         <span className={S.experienceText}>🔥 인기체험</span>
         <div className={S.experienceArrowContainer}>
-          <ArrowButton />
+          <ArrowButton page={page} setPage={setPage} totalCount={bestActivitiesData.totalCount} />
         </div>
       </div>
 
       <div className={S.bestZoneCardContainer}>
-        {bestActivitiesResponse.activities.map(activity => (
+        {bestActivitiesData.activities.map(activity => (
           <div key={activity.id} className={S.bestZoneCard}>
             <div className={S.bestZoneCardImage}>
-              <Image
-                src={activity.bannerImageUrl}
-                alt={activity.title}
-                width={384}
-                height={384}
-                className={S.bestZoneCardImage}
-              />
+              {!imgError[activity.id] && (
+                <Image
+                  src={activity.bannerImageUrl}
+                  alt=""
+                  width={384}
+                  height={384}
+                  className={S.bestZoneCardImage}
+                  onError={() => setImgError(prev => ({ ...prev, [activity.id]: true }))}
+                />
+              )}
 
               <div className={S.bestZoneCardContent}>
                 <div className={S.bestZoneCardRating}>

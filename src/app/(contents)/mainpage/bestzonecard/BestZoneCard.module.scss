@@ -42,7 +42,6 @@
 .bestZoneCardRating {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
 }
 
 .bestZoneCardRatingText {
@@ -51,6 +50,8 @@
 }
 
 .bestZoneCardTitle {
+  margin-bottom: 10px;
+  margin-top: 10px;
   width: 251px;
   @include text3XlBold;
   color: $white;
