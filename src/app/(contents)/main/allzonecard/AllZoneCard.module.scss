@@ -1,5 +1,15 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
+.allExperienceContainer {
+  margin-top: 35px;
+  margin-bottom: 32px;
+}
+
+.experienceText {
+  @include text3XlBold;
+  color: $black;
+}
+
 .allZoneCardContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

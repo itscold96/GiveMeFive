@@ -1,5 +1,5 @@
 import S from './CategoryAndDropdown.module.scss';
-import Dropdown from '../../../components/@shared/dropdown/Dropdown';
+import Dropdown from '../../../../components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 
 export type Category = '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';

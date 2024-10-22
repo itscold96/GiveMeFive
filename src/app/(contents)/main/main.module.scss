@@ -8,10 +8,10 @@
   justify-content: center;
 }
 
-.experienceText {
-  @include text3XlBold;
-  color: $black;
-}
+// .experienceText {
+//   @include text3XlBold;
+//   color: $black;
+// }
 
 .inputContainer {
   display: flex;
@@ -49,13 +49,13 @@
   height: 56px !important;
 }
 
-.bestExperienceContainer {
-  display: flex;
-  justify-content: space-between;
+// .bestExperienceContainer {
+//   display: flex;
+//   justify-content: space-between;
 
-  margin-top: 35px;
-  margin-bottom: 32px;
-}
+//   margin-top: 35px;
+//   margin-bottom: 32px;
+// }
 
 .experienceTextContainer {
   display: flex;
@@ -67,10 +67,10 @@
   margin-top: 60px;
 }
 
-.allExperienceContainer {
-  margin-top: 35px;
-  margin-bottom: 32px;
-}
+// .allExperienceContainer {
+//   margin-top: 35px;
+//   margin-bottom: 32px;
+// }
 
 .categoryDropdownContainer {
   display: flex;

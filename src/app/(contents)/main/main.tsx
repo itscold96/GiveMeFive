@@ -3,42 +3,49 @@
 import S from './main.module.scss';
 import Input from '../../components/@shared/input/Input';
 import Button from '../../components/@shared/button/Button';
-import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useEffect, useMemo, useState } from 'react';
-import Pagination from './pagination/Pagination';
-import BestZoneCard from './card/bestzonecard/BestZoneCard';
+import { useEffect } from 'react';
+import BestZoneCard from './bestzonecard/BestZoneCard';
 import { useActivityStore } from '@/stores/useActivityStore';
-import AllZoneCard from './card/allzonecard/AllZoneCard';
+import AllZoneCard from './allzonecard/AllZoneCard';
 import Banner from './banner/Banner';
-import ArrowButton from './arrowButton/ArrowButton';
+// import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
+// import ArrowButton from './arrowButton/ArrowButton';
 
 export default function Main() {
   const getActivities = useActivityStore(state => state.getActivities);
-  const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
-
-  const handleSortChange = (value: string) => {
-    setSelectedSort(value);
-  };
-  const activityTotalCount = useActivityStore(state => state.activitiesResponse.totalCount);
-  const pageCount = useMemo(() => Math.max(1, Math.ceil(activityTotalCount / 8)), [activityTotalCount]);
-  const [page, setPage] = useState(1);
-
-  const onChangePage = (page: number) => {
-    setPage(page);
-  };
+  const firstBestActivity = useActivityStore(state => state.firstBestActivity);
 
   useEffect(() => {
     getActivities({
-      category: selectedCategory ?? undefined,
-      sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
       size: 8,
       method: 'offset',
-      page,
+      page: 1,
     });
-  }, [selectedCategory, selectedSort, page]);
+  }, [getActivities]);
 
-  const firstBestActivity = useActivityStore(state => state.firstBestActivity);
+  // const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
+  // const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
+
+  // const handleSortChange = (value: string) => {
+  //   setSelectedSort(value);
+  // };
+  // const activityTotalCount = useActivityStore(state => state.activitiesResponse.totalCount);
+  // const pageCount = useMemo(() => Math.max(1, Math.ceil(activityTotalCount / 8)), [activityTotalCount]);
+  // const [page, setPage] = useState(1);
+
+  // const onChangePage = (page: number) => {
+  //   setPage(page);
+  // };
+
+  // useEffect(() => {
+  //   getActivities({
+  //     category: selectedCategory ?? undefined,
+  //     sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+  //     size: 8,
+  //     method: 'offset',
+  //     page,
+  //   });
+  // }, [selectedCategory, selectedSort, page]);
 
   return (
     <div>
@@ -61,28 +68,28 @@ export default function Main() {
           </div>
         </div>
 
-        <div className={S.bestExperienceContainer}>
+        {/* <div className={S.bestExperienceContainer}>
           <span className={S.experienceText}>🔥 인기체험</span>
           <div className={S.experienceArrowContainer}>
             <ArrowButton />
           </div>
         </div>
-
+ */}
         <BestZoneCard />
 
-        <CategoryAndDropdown
+        {/* <CategoryAndDropdown
           selectedCategory={selectedCategory as CategoryType}
           setSelectedCategory={setSelectedCategory}
           selectedSort={selectedSort as string}
           handleSortChange={handleSortChange}
-        />
+        /> */}
 
-        <div className={S.allExperienceContainer}>
+        {/* <div className={S.allExperienceContainer}>
           <span className={S.experienceText}>🛼 모든체험</span>
-        </div>
+        </div> */}
         <AllZoneCard />
       </div>
-      <Pagination onChangePage={onChangePage} pageCount={pageCount} defaultValue={1} />
+      {/* <Pagination onChangePage={onChangePage} pageCount={pageCount} defaultValue={1} /> */}
     </div>
   );
 }
