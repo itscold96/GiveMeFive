@@ -2,9 +2,9 @@ import { useAvailableSchedule } from '@/queries/useAvailableScheduleQuery';
 import S from './ReservationSelector.module.scss';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-import ReservationCalendar from './ReservationCalendar';
 import AvailableTimeList from './AvailableTimeList';
 import { useReservationStore } from '@/stores/useReservationStore';
+import { Calendar } from '@mantine/dates';
 
 export default function ReservationSelector({ activityId }: { activityId: number }) {
   const { selectedDate } = useReservationStore(state => state.reservation);
@@ -22,7 +22,7 @@ export default function ReservationSelector({ activityId }: { activityId: number
 
     return {
       selected: isSelected,
-      onClick: () => setSelectedDate({ date, availableDates }),
+      onClick: () => setSelectedDate(date),
       className: classNames({ [S.availableDates]: isAvailable }), // 예약 가능 일에 스타일 부여
       disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
     };
@@ -32,7 +32,20 @@ export default function ReservationSelector({ activityId }: { activityId: number
     <>
       <section className={S.calendarContainer}>
         <p className={S.sectionTitle}>날짜</p>
-        <ReservationCalendar getDayProps={getDayProps} />
+        <div className={S.calendarWrapper}>
+          <Calendar
+            date={selectedDate}
+            onNextMonth={date => setSelectedDate(date)}
+            onPreviousMonth={date => setSelectedDate(date)}
+            firstDayOfWeek={0}
+            classNames={{
+              levelsGroup: S.levelsGroup,
+              day: S.day,
+            }}
+            getDayProps={getDayProps}
+            highlightToday
+          />
+        </div>
       </section>
 
       <section className={S.availableTimeContainer}>

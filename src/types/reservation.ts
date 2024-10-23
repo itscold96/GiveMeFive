@@ -12,7 +12,7 @@ export interface SelectAvailableDateParam {
 }
 
 export interface ReservationAction {
-  setSelectedDate: ({ date, availableDates }: SelectAvailableDateParam) => void;
+  setSelectedDate: (date: Date) => void;
   setSelectedTime: (time: Time) => void;
   increaseHeadCount: () => void;
   decreaseHeadCount: () => void;

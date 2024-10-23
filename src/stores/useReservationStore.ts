@@ -11,14 +11,8 @@ const initialReservation = {
 export const useReservationStore = create<ReservationStore>(set => ({
   reservation: initialReservation,
   action: {
-    setSelectedDate: ({ date, availableDates }) => {
-      set(prevState => {
-        if (availableDates?.includes(dayjs(date).format('YYYY-MM-DD'))) {
-          // 예약 가능일일 때만 선택 가능하게 설정, 날짜 바꾸면 기존 선택된 예약 시간 초기화
-          return { reservation: { ...prevState.reservation, selectedDate: date, selectedTime: null } };
-        }
-        return { reservation: prevState.reservation };
-      });
+    setSelectedDate: date => {
+      set(prevState => ({ reservation: { ...prevState.reservation, selectedDate: date, selectedTime: null } }));
     },
     setSelectedTime: time => {
       set(prevState => ({ reservation: { ...prevState.reservation, selectedTime: time } }));
