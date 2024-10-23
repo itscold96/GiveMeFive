@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import S from './SideMenu.module.scss';
@@ -10,28 +10,52 @@ import ReservationHistoryIcon from '@/images/sidemenuIcon/reservationhistory-Ico
 import MyExperienceManagementIcon from '@/images/sidemenuIcon/myexperiencemanagement-Icon.svg';
 import ReservationStatusIcon from '@/images/sidemenuIcon/reservationstatus-Icon.svg';
 import ProfileButtonIcon from '@/images/sidemenuIcon/profile-button-icon.svg';
-import DefaultProfileImage from '@/images/profiles/default-profile.svg'; // 기본 프로필 이미지 경로
-import { useUserQuery } from '@/queries/useUserQuery'; // 유저 쿼리 import
+import DefaultProfileImage from '@/images/profiles/default-profile.svg';
+import { useUserQuery } from '@/queries/useUserQuery';
+import { postProfileImage } from '@/fetches/postProfileImage';
+import { patchUserInfo } from '@/fetches/patchUserInfo';
 
 const SideMenu: React.FC = () => {
-  const { data: userInfo } = useUserQuery(); // 유저 정보 가져오기
-  const profileImageUrl = userInfo?.profileImageUrl || null; // 프로필 이미지 URL
-
+  const { data: userInfo } = useUserQuery();
+  const [profileImageUrl, setProfileImageUrl] = useState(userInfo?.profileImageUrl || DefaultProfileImage);
   const pathname = usePathname();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleProfileImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        const response = await postProfileImage(file);
+        const newProfileImageUrl = response.profileImageUrl;
+
+        setProfileImageUrl(newProfileImageUrl);
+        await patchUserInfo({ profileImageUrl: newProfileImageUrl });
+
+        console.log('Updated profile image URL:', newProfileImageUrl);
+      } catch (error) {
+        console.error('Failed to upload profile image:', error);
+      }
+    }
+  };
 
   return (
     <aside className={S.sideMenu}>
       <div className={S.profileContainer}>
-        <div className={S.profileImageWrapper}>
-          <Image
-            src={profileImageUrl || DefaultProfileImage} // profileImageUrl이 null일 때 기본 이미지 사용
-            alt="Profile"
-            layout="fill" // 부모 요소의 크기에 맞춰서 이미지 크기 조절
-            objectFit="cover" // 이미지가 부모 요소의 비율에 맞춰 잘리도록 설정
-            className={S.profileImage} // 원형 스타일을 위한 클래스
-          />
+        <div className={S.profileImageWrapper} onClick={handleProfileImageClick}>
+          <Image src={profileImageUrl} alt="Profile" layout="fill" objectFit="cover" className={S.profileImage} />
         </div>
-        <div className={S.editIcon}>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <div className={S.editIcon} onClick={handleProfileImageClick}>
           <Image src={ProfileButtonIcon} alt="Edit Profile" className={S.editButtonIcon} />
         </div>
       </div>

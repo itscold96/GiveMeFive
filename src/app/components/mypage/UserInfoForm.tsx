@@ -6,9 +6,9 @@ import S from './UserInfoForm.module.scss';
 import { useValidForm } from '@/hooks/useValidForm';
 import { VALID_OPTIONS } from '@/constants/validOption';
 import { useUserQuery } from '@/queries/useUserQuery';
-import { patchUserInfo } from '@/fetches/patchUserInfo'; // 수정된 부분
-import ConfirmModal from '../@shared/modal/ConfirmModal'; // ConfirmModal 임포트
-import { useRouter } from 'next/navigation'; // 다음 버전의 Next.js를 사용한다면 `next/navigation`에서 가져와야 함
+import { patchUserInfo } from '@/fetches/patchUserInfo';
+import ConfirmModal from '../@shared/modal/ConfirmModal';
+import { useRouter } from 'next/navigation';
 
 const config = {
   nickname: {
@@ -103,8 +103,8 @@ const UserInfoForm: React.FC = () => {
         />
 
         <Input
-          label="비밀번호"
-          placeholder="비밀번호를 입력하세요"
+          label="새 비밀번호"
+          placeholder="새 비밀번호를 입력하세요"
           htmlFor="password"
           error={errors.password}
           register={register.password}
@@ -114,7 +114,7 @@ const UserInfoForm: React.FC = () => {
         />
 
         <Input
-          label="비밀번호 재입력"
+          label="새 비밀번호 재입력"
           placeholder="비밀번호를 재입력하세요"
           htmlFor="passwordConfirmation"
           error={errors.passwordConfirmation}
