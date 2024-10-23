@@ -2,6 +2,7 @@
 
 .mobileReservationContainer {
   position: fixed;
+  z-index: $headerZIndex; // 모달을 여는 부모의 z-index가 header보다 작으면 쌓임 맥락에 의해 모달의 z-index가 아무리 커도 header를 넘을 수 없음
   bottom: 0;
 
   display: flex;
