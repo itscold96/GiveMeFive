@@ -49,6 +49,28 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
       </div>
       <div className={S.imageContainer}>
         {activity?.bannerImageUrl && <Image src={activity.bannerImageUrl} alt="" width={595} height={534} />}
+        <div className={S.subImagesContainer}>
+          <div className={S.subImage}>
+            {activity?.subImages[0]?.imageUrl && (
+              <Image src={activity.subImages[0].imageUrl} alt="" width={293.5} height={263} />
+            )}
+          </div>
+          <div className={S.subImage}>
+            {activity?.subImages[1]?.imageUrl && (
+              <Image src={activity.subImages[1].imageUrl} alt="" width={293.5} height={263} />
+            )}
+          </div>
+          <div className={S.subImage}>
+            {activity?.subImages[2]?.imageUrl && (
+              <Image src={activity.subImages[2].imageUrl} alt="" width={293.5} height={263} />
+            )}
+          </div>
+          <div className={S.subImage}>
+            {activity?.subImages[3]?.imageUrl && (
+              <Image src={activity.subImages[3].imageUrl} alt="" width={293.5} height={263} />
+            )}
+          </div>
+        </div>
       </div>
 
       <hr className={S.hr} />
