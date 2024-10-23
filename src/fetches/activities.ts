@@ -32,14 +32,12 @@ export interface GetActivitiesProps {
   title?: string;
 }
 
-const getActivities = async (option: GetActivitiesProps) => {
+export const getActivities = async (option: GetActivitiesProps) => {
   const response = await axiosInstance.get<GetActivitiesResponse>(`/activities`, {
     params: option,
   });
   return response.data;
 };
-
-export { getActivities };
 
 export interface ActivitySubImages {
   id: number;
@@ -62,7 +60,7 @@ export interface GetActivityIdProps {
   id: number;
 }
 
-const getActivityId = async ({ id }: GetActivityIdProps) => {
+export const getActivityId = async ({ id }: GetActivityIdProps) => {
   const response = await axiosInstance.get<GetActivityIdResponse>(`/activities/${id}`, {
     params: {
       include: 'subImages,schedules',
@@ -70,5 +68,3 @@ const getActivityId = async ({ id }: GetActivityIdProps) => {
   });
   return response.data;
 };
-
-export { getActivityId };
