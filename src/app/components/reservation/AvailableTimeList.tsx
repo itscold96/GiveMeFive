@@ -7,11 +7,19 @@ import { useReservationStore } from '@/stores/useReservationStore';
 export default function AvailableTimeList({ schedule }: { schedule: Schedule[] | undefined }) {
   const { selectedDate, selectedTime } = useReservationStore(state => state.reservation);
   const { setSelectedTime } = useReservationStore(state => state.action);
+
   const availableTimesOfSelectedDate =
     schedule
-      ?.filter(schedule => schedule.date === dayjs(selectedDate).format('YYYY-MM-DD')) // 스케쥴 배열에서 선택된 날짜에 맞는 스케쥴만 필터링한 뒤, times 프로퍼티의 값만 걸러낸다.
-      .map(schedule => schedule.times) // times가 배열이라 times끼리 모으면 2차원 배열이되므로 flat으로 한 겹 벗겨내어 1차원 객체 배열로 만들어준다.
-      .flat() || [];
+      ?.filter(schedule => dayjs(schedule.date).isSame(selectedDate, 'day')) // 선택된 날짜와 같은 스케줄만 필터링
+      .map(schedule => schedule.times) // 스케줄의 times 배열만 추출
+      .flat() // times 배열끼리 모여있는 2차원 배열을 1차원 time 배열로 변환
+      .filter(time => {
+        // 시작 시간이 현재 시간 이후인 예약만 필터링
+        const selectedDay = dayjs(selectedDate); // 선택된 날짜의 dayjs 객체
+        const [startHour, startMinute] = time.startTime.split(':').map(Number); // 시간을 분리해서 숫자로 변환
+        const startDateTime = selectedDay.set('hour', startHour).set('minute', startMinute); // 선택된 날짜에 시간 추가
+        return startDateTime.isAfter(dayjs(), 'minute'); // 현재 시간과 비교
+      }) || [];
 
   return (
     <div className={S.availableTimeList}>

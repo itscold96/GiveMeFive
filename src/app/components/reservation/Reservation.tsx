@@ -17,7 +17,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
 
   return (
-    <div style={{}}>
+    <div>
       <div className={S.reservationContainer}>
         <section className={S.priceContainer}>
           <p>
