@@ -30,6 +30,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
           <div className={S.separator} />
         </section>
 
+        {/* 이미 SSR 시에는 렌더링 되지 않도록 ResponsiveReservation 따로 처리하였으므로, 추가적으로 dynamic 처리를 하지 않아도, 순간 바뀌는 것이 눈에 띄지 않는다. */}
         {isTabletSize ? <CalendarModal activityId={activityId} /> : <ReservationSelector activityId={activityId} />}
 
         <HeadCountStepper />
