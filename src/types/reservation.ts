@@ -35,3 +35,9 @@ export interface ReservationComponentProps {
   handleDateSelect: ({ date, availableDates }: { date: Date; availableDates: string[] }) => void;
   handleTimeSelect: (time: Time) => void;
 }
+
+export interface SubmitReservationParams {
+  activityId: number;
+  scheduleId: number;
+  headCount: number;
+}

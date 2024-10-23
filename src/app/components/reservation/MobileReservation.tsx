@@ -8,16 +8,21 @@ import ReservationSelector from './ReservationSelector';
 import dayjs from 'dayjs';
 import { useReservationStore } from '@/stores/useReservationStore';
 import ReservationModal from './ReservationModal';
+import { useReservationSubmit } from '@/hooks/useReservationSubmit';
+import ConfirmModal from '../@shared/modal/ConfirmModal';
 
 export default function MobileReservation({ price, activityId }: ReservationProps) {
   const { headCount, selectedDate, selectedTime } = useReservationStore(state => state.reservation);
   const { toggleValue: isSelectDateModalOpen, toggleDispatch: SelectDateModalToggleDispatch } = useToggle();
   const { toggleValue: isStepperModalOpen, toggleDispatch: stepperModalToggleDispatch } = useToggle();
+  const { handleReservationSubmit, isModalOpen, modalMessage, modalToggle } = useReservationSubmit(activityId);
+
   const selectDateModalButtonText = selectedTime
     ? `${dayjs(selectedDate).format('YYYY/MM/DD')} ${selectedTime.startTime} ~ ${selectedTime.endTime}`
     : '날짜 선택하기';
 
   const totalPrice = `₩ ${getCurrencyFormat(price * headCount)}`;
+
   return (
     <div className={S.mobileReservationContainer}>
       <section className={S.selectorContainer}>
@@ -45,15 +50,25 @@ export default function MobileReservation({ price, activityId }: ReservationProp
           <ReservationSelector activityId={activityId} />
         </ReservationModal>
       </section>
+
       <Button
         borderRadius="radius4"
         buttonColor="nomadBlack"
         padding="padding14"
         textSize="md"
         className={S.submitButton}
+        onClick={handleReservationSubmit}
       >
         예약하기
       </Button>
+
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={() => modalToggle({ type: 'off' })}
+        onConfirm={() => modalToggle({ type: 'off' })}
+        message={modalMessage}
+        confirmButtonText="확인"
+      />
     </div>
   );
 }

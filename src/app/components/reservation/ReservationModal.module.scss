@@ -14,11 +14,6 @@
     margin-top: 50px;
   }
 
-  button {
-    border: none;
-    background-color: $white;
-  }
-
   @include mobile {
     border-radius: 0;
   }

@@ -28,6 +28,8 @@
         @include text2LgMedium;
         color: $green300;
         text-decoration: underline;
+        border: none;
+        background-color: $white;
       }
     }
 
@@ -37,16 +39,13 @@
       padding: 0;
       color: $green300;
       text-decoration: underline;
+      border: none;
+      background-color: $white;
     }
   }
 
   .submitButton {
     width: 106px;
     height: 48px;
-  }
-
-  button {
-    border: none;
-    background-color: $white;
   }
 }

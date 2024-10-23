@@ -10,11 +10,14 @@ import { useMediaQuery } from '@mantine/hooks';
 import CalendarModal from './CalendarModal';
 import { ReservationProps } from '@/types/reservation';
 import { useReservationStore } from '@/stores/useReservationStore';
+import ConfirmModal from '../@shared/modal/ConfirmModal';
+import { useReservationSubmit } from '@/hooks/useReservationSubmit';
 
 export default function Reservation({ activityId, price }: ReservationProps) {
   const { headCount } = useReservationStore(state => state.reservation);
   const isTabletSize = useMediaQuery('(max-width: 1200px)');
   const perPersonPrice = `₩ ${getCurrencyFormat(price)}`;
+  const { handleReservationSubmit, isModalOpen, modalMessage, modalToggle } = useReservationSubmit(activityId);
 
   return (
     <div>
@@ -37,9 +40,18 @@ export default function Reservation({ activityId, price }: ReservationProps) {
           padding="padding14"
           textSize="md"
           className={S.submitButton}
+          onClick={handleReservationSubmit}
         >
           예약하기
         </Button>
+
+        <ConfirmModal
+          isOpen={isModalOpen}
+          onClose={() => modalToggle({ type: 'off' })}
+          onConfirm={() => modalToggle({ type: 'off' })}
+          message={modalMessage}
+          confirmButtonText="확인"
+        />
 
         <section className={classNames(S.totalContainer, S.sectionTitle)}>
           <div className={S.separator} />
