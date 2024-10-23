@@ -37,3 +37,8 @@ export const getMyActivities = async (params: GetMyActivitiesProps) => {
   });
   return response.data;
 };
+
+export const deleteMyActivity = async (id: number) => {
+  const response = await axiosAuth.delete(`/my-activities/${id}`);
+  return response.data;
+};

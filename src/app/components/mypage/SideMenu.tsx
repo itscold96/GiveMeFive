@@ -42,8 +42,8 @@ const SideMenu: React.FC = () => {
               관리
             </Link>
           </li>
-          <li className={pathname === '/mypage/reservationstatus' ? S.active : ''}>
-            <Link href="/mypage/reservationstatus">
+          <li className={pathname === '/mybookingstatus' ? S.active : ''}>
+            <Link href="/mybookingstatus">
               <Image src={ReservationStatusIcon} alt="Reservation Status" className={S.menuIcon} />
               예약 현황
             </Link>
