@@ -10,15 +10,27 @@ import ReservationHistoryIcon from '@/images/sidemenuIcon/reservationhistory-Ico
 import MyExperienceManagementIcon from '@/images/sidemenuIcon/myexperiencemanagement-Icon.svg';
 import ReservationStatusIcon from '@/images/sidemenuIcon/reservationstatus-Icon.svg';
 import ProfileButtonIcon from '@/images/sidemenuIcon/profile-button-icon.svg';
-import ProfileImage from '@/images/sidemenuIcon/profile-image.svg';
+import DefaultProfileImage from '@/images/profiles/default-profile.svg'; // 기본 프로필 이미지 경로
+import { useUserQuery } from '@/queries/useUserQuery'; // 유저 쿼리 import
 
 const SideMenu: React.FC = () => {
+  const { data: userInfo } = useUserQuery(); // 유저 정보 가져오기
+  const profileImageUrl = userInfo?.profileImageUrl || null; // 프로필 이미지 URL
+
   const pathname = usePathname();
 
   return (
     <aside className={S.sideMenu}>
       <div className={S.profileContainer}>
-        <Image src={ProfileImage} alt="Profile" className={S.profileImage} />
+        <div className={S.profileImageWrapper}>
+          <Image
+            src={profileImageUrl || DefaultProfileImage} // profileImageUrl이 null일 때 기본 이미지 사용
+            alt="Profile"
+            layout="fill" // 부모 요소의 크기에 맞춰서 이미지 크기 조절
+            objectFit="cover" // 이미지가 부모 요소의 비율에 맞춰 잘리도록 설정
+            className={S.profileImage} // 원형 스타일을 위한 클래스
+          />
+        </div>
         <div className={S.editIcon}>
           <Image src={ProfileButtonIcon} alt="Edit Profile" className={S.editButtonIcon} />
         </div>
