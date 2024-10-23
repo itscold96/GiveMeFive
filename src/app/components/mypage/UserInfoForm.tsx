@@ -46,7 +46,6 @@ const UserInfoForm: React.FC = () => {
     try {
       await patchUserInfo({
         nickname: formData.nickname,
-        password: formData.password,
       });
       setModalOpen(true);
     } catch (error) {
