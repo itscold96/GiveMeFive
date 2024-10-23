@@ -1,5 +1,5 @@
 import S from './CategoryAndDropdown.module.scss';
-import Dropdown from '../../../../components/@shared/dropdown/Dropdown';
+import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import { useRef, useEffect } from 'react';
 
