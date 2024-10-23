@@ -8,12 +8,13 @@ import { useState, useEffect, useMemo } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery, useSearchActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
-
+import { useRouter } from 'next/navigation';
 interface AllZoneCardProps {
   searchTerm: string;
 }
 
 export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
+  const router = useRouter();
   const [selectedSort, setSelectedSort] = useState<string | undefined>(undefined);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
   const [page, setPage] = useState(1);
@@ -97,7 +98,7 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
       ) : (
         <div className={S.allZoneCardContainer}>
           {filteredActivities.map(activity => (
-            <div key={activity.id}>
+            <div key={activity.id} onClick={() => router.push(`/activity/${activity.id}`)}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
