@@ -14,8 +14,28 @@
 }
 
 .bestZoneCardContainer {
+  position: relative;
+  flex-grow: 1;
   display: flex;
   gap: 24px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; // iOS에서 부드러운 스크롤
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include tablet {
+    align-items: stretch;
+  }
+
+  @include mobile {
+    align-items: stretch;
+  }
 }
 
 .bestZoneCardImage {
@@ -27,6 +47,11 @@
   border-radius: 20px;
   border: 1px solid $gray300;
   background-color: $gray900;
+
+  @include mobile {
+    width: 186px;
+    height: 186px;
+  }
 }
 
 .bestZoneCardContent {
@@ -42,11 +67,16 @@
 .bestZoneCardRating {
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
 .bestZoneCardRatingText {
   @include textMdSemibold;
   color: $white;
+
+  @include mobile {
+    @include textMdSemibold;
+  }
 }
 
 .bestZoneCardTitle {
@@ -55,11 +85,19 @@
   width: 251px;
   @include text3XlBold;
   color: $white;
+
+  @include mobile {
+    @include text2LgBold;
+  }
 }
 
 .bestZoneCardPrice {
-  @include textLgBold;
+  @include textXlBold;
   color: $white;
+
+  @include mobile {
+    @include textLgBold;
+  }
 }
 
 .bestZoneCardPriceUnit {

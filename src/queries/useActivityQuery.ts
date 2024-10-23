@@ -8,15 +8,15 @@ export const useActivitiesQuery = (params: GetActivitiesProps) => {
   });
 };
 
-export const useBestActivitiesQuery = (page: number) => {
+export const useBestActivitiesQuery = (page: number, size: number) => {
   return useQuery<GetActivitiesResponse, Error>({
-    queryKey: ['bestActivities', page],
+    queryKey: ['bestActivities', page, size],
     queryFn: () =>
       getActivities({
         sort: 'most_reviewed',
         method: 'offset',
         page,
-        size: 3,
+        size,
       }),
   });
 };
