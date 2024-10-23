@@ -15,6 +15,13 @@
   display: flex;
   gap: 12px;
 
+  .noAvailableTime {
+    width: 100%;
+    text-align: center;
+    @include textLgMedium;
+    color: $gray900;
+  }
+
   .availableTime {
     min-width: fit-content;
     border: 1px solid $nomadBlack;

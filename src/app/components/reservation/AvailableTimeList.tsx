@@ -15,6 +15,9 @@ export default function AvailableTimeList({ schedule }: { schedule: Schedule[] |
 
   return (
     <div className={S.availableTimeList}>
+      {availableTimesOfSelectedDate?.length === 0 && (
+        <p className={S.noAvailableTime}>해당 날짜에 예약 가능한 시간이 없습니다.</p>
+      )}
       {availableTimesOfSelectedDate.map(time => (
         <div
           key={time.id}
