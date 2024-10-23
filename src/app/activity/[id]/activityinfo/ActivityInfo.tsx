@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Dropdown from '../../../components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
+import Map from './map';
 
 export default function ActivityInfo({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
@@ -38,18 +39,16 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div>
-          <Dropdown
-            type="kebab"
-            data={dropdownList}
-            onChange={onDropdownChange}
-            toggleDropdown={toggleDropdown}
-            isDropdownToggle={isDropdownToggle}
-          />
-        </div>
+        <Dropdown
+          type="kebab"
+          data={dropdownList}
+          onChange={onDropdownChange}
+          toggleDropdown={toggleDropdown}
+          isDropdownToggle={isDropdownToggle}
+        />
       </div>
       <div className={S.imageContainer}>
-        <Image src={activity?.bannerImageUrl} alt="" width={384} height={384} />
+        {activity?.bannerImageUrl && <Image src={activity.bannerImageUrl} alt="" width={595} height={534} />}
       </div>
 
       <hr className={S.hr} />
@@ -61,7 +60,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
       <hr className={S.hr} />
 
       <div className={S.mapContainer}>
-        <div className={S.map}>지도</div>
+        <div className={S.map}>{activity?.address && <Map address={activity.address} />} </div>
 
         <div className={S.locationContainer}>
           <Image src={location} alt="" width={18} height={18} />
