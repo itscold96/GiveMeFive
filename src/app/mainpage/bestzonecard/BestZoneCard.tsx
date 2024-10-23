@@ -6,8 +6,10 @@ import Star from '@/images/star-icon.svg';
 import { useState, useEffect } from 'react';
 import ArrowButton from './arrowButton/ArrowButton';
 import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
+import { useRouter } from 'next/navigation';
 
 export default function BestZoneCard() {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [isWideScreen, setIsWideScreen] = useState(false);
   const size = isWideScreen ? 3 : 100; // 와이드스크린일 때 3개, 아닐 때 100개
@@ -52,7 +54,7 @@ export default function BestZoneCard() {
 
       <div className={S.bestZoneCardContainer}>
         {displayedActivities.map(activity => (
-          <div key={activity.id} className={S.bestZoneCard}>
+          <div key={activity.id} className={S.bestZoneCard} onClick={() => router.push(`/activity/${activity.id}`)}>
             <div className={S.bestZoneCardImage}>
               {!imgError[activity.id] && (
                 <Image
