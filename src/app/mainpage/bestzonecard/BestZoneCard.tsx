@@ -54,7 +54,7 @@ export default function BestZoneCard() {
 
       <div className={S.bestZoneCardContainer}>
         {displayedActivities.map(activity => (
-          <div key={activity.id} className={S.bestZoneCard} onClick={() => router.push(`/activity/${activity.id}`)}>
+          <div key={activity.id} className={S.bestZoneCard} onClick={() => router.push(`/activities/${activity.id}`)}>
             <div className={S.bestZoneCardImage}>
               {!imgError[activity.id] && (
                 <Image
