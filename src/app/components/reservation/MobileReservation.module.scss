@@ -40,22 +40,6 @@
     }
   }
 
-  .modal {
-    border-radius: 0;
-    position: relative;
-
-    .modalTitle {
-      position: absolute;
-      top: 15px;
-      @include text2XlBold;
-    }
-
-    .modalCloseButton {
-      width: 100%;
-      margin-top: 50px;
-    }
-  }
-
   .submitButton {
     width: 106px;
     height: 48px;
