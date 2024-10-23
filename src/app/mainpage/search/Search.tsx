@@ -1,6 +1,6 @@
 import S from './Search.module.scss';
-import Input from '../../../components/@shared/input/Input';
-import Button from '../../../components/@shared/button/Button';
+import Input from '@/app/components/@shared/input/Input';
+import Button from '@/app/components/@shared/button/Button';
 import { useForm } from 'react-hook-form';
 interface SearchProps {
   onSearch: (searchTerm: string) => void;

@@ -4,9 +4,14 @@
   width: 100%;
   height: 550px;
   position: relative;
+  z-index: -1;
 
   // 엑박일 경우 사진 색상
   background-color: $gray900;
+
+  @include mobile {
+    height: 240px;
+  }
 }
 
 .bannerImage {
@@ -19,6 +24,10 @@
   max-width: 1200px;
   top: 35%;
   right: 50%;
+
+  @include mobile {
+    top: 30%;
+  }
 }
 
 .bannerContent {
@@ -26,15 +35,40 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @include tablet {
+    margin-left: 20px;
+  }
+
+  @include mobile {
+    max-width: 190px;
+    margin-left: 10px;
+    gap: 8px;
+  }
 }
 
 .bannerTitle {
   @include text4XlBold;
   color: $white;
+
+  @include tablet {
+    @include text3-5XlBold;
+  }
+
+  @include mobile {
+    @include text2XlBold;
+  }
 }
 
 .bannerSubtitle {
   @include text2XlBold;
   color: $white;
-  //   margin-top: 20px;
+
+  @include tablet {
+    @include textXlBold;
+  }
+
+  @include mobile {
+    @include textMdBold;
+  }
 }
