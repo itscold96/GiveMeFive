@@ -40,3 +40,35 @@ const getActivities = async (option: GetActivitiesProps) => {
 };
 
 export { getActivities };
+
+export interface ActivitySubImages {
+  id: number;
+  imageUrl: string;
+}
+
+export interface ActivitySchedules {
+  id: number;
+  date: Date;
+  startTime: string;
+  endTime: string;
+}
+
+export interface GetActivityIdResponse extends Activity {
+  subImages: ActivitySubImages[];
+  schedules: ActivitySchedules[];
+}
+
+export interface GetActivityIdProps {
+  id: number;
+}
+
+const getActivityId = async ({ id }: GetActivityIdProps) => {
+  const response = await axiosInstance.get<GetActivityIdResponse>(`/activities/${id}`, {
+    params: {
+      include: 'subImages,schedules',
+    },
+  });
+  return response.data;
+};
+
+export { getActivityId };

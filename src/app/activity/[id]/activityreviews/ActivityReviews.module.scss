@@ -1,0 +1,100 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.hr,
+.hr2 {
+  width: 790px;
+  height: 1px;
+  opacity: 0.25;
+  background-color: $nomadBlack;
+}
+
+.hr {
+  margin: 34px 0;
+}
+
+.hr2 {
+  margin: 16px 0;
+}
+
+.activityReviewAndPagination {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.activityReview {
+  @include text2LgBold;
+  color: $nomadBlack;
+}
+
+.averageRatingAndSatisfaction {
+  width: 187px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.averageRating {
+  @include text3-25XlSemibold;
+  color: $nomadBlack;
+}
+
+.satisfaction {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.satisfactionTitle {
+  @include text2Lg;
+  color: $nomadBlack;
+}
+
+.reviewCountContainer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.reviewCount {
+  @include textMdRegular;
+  color: $black;
+}
+
+.reviewContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.profileImage {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: $gray300;
+}
+
+.reviewInfo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.reviewer {
+  @include textLgBold;
+  color: $nomadBlack;
+}
+
+.dash {
+  @include textMdRegular;
+  color: $nomadBlack;
+}
+
+.reviewDate {
+  @include textLgRegular;
+  color: $gray600;
+}
+
+.reviewContent {
+  @include textLgRegular;
+  color: $nomadBlack;
+}
