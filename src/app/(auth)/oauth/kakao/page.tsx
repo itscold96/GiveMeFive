@@ -1,5 +1,6 @@
 'use client';
 
+import { KAKAO_SIGNUP_OAUTH_URL } from '@/constants/oauth';
 import { oauthSignin } from '@/fetches/oauthSignin';
 import { useUserStore } from '@/stores/useUserStore';
 import { LoginReturn } from '@/types/auth';
@@ -29,7 +30,7 @@ export default function RedirectKakao() {
         router.replace('/');
       } catch (error) {
         if (error instanceof AxiosError && error.status === 403) {
-          router.replace(`/oauth/kakao/signup/${code}`);
+          router.replace(KAKAO_SIGNUP_OAUTH_URL);
         }
       }
     };

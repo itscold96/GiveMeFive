@@ -98,7 +98,7 @@ export default function AllZoneCard({ searchTerm }: AllZoneCardProps) {
       ) : (
         <div className={S.allZoneCardContainer}>
           {filteredActivities.map(activity => (
-            <div key={activity.id} onClick={() => router.push(`/activity/${activity.id}`)}>
+            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
