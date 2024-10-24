@@ -1,5 +1,4 @@
-import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -7,46 +6,40 @@ declare global {
   }
 }
 
+interface KakaoAddressResult {
+  x: number;
+  y: number;
+}
+
 export default function Map({ address }: { address: string }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isKakaoLoaded || !mapRef.current || !window.kakao || !window.kakao.maps) return;
+    const script = document.createElement('script');
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`;
+    script.async = true;
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        if (!mapRef.current) return;
 
-    window.kakao.maps.load(() => {
-      const geocoder = new window.kakao.maps.services.Geocoder();
-
-      geocoder.addressSearch(address, (result: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-          const options = {
-            center: coords,
-            level: 3,
-          };
-          const map = new window.kakao.maps.Map(mapRef.current, options);
-
-          new window.kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
-        } else {
-          console.error('주소를 찾을 수 없습니다.');
-        }
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(address, (result: KakaoAddressResult[], status: string) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+            const map = new window.kakao.maps.Map(mapRef.current, {
+              center: coords,
+              level: 3,
+            });
+            new window.kakao.maps.Marker({ position: coords, map: map });
+          }
+        });
       });
-    });
-  }, [isKakaoLoaded, address]);
+    };
+    document.head.appendChild(script);
 
-  return (
-    <>
-      <Script
-        strategy="afterInteractive"
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
-        onLoad={() => setIsKakaoLoaded(true)}
-      />
-      <div ref={mapRef} style={{ width: '100%', height: '476px' }}>
-        {!isKakaoLoaded && <p>지도를 불러오는 중...</p>}
-      </div>
-    </>
-  );
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, [address]);
+  return <div ref={mapRef} style={{ width: '100%', height: '476px' }} />;
 }
