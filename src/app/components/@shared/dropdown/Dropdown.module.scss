@@ -86,6 +86,7 @@
 
 .kebabDropdownInfo {
   top: 50px;
+  right: 0;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -101,6 +102,7 @@
 
 .hideDropdownInfo {
   top: 10px;
+  right: 10px;
   position: absolute;
   display: flex;
   flex-direction: column;
