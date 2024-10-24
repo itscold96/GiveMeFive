@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import S from './MyExperienceManagementCard.module.scss';
 import Dropdown from '../../components/@shared/dropdown/Dropdown';
 import useDropdown from '../../../hooks/useDropdown';
+import AlertModal from '../../components/@shared/modal/AlertModal';
+import { deleteMyActivity } from '../../../fetches/myActivities';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Experience {
   id: number;
@@ -20,18 +23,31 @@ interface MyExperienceManagementCardProps {
 
 function MyExperienceManagementCard({ experience }: MyExperienceManagementCardProps) {
   const actionList = ['수정하기', '삭제하기'];
-  const { onDropdownChange, data, toggleDropdown, isDropdownToggle } = useDropdown(actionList);
+  const { toggleDropdown, isDropdownToggle } = useDropdown(actionList);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const handleActionSelect = function (action: string) {
-    toggleDropdown(); // 액션을 선택할 때 드롭다운을 닫기
-    if (action === '수정하기') {
-      // 수정하기 로직 추가
-      console.log('수정하기 클릭');
-    } else if (action === '삭제하기') {
-      // 삭제하기 로직 추가
-      console.log('삭제하기 클릭');
+  const queryClient = useQueryClient();
+
+  function handleActionSelect(action: string) {
+    toggleDropdown();
+    if (action === '삭제하기') {
+      setIsAlertOpen(true);
     }
-  };
+  }
+
+  function handleCloseAlert() {
+    setIsAlertOpen(false);
+  }
+
+  async function handleConfirmDelete() {
+    try {
+      await deleteMyActivity(experience.id);
+      setIsAlertOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['myActivities'] });
+    } catch (error) {
+      console.error('삭제 실패:', error);
+    }
+  }
 
   return (
     <div className={S.card}>
@@ -45,13 +61,20 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
       </div>
       <div className={S.actions}>
         <Dropdown
-          data={data}
+          data={actionList}
           onChange={handleActionSelect}
           isDropdownToggle={isDropdownToggle}
           toggleDropdown={toggleDropdown}
           type="kebab"
         />
       </div>
+      <AlertModal
+        isOpen={isAlertOpen}
+        onClose={handleCloseAlert}
+        onAlert={handleConfirmDelete}
+        message="정말로 삭제하시겠습니까?"
+        alertButtonText="삭제"
+      />
     </div>
   );
 }
