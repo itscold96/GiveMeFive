@@ -19,7 +19,11 @@ export const useReservationSubmit = (activityId: number) => {
         setModalMessage('예약이 완료되었습니다');
       } catch (error) {
         if (error instanceof AxiosError) {
-          setModalMessage(error.response?.data.message);
+          if (error.status === 401) {
+            setModalMessage('예약을 위해 로그인이 필요합니다.');
+          } else {
+            setModalMessage(error.response?.data.message);
+          }
         }
       } finally {
         modalToggle({ type: 'on' });
