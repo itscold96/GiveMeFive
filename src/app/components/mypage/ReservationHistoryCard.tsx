@@ -4,10 +4,12 @@ import Button from '../@shared/button/Button';
 import AlertModal from '../../components/@shared/modal/AlertModal';
 import Modal from '../../components/@shared/modal/Modal';
 import { cancelReservation } from '@/fetches/reservationHistory';
+import Link from 'next/link'; // Link 컴포넌트 추가
 
 interface Reservation {
   id: number;
   activity: {
+    id: number;
     title: string;
     bannerImageUrl: string;
   };
@@ -113,7 +115,9 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
       <img src={activity.bannerImageUrl} alt={activity.title} className={S.image} />
       <div className={S.info}>
         <div className={`${S.status} ${S[status]}`}>{getStatusLabel()}</div>
-        <div className={S.title}>{activity.title}</div>
+        <Link href={`/activities/${activity.id}`} className={S.title}>
+          {activity.title}
+        </Link>
         <div className={S.details}>
           {date} · {startTime} - {endTime} · {headCount}명
         </div>
