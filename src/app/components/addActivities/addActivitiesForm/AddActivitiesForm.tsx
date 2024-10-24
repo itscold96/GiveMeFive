@@ -17,6 +17,11 @@ import DateTimeInput from '../dateTimeInput/DateTimeInput';
 import BannerImageInput from '../bannerImageInput/BannerImageInput';
 import SubImageInput from '../subImageInput/SubImageInput';
 import S from './AddActivitiesForm.module.scss';
+import { GetActivitiesDetailResponse } from './../../../../fetches/getActivitiesDetail';
+
+interface AddActivitiesFormProps {
+  defaultData?: GetActivitiesDetailResponse;
+}
 
 const CATEGORY = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 const config: ValidationConfig = {
@@ -67,7 +72,7 @@ const config: ValidationConfig = {
   },
 };
 
-export default function AddActivitiesForm() {
+export default function AddActivitiesForm({ defaultData }: AddActivitiesFormProps) {
   const [loading, setLoading] = useState(false);
   const { data, onDropdownChange, toggleDropdown, isDropdownToggle, selectedValue } = useDropdown(CATEGORY);
   const { errors, register, handleSubmit, reset, getValues, setValue } = useValidForm({
@@ -78,10 +83,15 @@ export default function AddActivitiesForm() {
   const handleFormSubmit = async (formData: any) => {
     if (loading) return;
     setLoading(true);
+    let bannerUrl = defaultData?.bannerImageUrl;
+    if (formData.bannerImageUrl instanceof File) {
+      bannerUrl = await createImageUrl(formData.bannerImageUrl);
+    }
     const typedData: SubmitActivitiesParams = {
       ...formData,
-      price: Number(formData.price), // 가격을 숫자로 변환
-      bannerImageUrl: await createImageUrl(formData.bannerImageUrl),
+      price: Number(formData.price),
+
+      bannerImageUrl: bannerUrl,
       subImageUrls: await createImageUrls(formData.subImageUrls),
     };
     try {
@@ -107,11 +117,31 @@ export default function AddActivitiesForm() {
   };
 
   useEffect(() => {
+    if (defaultData) {
+      console.log(defaultData);
+      reset({
+        title: defaultData.title,
+        category: defaultData.category,
+        description: defaultData.description,
+        price: defaultData.price,
+        address: defaultData.address,
+        bannerImageUrl: defaultData.bannerImageUrl,
+        schedules: defaultData.schedules,
+        subImages: defaultData.subImages,
+      });
+      onDropdownChange(defaultData.category);
+    }
+  }, [defaultData, reset]);
+
+  useEffect(() => {
     const handleCategory = () => {
       setValue('category', selectedValue);
     };
     handleCategory();
   }, [selectedValue]);
+  const onClick = () => {
+    console.log(getValues());
+  };
 
   return (
     <div>
@@ -121,6 +151,9 @@ export default function AddActivitiesForm() {
       >
         <div className={S.head}>
           <div className={S.headText}>내 체험 등록</div>
+          <button type="button" onClick={onClick}>
+            테스트
+          </button>
           <Button
             buttonColor="nomadBlack"
             textSize="md"
@@ -157,7 +190,7 @@ export default function AddActivitiesForm() {
           message={errors.price?.message}
           type="number"
         />
-        <DaumAddress errors={errors} register={register} setValue={setValue} />
+        <DaumAddress errors={errors} register={register} setValue={setValue} getValues={getValues} />
         <label htmlFor="availableTime">예약 가능한 시간대</label>
         <DateTimeInput
           setValue={setValue}
@@ -165,8 +198,14 @@ export default function AddActivitiesForm() {
           id="availableTime"
           error={errors.schedules}
           message={errors.schedules?.message}
+          defaultDataSchedules={defaultData?.schedules}
         />
-        <BannerImageInput error={errors.bannerImageUrl} message={errors.bannerImageUrl?.message} setValue={setValue} />
+        <BannerImageInput
+          defaultDataBannerImage={defaultData?.bannerImageUrl}
+          error={errors.bannerImageUrl}
+          message={errors.bannerImageUrl?.message}
+          setValue={setValue}
+        />
         <SubImageInput error={errors.subImageUrls} message={errors.subImageUrls?.message} setValue={setValue} />
       </form>
     </div>

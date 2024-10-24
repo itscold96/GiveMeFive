@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import S from './BannerImageInput.module.scss';
 import plusIcon from '@/images/plus-icon.svg';
@@ -9,8 +9,9 @@ interface BannerImageInputProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   message?: string | FieldError | Merge<FieldError, FieldErrorsImpl>;
   setValue?: any;
+  defaultDataBannerImage?: string;
 }
-export default function BannerImageInput({ error, message, setValue }: BannerImageInputProps) {
+export default function BannerImageInput({ error, message, setValue, defaultDataBannerImage }: BannerImageInputProps) {
   const [imagePreview, setImagePreview] = useState('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +27,11 @@ export default function BannerImageInput({ error, message, setValue }: BannerIma
     setValue('bannerImageUrl', '');
     setImagePreview('');
   };
-
+  useEffect(() => {
+    if (defaultDataBannerImage) {
+      setImagePreview(defaultDataBannerImage);
+    }
+  }, [defaultDataBannerImage]);
   return (
     <div className={S.container}>
       <div className={S.labelName}>배너 이미지</div>
