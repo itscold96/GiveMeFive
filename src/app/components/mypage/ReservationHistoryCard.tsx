@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import S from './ReservationHistoryCard.module.scss';
 import Button from '../@shared/button/Button';
+import AlertModal from '../../components/@shared/modal/AlertModal';
+import { cancelReservation } from '@/fetches/reservationHistory';
 
 interface Reservation {
   id: number;
@@ -19,10 +21,12 @@ interface Reservation {
 
 interface ReservationHistoryCardProps {
   reservation: Reservation;
+  onCancelSuccess?: () => void;
 }
 
-function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
+function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHistoryCardProps) {
   const { activity, date, startTime, endTime, headCount, totalPrice, status, reviewSubmitted } = reservation;
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   function getStatusLabel() {
     switch (status) {
@@ -41,6 +45,27 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
     }
   }
 
+  function openAlert() {
+    setIsAlertOpen(true);
+  }
+
+  function handleCloseAlert() {
+    setIsAlertOpen(false);
+  }
+
+  async function handleConfirmDelete() {
+    try {
+      await cancelReservation(reservation.id);
+      setIsAlertOpen(false);
+      console.log('예약이 취소되었습니다.');
+      if (onCancelSuccess) {
+        onCancelSuccess();
+      }
+    } catch (error) {
+      console.error('예약 취소 중 오류가 발생했습니다:', error);
+    }
+  }
+
   function renderActionButton() {
     if (status === 'completed' && !reviewSubmitted) {
       return (
@@ -50,7 +75,7 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
           textSize="md"
           padding="padding8"
           className={S.actionButton}
-          onClick={function () {
+          onClick={() => {
             console.log('후기 작성 클릭됨');
           }}
         >
@@ -66,9 +91,7 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
           textSize="md"
           padding="padding8"
           className={S.actionButton}
-          onClick={function () {
-            console.log('예약 취소 클릭됨');
-          }}
+          onClick={openAlert}
         >
           예약 취소
         </Button>
@@ -91,6 +114,14 @@ function ReservationHistoryCard({ reservation }: ReservationHistoryCardProps) {
           <div className={S.buttonContainer}>{renderActionButton()}</div>
         </div>
       </div>
+
+      <AlertModal
+        isOpen={isAlertOpen}
+        onClose={handleCloseAlert}
+        onAlert={handleConfirmDelete}
+        message="정말로 취소하시겠습니까?"
+        alertButtonText="취소"
+      />
     </div>
   );
 }
