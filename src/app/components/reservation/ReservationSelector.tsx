@@ -1,10 +1,8 @@
 import { useAvailableSchedule } from '@/queries/useAvailableScheduleQuery';
 import S from './ReservationSelector.module.scss';
-import dayjs from 'dayjs';
-import classNames from 'classnames';
 import AvailableTimeList from './AvailableTimeList';
 import { useReservationStore } from '@/stores/useReservationStore';
-import { Calendar } from '@mantine/dates';
+import ReservationCalendar from '../@shared/reservationCalendar/ReservationCalendar';
 
 export default function ReservationSelector({ activityId }: { activityId: number }) {
   const { selectedDate } = useReservationStore(state => state.reservation);
@@ -15,37 +13,19 @@ export default function ReservationSelector({ activityId }: { activityId: number
   const { data: schedule } = useAvailableSchedule({ activityId, year, month, date });
   const availableDates = schedule?.map(schedule => schedule.date) || []; // 예약 가능일자 배열
 
-  const getDayProps = (date: Date) => {
-    const formattedDate = dayjs(date).format('YYYY-MM-DD');
-    const isAvailable = availableDates?.includes(formattedDate); // 해당 날짜가 선택 가능한 날짜 배열에 있는 지 검사
-    const isSelected = dayjs(selectedDate).isSame(dayjs(date), 'day');
-
-    return {
-      selected: isSelected,
-      onClick: () => setSelectedDate(date),
-      className: classNames({ [S.availableDates]: isAvailable }), // 예약 가능 일에 스타일 부여
-      disabled: !isAvailable, // 예약 가능일이 아니면 선택 불가
-    };
-  };
-
   return (
     <>
       <section className={S.calendarContainer}>
         <p className={S.sectionTitle}>날짜</p>
-        <div className={S.calendarWrapper}>
-          <Calendar
-            date={selectedDate}
-            onNextMonth={date => setSelectedDate(date)}
-            onPreviousMonth={date => setSelectedDate(date)}
-            firstDayOfWeek={0}
-            classNames={{
-              levelsGroup: S.levelsGroup,
-              day: S.day,
-            }}
-            getDayProps={getDayProps}
-            highlightToday
-          />
-        </div>
+        <ReservationCalendar
+          selectedDate={selectedDate} // 선택된 날짜
+          onClickDate={setSelectedDate} // 날짜 클릭 시 실행될 함수, 자동으로 매개변수로 클릭한 날짜 (date:Date)를 받도록 제작하였습니다.
+          availableDates={availableDates} // 선택 가능한 날짜를 (YYYY-MM-DD) 포맷 배열로 넣어주면 됩니다.
+          // 필요한 것이 있다면 Mantine 공식 문서를 참조하여 아래와 같이 추가 작성하면 됩니다.
+          onNextMonth={date => setSelectedDate(date)}
+          onPreviousMonth={date => setSelectedDate(date)}
+          highlightToday
+        />
       </section>
 
       <section className={S.availableTimeContainer}>
