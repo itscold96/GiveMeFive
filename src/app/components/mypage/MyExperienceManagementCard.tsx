@@ -5,6 +5,7 @@ import useDropdown from '../../../hooks/useDropdown';
 import AlertModal from '../../components/@shared/modal/AlertModal';
 import { deleteMyActivity } from '../../../fetches/myActivities';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 
 interface Experience {
   id: number;
@@ -56,7 +57,9 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
         <div className={S.rating}>
           ⭐ {experience.rating} ({experience.reviewCount})
         </div>
-        <div className={S.title}>{experience.title}</div>
+        <Link href={`/activities/${experience.id}`} className={S.title}>
+          {experience.title}
+        </Link>
         <div className={S.price}>₩{experience.price.toLocaleString()}</div>
       </div>
       <div className={S.actions}>

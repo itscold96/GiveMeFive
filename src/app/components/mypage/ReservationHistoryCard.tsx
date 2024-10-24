@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import S from './ReservationHistoryCard.module.scss';
 import Button from '../@shared/button/Button';
 import AlertModal from '../../components/@shared/modal/AlertModal';
+import Modal from '../../components/@shared/modal/Modal';
 import { cancelReservation } from '@/fetches/reservationHistory';
 
 interface Reservation {
@@ -27,6 +28,7 @@ interface ReservationHistoryCardProps {
 function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHistoryCardProps) {
   const { activity, date, startTime, endTime, headCount, totalPrice, status, reviewSubmitted } = reservation;
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   function getStatusLabel() {
     switch (status) {
@@ -66,6 +68,14 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
     }
   }
 
+  function openReviewModal() {
+    setIsReviewModalOpen(true);
+  }
+
+  function closeReviewModal() {
+    setIsReviewModalOpen(false);
+  }
+
   function renderActionButton() {
     if (status === 'completed' && !reviewSubmitted) {
       return (
@@ -75,9 +85,7 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
           textSize="md"
           padding="padding8"
           className={S.actionButton}
-          onClick={() => {
-            console.log('후기 작성 클릭됨');
-          }}
+          onClick={openReviewModal}
         >
           후기 작성
         </Button>
@@ -122,6 +130,10 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
         message="정말로 취소하시겠습니까?"
         alertButtonText="취소"
       />
+
+      <Modal isOpen={isReviewModalOpen} onClose={closeReviewModal}>
+        <div>후기 작성 내용을 여기에 추가하세요.</div>
+      </Modal>
     </div>
   );
 }
