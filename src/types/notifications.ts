@@ -1,11 +1,11 @@
 export interface Notification {
   id: number;
   teamId: string;
-  userId: 0;
+  userId: number;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 }
 
 export interface GetNotificationReturn {

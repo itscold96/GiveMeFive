@@ -1,0 +1,32 @@
+@use '@/styles/abstracts/core' as *;
+
+.alarmContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .notification {
+    border: none;
+    background-color: transparent;
+  }
+
+  .notificationBadge {
+    background-color: red;
+    height: 8px;
+    width: 8px;
+    position: absolute;
+    right: 3px;
+    top: 0;
+    border-radius: 50%;
+
+    @include mobile {
+      right: 3px;
+      top: 3px;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+}

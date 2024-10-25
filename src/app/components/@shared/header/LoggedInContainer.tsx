@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import S from './LoggedInContainer.module.scss';
 import defaultProfileImg from '@/images/profiles/default-profile.svg';
-import notificationIcon from '@/images/icons/Icon-notification.svg';
 import useDropdown from '@/hooks/useDropdown';
 import Dropdown from '../dropdown/Dropdown';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/stores/useUserStore';
+import Alarm from './Alarm';
 
 interface LoggedInContainerProps {
   profileImageUrl: string | null;
@@ -34,9 +34,7 @@ export default function LoggedInContainer({ profileImageUrl, nickname }: LoggedI
 
   return (
     <div className={S.loggedInContainer}>
-      <button className={S.notification}>
-        <Image src={notificationIcon} alt="프로필 이미지" width={20} height={20} />
-      </button>
+      <Alarm />
       <article className={S.verticalSeparator} />
       <div className={S.profileContainer} onClick={toggleDropdown}>
         <Image src={profileImageUrl || defaultProfileImg} alt="프로필 이미지" width={32} height={32} priority />
