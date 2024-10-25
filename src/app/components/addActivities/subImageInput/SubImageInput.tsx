@@ -27,9 +27,11 @@ export default function SubImageInput({
 }: BannerImageInputProps) {
   const [imagePreviews, setImagePreviews] = useState<SubImage[]>([]);
   const [imagePreviewFiles, setImagePreviewFiles] = useState<File[]>([]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0 || imagePreviews.length >= 4) return;
+
     if (defaultDataSubImages) {
       const newPreviews: SubImage[] = files.map(file => ({
         id: undefined,
@@ -43,6 +45,7 @@ export default function SubImageInput({
       setValue('subImageUrlsToAdd', [...newSubImageUrlsToAdd, ...newFiles]);
       return;
     }
+
     const newPreviews: SubImage[] = files.map(file => ({
       id: undefined,
       imageUrl: URL.createObjectURL(file),
@@ -51,6 +54,7 @@ export default function SubImageInput({
     const newFiles = files.map(file => file);
     setImagePreviewFiles(prev => [...prev, ...newFiles]);
   };
+
   const onRemoveImage = (index: number) => {
     setImagePreviews(prevState => {
       const removedSubImageId = prevState[index]?.id;
@@ -64,6 +68,7 @@ export default function SubImageInput({
     });
     setImagePreviewFiles(prevState => prevState.filter((_, i) => i !== index));
   };
+
   useEffect(() => {
     if (defaultDataSubImages) {
       const previews = defaultDataSubImages.map((image: SubImage) => ({

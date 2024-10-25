@@ -55,7 +55,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
     price: {
       required: '해당 입력란은 비워둘 수 없습니다.',
       minLength: {
-        value: 2, // 최소 길이
+        value: 2,
         message: '2자 이상으로 작성해주세요.',
       },
       maxLength: VALID_OPTIONS.maxLength10,
@@ -63,7 +63,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
     address: {
       required: '해당 입력란은 비워둘 수 없습니다.',
       minLength: {
-        value: 2, // 최소 길이
+        value: 2,
         message: '2자 이상으로 작성해주세요.',
       },
       maxLength: VALID_OPTIONS.maxLength50,
@@ -109,7 +109,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
       subImageUrls: await createImageUrls(formData.subImageUrls),
     };
     try {
-      const data = await postActivities(typedData);
+      await postActivities(typedData);
       router.replace('/');
     } catch (error: any) {
       if (error.response) {
@@ -150,7 +150,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
     };
 
     try {
-      const data = await editActivities(typedData, activityId);
+      await editActivities(typedData, activityId);
       router.replace('/');
     } catch (error: any) {
       if (error.response) {
