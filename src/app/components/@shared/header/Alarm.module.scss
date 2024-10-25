@@ -7,6 +7,7 @@
   justify-content: center;
 
   .notification {
+    display: flex; // 중앙 정렬을 위한 flex
     border: none;
     background-color: transparent;
   }
