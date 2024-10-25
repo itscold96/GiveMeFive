@@ -1,9 +1,9 @@
 @use '@/styles/abstracts/core' as *;
 
 .notificationModalContainer {
-  position: fixed;
-  top: 80px;
-  right: 20px;
+  position: absolute;
+  top: 60px;
+  right: -90px;
   background-color: $green100;
 
   padding: 24px 20px;
@@ -14,6 +14,7 @@
   z-index: 2;
 
   @include mobile {
+    position: fixed;
     height: 100dvh;
     width: 100dvw;
     top: 0;

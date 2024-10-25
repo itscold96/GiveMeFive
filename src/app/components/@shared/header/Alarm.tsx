@@ -3,7 +3,7 @@ import S from './Alarm.module.scss';
 import NotificationModal from '@/app/components/@shared/header/notification/NotificationModal';
 import notificationIcon from '@/images/icons/Icon-notification.svg';
 import { useToggle } from '@/hooks/useToggle';
-import Portal from '../portal/Portal';
+import Portal from '../backdrop/Portal';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useNotification } from '@/queries/useNotification';
@@ -47,9 +47,9 @@ export default function Alarm() {
       <button className={S.notification} onClick={() => toggleDispatch({ type: 'switch' })}>
         <Image src={notificationIcon} alt="프로필 이미지" width={20} height={20} priority />
       </button>
-      <Portal isOpen={toggleValue} onClose={() => toggleDispatch({ type: 'off' })}>
+      {toggleValue && (
         <NotificationModal onClose={() => toggleDispatch({ type: 'off' })} notificationList={notificationList} />
-      </Portal>
+      )}
     </div>
   );
 }
