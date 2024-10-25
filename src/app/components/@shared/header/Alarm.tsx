@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import S from './Alarm.module.scss';
-import NotificationModal from '@/app/components/@shared/modal/notification/NotificationModal';
+import NotificationModal from '@/app/components/@shared/header/notification/NotificationModal';
 import notificationIcon from '@/images/icons/Icon-notification.svg';
 import { useToggle } from '@/hooks/useToggle';
 import Portal from '../portal/Portal';
