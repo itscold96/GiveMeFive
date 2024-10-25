@@ -49,6 +49,7 @@ export default function Dropdown({
             <Image src={dropdownArrow} alt="드롭다운 화살표" width={22} height={22} />
           </div>
         )}
+
         {isDropdownToggle && (
           <div
             className={

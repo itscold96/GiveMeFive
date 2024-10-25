@@ -18,11 +18,13 @@
 - label(string)?: 라벨 요소에 표출될 텍스트입니다. 값이 없으면 label은 생성되지 않습니다.
 - htmlFor(string)?: 라벨과 연동되기 위한 htmlFor 값입니다. 자동으로 input의 id값에도 같은 값이 부여됩니다.
 - error(FieldError | Merge<FieldError, FieldErrorsImpl>)?: register에 있는 입력 필드의 error 객체입니다.
-- message(string | FieldError | Merge<FieldError, FieldErrorsImpl>)? register에 있는 입력 필드의 massage 객체입니다.:
+- message(string | FieldError | Merge<FieldError, FieldErrorsImpl>)? register에 있는 입력 필드의 massage 객체입니다.
 - register(UseFormRegisterReturn)?: useValidForm 훅에서 반환되는 register 객체입니다.
 - type(HTMLInputTypeAttribute, default: 'text')?: input 타입입니다.
 - placeholder(string)?: 플레이스홀더 텍스트입니다.
 - className(string)?: input을 감싸고 있는 div에 들어갈 className으로, 커스텀 스타일이 가능합니다.
+- value?(string): 특정 value가 고정으로 들어가야 하는 경우 사용할 수 있습니다.
+- onClick?(event: React.MouseEvent<HTMLInputElement>)=>void: button의 onClick 이벤트가 필요한 경우 사용할 수 있습니다.
 
 # useValidForm Custom Hook
 

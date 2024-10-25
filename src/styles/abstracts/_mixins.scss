@@ -19,6 +19,24 @@
 }
 
 // font-style 관련 mixins
+@mixin text4XlBold {
+  font-size: map-get($fontSize, '4Xl');
+  line-height: map-get($lineHeight, '4Xl');
+  font-weight: map-get($fontWeight, 'Bold');
+}
+
+@mixin text3-5XlBold {
+  font-size: map-get($fontSize, '3.5Xl');
+  line-height: map-get($lineHeight, '3.5Xl');
+  font-weight: map-get($fontWeight, 'Bold');
+}
+
+@mixin text3-25XlSemibold {
+  font-size: map-get($fontSize, '3.25Xl');
+  line-height: map-get($lineHeight, '3.25Xl');
+  font-weight: map-get($fontWeight, 'Semibold');
+}
+
 @mixin text3XlBold {
   font-size: map-get($fontSize, '3Xl');
   line-height: map-get($lineHeight, '3Xl');
@@ -29,6 +47,12 @@
   font-size: map-get($fontSize, '3Xl');
   line-height: map-get($lineHeight, '3Xl');
   font-weight: map-get($fontWeight, 'Semibold');
+}
+
+@mixin text3XlRegular {
+  font-size: map-get($fontSize, '3Xl');
+  line-height: map-get($lineHeight, '3Xl');
+  font-weight: map-get($fontWeight, 'Regular');
 }
 
 @mixin text2XlBold {

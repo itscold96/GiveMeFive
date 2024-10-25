@@ -3,6 +3,8 @@ import '@/styles/base/globals.scss';
 import Header from './components/@shared/header/Header';
 import Providers from './components/providers/Providers';
 
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 export const metadata: Metadata = {
   title: 'GiveMeFive!',
   description: '즐거움을 나누는 이색 체험 플랫폼',

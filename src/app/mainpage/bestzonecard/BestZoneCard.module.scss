@@ -1,0 +1,106 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.bestExperienceContainer {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 35px;
+  margin-bottom: 32px;
+}
+
+.experienceText {
+  @include text3XlBold;
+  color: $black;
+}
+
+.bestZoneCardContainer {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  gap: 24px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; // iOS에서 부드러운 스크롤
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include tablet {
+    align-items: stretch;
+  }
+
+  @include mobile {
+    align-items: stretch;
+  }
+}
+
+.bestZoneCardImage {
+  width: 384px;
+  height: 384px;
+  position: relative;
+
+  // 엑박일 경우 사진 크기 가늠할 수 있는 보더
+  border-radius: 20px;
+  border: 1px solid $gray300;
+  background-color: $gray900;
+
+  @include mobile {
+    width: 186px;
+    height: 186px;
+  }
+}
+
+.bestZoneCardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  padding-left: 20px;
+  padding-bottom: 30px;
+  color: $gray900;
+}
+
+.bestZoneCardRating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bestZoneCardRatingText {
+  @include textMdSemibold;
+  color: $white;
+
+  @include mobile {
+    @include textMdSemibold;
+  }
+}
+
+.bestZoneCardTitle {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 251px;
+  @include text3XlBold;
+  color: $white;
+
+  @include mobile {
+    @include text2LgBold;
+  }
+}
+
+.bestZoneCardPrice {
+  @include textXlBold;
+  color: $white;
+
+  @include mobile {
+    @include textLgBold;
+  }
+}
+
+.bestZoneCardPriceUnit {
+  @include textMdRegular;
+  color: $gray700;
+}

@@ -1,0 +1,56 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.categoryDropdownContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+
+  @include tablet {
+    align-items: stretch;
+  }
+
+  @include mobile {
+    align-items: stretch;
+  }
+}
+
+.categoryContainer {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; // iOS에서 부드러운 스크롤
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.category {
+  width: 127px;
+  height: 58px;
+
+  text-align: center;
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid $green300;
+  background-color: $white;
+  @include text2LgMedium;
+  color: $green300;
+
+  &.selected {
+    background-color: $green300;
+    color: $white;
+  }
+
+  flex-shrink: 0;
+}
+
+.dropdownContainer {
+  flex-shrink: 0;
+  padding-left: 35px;
+}
