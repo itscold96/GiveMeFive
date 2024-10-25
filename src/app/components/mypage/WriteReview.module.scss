@@ -51,19 +51,19 @@
     width: 100%;
     min-height: 240px;
     padding: 12px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid $gray300;
     border-radius: 4px;
     margin: 16px 0;
     font-size: 14px;
     resize: vertical;
 
     &::placeholder {
-      color: #999;
+      color: $gray700;
     }
 
     &:focus {
       outline: none;
-      border-color: #666;
+      border-color: $gray900;
     }
   }
 
