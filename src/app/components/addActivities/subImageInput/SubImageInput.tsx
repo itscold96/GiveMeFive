@@ -9,25 +9,78 @@ interface BannerImageInputProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   message?: string | FieldError | Merge<FieldError, FieldErrorsImpl>;
   setValue?: any;
+  defaultDataSubImages?: any;
+  getValues?: any;
 }
 
-export default function SubImageInput({ error, message, setValue }: BannerImageInputProps) {
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+interface SubImage {
+  id?: number;
+  imageUrl: string;
+}
+
+export default function SubImageInput({
+  error,
+  message,
+  setValue,
+  defaultDataSubImages,
+  getValues,
+}: BannerImageInputProps) {
+  const [imagePreviews, setImagePreviews] = useState<SubImage[]>([]);
   const [imagePreviewFiles, setImagePreviewFiles] = useState<File[]>([]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (files.length > 0 && imagePreviews.length < 4) {
-      const newPreviews = files.map(file => URL.createObjectURL(file));
+    if (files.length === 0 || imagePreviews.length >= 4) return;
+
+    if (defaultDataSubImages) {
+      const newPreviews: SubImage[] = files.map(file => ({
+        id: undefined,
+        imageUrl: URL.createObjectURL(file),
+      }));
       setImagePreviews(prev => [...prev, ...newPreviews]);
       const newFiles = files.map(file => file);
       setImagePreviewFiles(prev => [...prev, ...newFiles]);
+      const currentImageUrlsToAdd = getValues('subImageUrlsToAdd');
+      const newSubImageUrlsToAdd = Array.isArray(currentImageUrlsToAdd) ? currentImageUrlsToAdd : [];
+      setValue('subImageUrlsToAdd', [...newSubImageUrlsToAdd, ...newFiles]);
+      e.target.value = '';
+      return;
     }
-  };
-  const onRemoveImage = (index: number) => {
-    setImagePreviews(prev => prev.filter((_, i) => i !== index));
-    setImagePreviewFiles(prev => prev.filter((_, i) => i !== index));
+
+    const newPreviews: SubImage[] = files.map(file => ({
+      id: undefined,
+      imageUrl: URL.createObjectURL(file),
+    }));
+    setImagePreviews(prev => [...prev, ...newPreviews]);
+    const newFiles = files.map(file => file);
+    setImagePreviewFiles(prev => [...prev, ...newFiles]);
+    e.target.value = '';
   };
 
+  const onRemoveImage = (index: number) => {
+    setImagePreviews(prevState => {
+      const removedSubImageId = prevState[index]?.id;
+      if (defaultDataSubImages) {
+        const currentImageUrlIdsToRemove = getValues('subImageIdsToRemove');
+        const newSubImageUrlIdsToRemove = Array.isArray(currentImageUrlIdsToRemove) ? currentImageUrlIdsToRemove : [];
+        setValue('subImageIdsToRemove', [...newSubImageUrlIdsToRemove, removedSubImageId]);
+      }
+      const updateState = prevState.filter((_, i) => i !== index);
+      return updateState;
+    });
+    setImagePreviewFiles(prevState => prevState.filter((_, i) => i !== index));
+  };
+
+  useEffect(() => {
+    if (defaultDataSubImages) {
+      const previews = defaultDataSubImages.map((image: SubImage) => ({
+        id: image.id,
+        imageUrl: image.imageUrl,
+      }));
+      setImagePreviews(previews);
+      setValue('subImageUrls', imagePreviewFiles);
+    }
+  }, [defaultDataSubImages]);
   useEffect(() => {
     setValue('subImageUrls', imagePreviewFiles);
   }, [imagePreviewFiles]);
@@ -39,7 +92,7 @@ export default function SubImageInput({ error, message, setValue }: BannerImageI
         <div className={S.inputBox}>
           <label htmlFor="addSubImage" className={S.labelWrapper}>
             <div className={S.addImageButton}>
-              <Image src={plusIcon} alt="이미지 등록 버튼" width={29.5} height={29.5} />
+              <Image src={plusIcon} alt="이미지 등 록 버튼" width={29.5} height={29.5} />
               <div>이미지 등록</div>
             </div>
           </label>
@@ -50,7 +103,7 @@ export default function SubImageInput({ error, message, setValue }: BannerImageI
             {imagePreviews.map((preview, index) => (
               <div key={`${preview}-${index}`} className={S.imagePreviewWrapper}>
                 <Image
-                  src={preview}
+                  src={preview.imageUrl}
                   alt={`미리보기 이미지 ${index + 1}`}
                   width={180}
                   height={180}

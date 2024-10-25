@@ -8,6 +8,12 @@ import Image from 'next/image';
 import S from './DateTimeInput.module.scss';
 import plusIcon from '@/images/add-plus-button.svg';
 import minusIcon from '@/images/delete-minus-button.svg';
+type DateTimeType = {
+  id?: number;
+  startTime: string;
+  endTime: string;
+  date: string;
+};
 
 interface DateTimeInputProps {
   setValue: any;
@@ -15,22 +21,23 @@ interface DateTimeInputProps {
   id?: string;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   message?: string | FieldError | Merge<FieldError, FieldErrorsImpl>;
+  defaultDataSchedules?: DateTimeType[];
 }
 
-type DateTimeType = {
-  selectDate: Date | null;
-  startTime: string;
-  endTime: string;
-  date: string;
-};
-
-export default function DateTimeInput({ setValue, id, error, message }: DateTimeInputProps) {
+export default function DateTimeInput({
+  setValue,
+  getValues,
+  id,
+  error,
+  message,
+  defaultDataSchedules,
+}: DateTimeInputProps) {
   const [dateTime, setDateTime] = useState<DateTimeType>({
-    selectDate: null as Date | null,
     startTime: '',
     endTime: '',
     date: '',
   });
+
   const [dateTimeBox, setDateTimeBox] = useState<DateTimeType[]>([]);
   const startRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLInputElement>(null);
@@ -50,7 +57,6 @@ export default function DateTimeInput({ setValue, id, error, message }: DateTime
     const formatData = selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : '';
     setDateTime(prevState => ({
       ...prevState,
-      selectDate: selectedDate, // DatePicker에 보여주기 위한 값
       date: formatData, // string으로 포맷된 값 저장
     }));
   };
@@ -72,21 +78,36 @@ export default function DateTimeInput({ setValue, id, error, message }: DateTime
   };
 
   const onAddSchedule = () => {
-    if (dateTime.selectDate && dateTime.startTime && dateTime.endTime) {
+    if (!(dateTime.date && dateTime.startTime && dateTime.endTime)) return;
+    if (defaultDataSchedules) {
+      const currentScheduleToAdd = getValues('schedulesToAdd');
+      const newScheduleToAdd = Array.isArray(currentScheduleToAdd) ? currentScheduleToAdd : [];
+      setValue('schedulesToAdd', [...newScheduleToAdd, dateTime]);
       setDateTimeBox(prevState => [...prevState, dateTime]);
+      return;
     }
+    setDateTimeBox(prevState => [...prevState, dateTime]);
   };
-
   const onRemoveSchedule = (index: number) => {
-    setDateTimeBox(prevState => prevState.filter((_, i) => i !== index));
+    setDateTimeBox(prevState => {
+      const removedScheduleId = prevState[index]?.id;
+      if (removedScheduleId) {
+        const currentScheduleIdsToRemove = getValues('scheduleIdsToRemove');
+        const newScheduleIdsToRemove = Array.isArray(currentScheduleIdsToRemove) ? currentScheduleIdsToRemove : [];
+        setValue('scheduleIdsToRemove', [...newScheduleIdsToRemove, removedScheduleId]);
+      }
+      const updatedState = prevState.filter((_, i) => i !== index);
+      return updatedState;
+    });
   };
-
+  useEffect(() => {
+    if (defaultDataSchedules) {
+      setDateTimeBox(defaultDataSchedules);
+    }
+  }, [defaultDataSchedules]);
   useEffect(() => {
     if (!dateTimeBox) return;
-    const filteredDateTimeBox = dateTimeBox.map(({ selectDate, ...rest }) => ({
-      ...rest,
-    }));
-    setValue('schedules', filteredDateTimeBox);
+    setValue('schedules', dateTimeBox);
   }, [dateTimeBox]);
 
   return (
@@ -100,8 +121,8 @@ export default function DateTimeInput({ setValue, id, error, message }: DateTime
             rightSection={icon}
             leftSectionPointerEvents="none"
             placeholder="YY/MM/DD"
-            value={dateTime.selectDate}
             onChange={onDateSelectChange}
+            value={dateTime.date ? dayjs(dateTime.date).toDate() : null}
             styles={{
               input: {
                 width: '100%',
@@ -160,7 +181,7 @@ export default function DateTimeInput({ setValue, id, error, message }: DateTime
         {dateTimeBox &&
           dateTimeBox.map((item, index) => (
             <div key={`${item}-${index}`} className={S.itemDateTime}>
-              <div className={S.itemDate}>{dayjs(item.selectDate).format('YY/MM/DD')}</div>
+              <div className={S.itemDate}>{dayjs(item.date).format('YY/MM/DD')}</div>
               <div className={S.itemTime}>{item.startTime}</div>
               <div className={S.itemTilde}>~</div>
               <div className={S.itemTime}>{item.endTime}</div>
