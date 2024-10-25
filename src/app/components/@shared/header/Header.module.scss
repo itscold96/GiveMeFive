@@ -12,6 +12,7 @@
   width: 100%;
   border-bottom: 1px solid $gray300;
   background-color: $white;
+  z-index: $headerZIndex;
 }
 
 .headerContents {

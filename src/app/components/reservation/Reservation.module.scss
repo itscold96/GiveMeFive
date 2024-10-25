@@ -1,0 +1,53 @@
+@use '@/styles/abstracts/core' as *;
+
+.reservationContainer {
+  width: 384px;
+
+  padding: 24px 24px 24px 18px;
+  border: 1px solid $gray300;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 16px 0 #1122110d;
+
+  .submitButton {
+    width: 100%;
+  }
+}
+
+.priceContainer {
+  @include text3XlBold;
+  color: $black;
+
+  .perPerson {
+    @include textXlRegular;
+    color: $gray900;
+  }
+
+  .separator {
+    margin: 16px 0;
+  }
+}
+
+.totalContainer {
+  .separator {
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
+  .totalPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $gray300;
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
