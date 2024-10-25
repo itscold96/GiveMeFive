@@ -1,6 +1,9 @@
+import dayjs from 'dayjs';
+
 const getElapsedPeriod = (createdAt: string): string => {
-  const createdDate = new Date(createdAt);
-  const milliSeconds = new Date().getTime() - createdDate.getTime();
+  const createdDate = dayjs(createdAt);
+  const now = dayjs();
+  const milliSeconds = now.valueOf() - createdDate.valueOf(); // 현재 시점과 생성 시점의 밀리세컨드 단위 차이 반환
   const seconds = milliSeconds / 1000;
 
   if (seconds < 60) {
