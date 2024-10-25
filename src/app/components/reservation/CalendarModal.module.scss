@@ -1,0 +1,29 @@
+@use '@/styles/abstracts/core' as *;
+
+.openCalendarButton {
+  background-color: $white;
+  border: none;
+  padding: 5px 0 27px;
+  @include textLgSemibold;
+  text-decoration: underline;
+  color: $nomadBlack;
+
+  &:hover {
+    color: $green200;
+  }
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
+
+.modal {
+  position: relative;
+  .modalTitle {
+    position: absolute;
+    @include text2XlSemibold;
+    color: $nomadBlack;
+    top: 15px;
+  }
+}

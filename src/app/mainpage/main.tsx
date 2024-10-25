@@ -15,7 +15,7 @@ export default function Main() {
     method: 'offset',
     page: 1,
   });
-
+  console.log(activitiesData);
   const firstBestActivity = activitiesData?.activities[0] || null;
 
   const handleSearch = (term: string) => {

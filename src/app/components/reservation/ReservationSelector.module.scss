@@ -1,0 +1,31 @@
+@use '@/styles/abstracts/core' as *;
+
+.calendarContainer {
+  .sectionTitle {
+    padding-bottom: 16px;
+  }
+  
+}
+
+.availableTimeContainer {
+  .sectionTitle {
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  @include desktop {
+    .separator {
+      height: 1px;
+      width: 100%;
+      background-color: $gray300;
+
+      margin-top: 16px;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
