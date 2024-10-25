@@ -4,7 +4,7 @@ import S from './ActivityInfo.module.scss';
 import star from '@/images/star-icon.svg';
 import location from '@/images/location.svg';
 import Image from 'next/image';
-import Dropdown from '../../../components/@shared/dropdown/Dropdown';
+import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import Map from './map';
