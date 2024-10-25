@@ -23,7 +23,7 @@ export default function EditActivities() {
   }, []);
   return (
     <div>
-      <AddActivitiesForm defaultData={defaultData} />
+      <AddActivitiesForm defaultData={defaultData} activityId={activityId} />
     </div>
   );
 }

@@ -80,8 +80,8 @@ export default function DateTimeInput({
   const onAddSchedule = () => {
     if (!(dateTime.date && dateTime.startTime && dateTime.endTime)) return;
     if (defaultDataSchedules) {
-      const currentScheduleIdsToAdd = getValues('schedulesToAdd');
-      const newScheduleToAdd = Array.isArray(currentScheduleIdsToAdd) ? currentScheduleIdsToAdd : [];
+      const currentScheduleToAdd = getValues('schedulesToAdd');
+      const newScheduleToAdd = Array.isArray(currentScheduleToAdd) ? currentScheduleToAdd : [];
       setValue('schedulesToAdd', [...newScheduleToAdd, dateTime]);
       setDateTimeBox(prevState => [...prevState, dateTime]);
       return;
