@@ -3,7 +3,6 @@ import S from './Alarm.module.scss';
 import NotificationModal from '@/app/components/@shared/header/notification/NotificationModal';
 import notificationIcon from '@/images/icons/Icon-notification.svg';
 import { useToggle } from '@/hooks/useToggle';
-import Portal from '../backdrop/Portal';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useNotification } from '@/queries/useNotification';
