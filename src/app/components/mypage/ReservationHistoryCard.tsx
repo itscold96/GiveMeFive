@@ -4,7 +4,8 @@ import Button from '../@shared/button/Button';
 import AlertModal from '../../components/@shared/modal/AlertModal';
 import Modal from '../../components/@shared/modal/Modal';
 import { cancelReservation } from '@/fetches/reservationHistory';
-import Link from 'next/link'; // Link 컴포넌트 추가
+import Link from 'next/link';
+import WriteReview from './WriteReview'; // WriteReview 컴포넌트 import
 
 interface Reservation {
   id: number;
@@ -135,8 +136,18 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
         alertButtonText="취소"
       />
 
+      {/* WriteReview 모달 사용 */}
       <Modal isOpen={isReviewModalOpen} onClose={closeReviewModal}>
-        <div>후기 작성 내용을 여기에 추가하세요.</div>
+        <WriteReview
+          bannerImageUrl={activity.bannerImageUrl}
+          title={activity.title}
+          date={date}
+          startTime={startTime}
+          endTime={endTime}
+          headCount={headCount}
+          totalPrice={totalPrice}
+          onClose={closeReviewModal}
+        />
       </Modal>
     </div>
   );
