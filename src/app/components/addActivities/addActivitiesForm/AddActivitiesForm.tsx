@@ -236,6 +236,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
           register={register.price}
           message={errors.price?.message}
           type="number"
+          className={S.priceInput}
         />
         <DaumAddress errors={errors} register={register} setValue={setValue} getValues={getValues} />
         <label htmlFor="availableTime">예약 가능한 시간대</label>

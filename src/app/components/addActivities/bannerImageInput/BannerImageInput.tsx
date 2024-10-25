@@ -20,6 +20,7 @@ export default function BannerImageInput({ error, message, setValue, defaultData
       setValue('bannerImageUrl', file);
       const fileUrl = URL.createObjectURL(file);
       setImagePreview(fileUrl);
+      e.target.value = '';
     }
   };
 

@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { MantineProvider } from '@mantine/core';
-import { ModalsProvider } from '@mantine/modals';
 import '@/styles/base/globals.scss';
 import Header from './components/@shared/header/Header';
 import Providers from './components/providers/Providers';
@@ -24,10 +22,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          <MantineProvider>
-            <Header />
-            <ModalsProvider>{children}</ModalsProvider>
-          </MantineProvider>
+          <Header />
+          <div>{children}</div>
         </Providers>
       </body>
     </html>

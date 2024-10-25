@@ -43,6 +43,7 @@ export default function SubImageInput({
       const currentImageUrlsToAdd = getValues('subImageUrlsToAdd');
       const newSubImageUrlsToAdd = Array.isArray(currentImageUrlsToAdd) ? currentImageUrlsToAdd : [];
       setValue('subImageUrlsToAdd', [...newSubImageUrlsToAdd, ...newFiles]);
+      e.target.value = '';
       return;
     }
 
@@ -53,6 +54,7 @@ export default function SubImageInput({
     setImagePreviews(prev => [...prev, ...newPreviews]);
     const newFiles = files.map(file => file);
     setImagePreviewFiles(prev => [...prev, ...newFiles]);
+    e.target.value = '';
   };
 
   const onRemoveImage = (index: number) => {

@@ -1,0 +1,41 @@
+@use '@/styles/abstracts/core' as *;
+
+.headCountContainer {
+  padding-bottom: 16px;
+
+  .sectionTitle {
+    padding-bottom: 8px;
+  }
+
+  .headCountStepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 120px;
+    width: fit-content;
+    padding: 10px;
+    border: 1px solid $gray300;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 #0510370f;
+
+    p {
+      padding: 0 5px;
+    }
+
+    button {
+      background-color: $white;
+      border: none;
+    }
+  }
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $gray300;
+}
+
+.sectionTitle {
+  @include textXlSemibold;
+  color: $nomadBlack;
+}
