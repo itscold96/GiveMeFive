@@ -17,6 +17,10 @@
     gap: 10px;
     @include textMdMedium;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     img {
       border-radius: 50%;
     }

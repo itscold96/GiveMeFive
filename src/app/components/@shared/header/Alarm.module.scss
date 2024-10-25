@@ -12,18 +12,14 @@
   }
 
   .notificationBadge {
-    background-color: red;
+    position: absolute;
+    background-color: $red300;
     height: 8px;
     width: 8px;
-    position: absolute;
-    right: 3px;
-    top: 0;
+    right: 0;
+    right: 6px;
+    top: 1px;
     border-radius: 50%;
-
-    @include mobile {
-      right: 3px;
-      top: 3px;
-    }
 
     &.hidden {
       display: none;
