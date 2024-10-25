@@ -1,0 +1,27 @@
+@use '@/styles/abstracts/core' as *;
+
+.notificationContainer {
+  position: relative;
+  border-radius: 10px;
+  padding: 16px 30px 16px 12px;
+  background-color: $white;
+
+  .closeButtonWrapper {
+    display: flex;
+    justify-content: space-between;
+    .message {
+      @include textMdRegular;
+      padding-bottom: 5px;
+    }
+    .closeButton {
+      position: absolute;
+      top: 12px;
+      right: 5px;
+    }
+  }
+
+  .createdTime {
+    @include textXsRegular;
+    color: $gray600;
+  }
+}

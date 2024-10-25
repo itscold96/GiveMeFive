@@ -8,27 +8,6 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { useNotification } from '@/queries/useNotification';
 
-const dummyNotificationList = [
-  {
-    id: 0,
-    teamId: '8-3',
-    userId: 0,
-    content: '함께하면 즐거운 스트릿 댄스(2023-01-14 15:00~18:00) 예약이 승인되었어요.',
-    createdAt: '2024-10-25T04:06:34.792Z',
-    updatedAt: '2024-10-25T04:06:34.792Z',
-    deletedAt: '2024-10-25T04:06:34.792Z',
-  },
-  {
-    id: 0,
-    teamId: '8-3',
-    userId: 0,
-    content: '함께하면 즐거운 스트릿 댄스(2023-01-14 15:00~18:00) 예약이 거절되었어요.',
-    createdAt: '2024-10-25T04:06:34.792Z',
-    updatedAt: '2024-10-25T04:06:34.792Z',
-    deletedAt: '2024-10-25T04:06:34.792Z',
-  },
-];
-
 export default function Alarm() {
   const [isRestNotification, setIsRestNotification] = useState(false);
   const { toggleValue, toggleDispatch } = useToggle();
@@ -77,7 +56,7 @@ export default function Alarm() {
         <Image src={notificationIcon} alt="프로필 이미지" width={20} height={20} />
       </button>
       <Portal isOpen={toggleValue} onClose={() => toggleDispatch({ type: 'off' })}>
-        <NotificationModal onClose={() => toggleDispatch({ type: 'off' })} notificationList={dummyNotificationList} />
+        <NotificationModal onClose={() => toggleDispatch({ type: 'off' })} notificationList={notificationList} />
       </Portal>
     </div>
   );

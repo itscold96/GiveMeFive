@@ -1,0 +1,50 @@
+@use '@/styles/abstracts/core' as *;
+
+.notificationModalContainer {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: $green100;
+
+  padding: 24px 20px;
+  border-radius: 10px;
+  width: 368px;
+
+  box-shadow: 0px 2px 8px 0px #78748640;
+  z-index: 2;
+
+  @include mobile {
+    width: 328px;
+  }
+
+  .modalTitle {
+    display: flex;
+    justify-content: space-between;
+
+    @include textXlBold;
+  }
+
+  .noResultText {
+    text-align: center;
+    padding: 20px 0;
+    @include textMdRegular;
+  }
+
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding-top: 20px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+  }
+}
