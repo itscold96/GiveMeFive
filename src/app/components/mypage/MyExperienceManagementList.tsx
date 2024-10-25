@@ -4,7 +4,7 @@ import S from './MyExperienceManagementList.module.scss';
 import { useMyActivitiesQuery } from '@/queries/useMyActivitiesQuery';
 
 function MyExperienceManagementList() {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const { data, error, isLoading } = useMyActivitiesQuery({ page, size: 20 });
 
   if (isLoading) {

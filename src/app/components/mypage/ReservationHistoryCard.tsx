@@ -136,7 +136,6 @@ function ReservationHistoryCard({ reservation, onCancelSuccess }: ReservationHis
         alertButtonText="취소"
       />
 
-      {/* WriteReview 모달 사용 */}
       <Modal isOpen={isReviewModalOpen} onClose={closeReviewModal}>
         <WriteReview
           bannerImageUrl={activity.bannerImageUrl}

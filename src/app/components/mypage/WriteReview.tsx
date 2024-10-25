@@ -70,7 +70,7 @@ const WriteReview: React.FC<WriteReviewProps> = ({
         className={S.submitButton}
         type="submit"
       >
-        제출하기
+        작성하기
       </Button>
     </div>
   );
