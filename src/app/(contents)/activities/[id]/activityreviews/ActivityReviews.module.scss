@@ -37,9 +37,8 @@
 }
 
 .averageRatingAndSatisfaction {
-  width: 187px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 16px;
 }
 
@@ -51,6 +50,7 @@
 .satisfaction {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -61,7 +61,7 @@
 
 .reviewCountContainer {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   align-items: center;
 }
 
@@ -76,11 +76,19 @@
   width: 100%;
 }
 
-.profileImage {
+.profileImageContainer {
+  position: relative;
   width: 45px;
   height: 45px;
+
+  // 프로필 사진이 없을 시 디폴트 이미지
   border-radius: 50%;
   background-color: $gray300;
+}
+
+.profileImage {
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .reviewInfo {
@@ -108,7 +116,6 @@
   @include textLgRegular;
   color: $nomadBlack;
 }
-
 .noReviewContainer {
   display: flex;
   flex-direction: column;

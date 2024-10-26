@@ -6,7 +6,7 @@ import Image from 'next/image';
 import ReviewPagination from './pagination/Pagination';
 import noReview from '@/images/empty.svg';
 import { useActivityReviewsQuery, useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
-
+import dayjs from 'dayjs';
 export default function ActivityReviews({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
   const activityQuery = useDetailActivitiesQuery(activityId);
@@ -44,14 +44,20 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
         </div>
 
         <div className={S.reviewContainer}>
-          <div className={S.profileImage}>
-            <Image src={reviews?.reviews[0]?.user.profileImageUrl} alt="" width={45} height={45} />
+          <div className={S.profileImageContainer}>
+            <Image
+              src={reviews?.reviews[0]?.user.profileImageUrl}
+              alt=""
+              width={45}
+              height={45}
+              className={S.profileImage}
+            />
           </div>
           <div>
             <div className={S.reviewInfo}>
               <span className={S.reviewer}>{reviews?.reviews[0]?.user.nickname}</span>
               <div className={S.dash}>|</div>
-              <div className={S.reviewDate}>{reviews?.reviews[0]?.createdAt.toLocaleDateString()}</div>
+              <div className={S.reviewDate}>{dayjs(reviews?.reviews[0]?.createdAt).format('YYYY.MM.DD')}</div>
             </div>
             <div className={S.reviewContent}>{reviews?.reviews[0]?.content}</div>
           </div>
