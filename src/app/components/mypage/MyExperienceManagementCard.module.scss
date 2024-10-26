@@ -25,6 +25,8 @@
 
 .title {
   @include textXlBold;
+  text-decoration: none;
+  color: inherit;
 }
 
 .rating {

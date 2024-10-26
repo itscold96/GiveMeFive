@@ -5,6 +5,8 @@ import useDropdown from '../../../hooks/useDropdown';
 import AlertModal from '../../components/@shared/modal/AlertModal';
 import { deleteMyActivity } from '../../../fetches/myActivities';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // useRouter를 임포트합니다.
 
 interface Experience {
   id: number;
@@ -25,12 +27,14 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
   const actionList = ['수정하기', '삭제하기'];
   const { toggleDropdown, isDropdownToggle } = useDropdown(actionList);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
   const queryClient = useQueryClient();
+  const router = useRouter(); // useRouter를 사용하여 router 객체를 가져옵니다.
 
   function handleActionSelect(action: string) {
     toggleDropdown();
-    if (action === '삭제하기') {
+    if (action === '수정하기') {
+      router.push(`/editactivities/${experience.id}`); // 수정 페이지로 이동
+    } else if (action === '삭제하기') {
       setIsAlertOpen(true);
     }
   }
@@ -56,7 +60,9 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
         <div className={S.rating}>
           ⭐ {experience.rating} ({experience.reviewCount})
         </div>
-        <div className={S.title}>{experience.title}</div>
+        <Link href={`/activities/${experience.id}`} className={S.title}>
+          {experience.title}
+        </Link>
         <div className={S.price}>₩{experience.price.toLocaleString()}</div>
       </div>
       <div className={S.actions}>

@@ -28,13 +28,7 @@ const Modal: React.FC<ModalProps> = function Modal({
 
   return (
     <div className={S.modalOverlay} onClick={onClose}>
-      <div
-        className={`${S.modalContent} ${className}`}
-        style={{ width, height }}
-        onClick={function (e) {
-          e.stopPropagation();
-        }}
-      >
+      <div className={`${S.modalContent} ${className}`} style={{ width, height }} onClick={e => e.stopPropagation()}>
         {showCloseButton && (
           <button className={S.closeButton} onClick={onClose}>
             <Image src={CloseButtonIcon} alt="Close" />
