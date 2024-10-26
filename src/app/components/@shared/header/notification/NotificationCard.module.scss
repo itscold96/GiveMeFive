@@ -12,11 +12,15 @@
     height: 5px;
     width: 5px;
 
-    background-color: $blue300;
+    background-color: $yellow;
     border-radius: 50%;
 
     &.declined {
       background-color: $red300;
+    }
+
+    &.confirmed {
+      background-color: $blue300;
     }
   }
 

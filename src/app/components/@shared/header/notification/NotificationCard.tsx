@@ -18,15 +18,17 @@ export default function NotificationCard({ id, message, createdAt }: Notificatio
   };
 
   const isDeclined = message.includes('거절');
+  const isConfirmed = message.includes('승인');
   const [before, after] = message.split(/거절|승인/);
 
   return (
     <div className={S.notificationContainer}>
-      <div className={classNames(S.messageTypeIndicator, { [S.declined]: isDeclined })} />
+      <div className={classNames(S.messageTypeIndicator, { [S.declined]: isDeclined, [S.confirmed]: isConfirmed })} />
       <div className={S.closeButtonWrapper}>
         <div className={S.message}>
           {before}
-          {isDeclined ? <span className={S.declined}>거절</span> : <span className={S.confirmed}>승인</span>}
+          {isDeclined && <span className={S.declined}>거절</span>}
+          {isConfirmed && <span className={S.confirmed}>승인</span>}
           {after}
         </div>
         <button className={S.closeButton} onClick={handleDeleteClick}>
