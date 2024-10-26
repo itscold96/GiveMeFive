@@ -18,8 +18,12 @@ export const createImageUrl = async (file: File) => {
   }
 };
 
-export const createImageUrls = async (files: File[]) => {
+export const createImageUrls = async (files: File[] = []) => {
   const urls: string[] = [];
+
+  if (!Array.isArray(files)) {
+    throw new Error('files가 배열이 아닙니다');
+  }
 
   for (const file of files) {
     try {

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import S from './SideMenu.module.scss';
@@ -10,16 +10,52 @@ import ReservationHistoryIcon from '@/images/sidemenuIcon/reservationhistory-Ico
 import MyExperienceManagementIcon from '@/images/sidemenuIcon/myexperiencemanagement-Icon.svg';
 import ReservationStatusIcon from '@/images/sidemenuIcon/reservationstatus-Icon.svg';
 import ProfileButtonIcon from '@/images/sidemenuIcon/profile-button-icon.svg';
-import ProfileImage from '@/images/sidemenuIcon/profile-image.svg';
+import DefaultProfileImage from '@/images/profiles/default-profile.svg';
+import { useUserQuery } from '@/queries/useUserQuery';
+import { postProfileImage } from '@/fetches/postProfileImage';
+import { patchUserInfo } from '@/fetches/patchUserInfo';
 
 const SideMenu: React.FC = () => {
+  const { data: userInfo } = useUserQuery();
+  const [profileImageUrl, setProfileImageUrl] = useState(userInfo?.profileImageUrl || DefaultProfileImage);
   const pathname = usePathname();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleProfileImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        const response = await postProfileImage(file);
+        const newProfileImageUrl = response.profileImageUrl;
+
+        setProfileImageUrl(newProfileImageUrl);
+        await patchUserInfo({ profileImageUrl: newProfileImageUrl });
+
+        console.log('Updated profile image URL:', newProfileImageUrl);
+      } catch (error) {
+        console.error('Failed to upload profile image:', error);
+      }
+    }
+  };
 
   return (
     <aside className={S.sideMenu}>
       <div className={S.profileContainer}>
-        <Image src={ProfileImage} alt="Profile" className={S.profileImage} />
-        <div className={S.editIcon}>
+        <div className={S.profileImageWrapper} onClick={handleProfileImageClick}>
+          <Image src={profileImageUrl} alt="Profile" layout="fill" objectFit="cover" className={S.profileImage} />
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <div className={S.editIcon} onClick={handleProfileImageClick}>
           <Image src={ProfileButtonIcon} alt="Edit Profile" className={S.editButtonIcon} />
         </div>
       </div>
@@ -42,8 +78,8 @@ const SideMenu: React.FC = () => {
               관리
             </Link>
           </li>
-          <li className={pathname === '/mypage/reservationstatus' ? S.active : ''}>
-            <Link href="/mypage/reservationstatus">
+          <li className={pathname === '/mybookingstatus' ? S.active : ''}>
+            <Link href="/mybookingstatus">
               <Image src={ReservationStatusIcon} alt="Reservation Status" className={S.menuIcon} />
               예약 현황
             </Link>

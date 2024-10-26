@@ -1,0 +1,29 @@
+@use '@/styles/abstracts/core' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  @include text3XlBold;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.text {
+  @include textXlRegular;
+  color: $gray800;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 756px;
+  margin: 0 auto;
+}

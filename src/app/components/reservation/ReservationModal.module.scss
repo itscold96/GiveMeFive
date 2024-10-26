@@ -1,0 +1,20 @@
+@use '@/styles/abstracts/core' as *;
+
+.modal {
+  position: relative;
+
+  .modalTitle {
+    position: absolute;
+    top: 15px;
+    @include text2XlBold;
+  }
+
+  .modalCloseButton {
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  @include mobile {
+    border-radius: 0;
+  }
+}

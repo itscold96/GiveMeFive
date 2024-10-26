@@ -1,5 +1,11 @@
 // media-query 관련 mixins
 // Media Query
+@mixin desktop {
+  @media (min-width: 1201px) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media (max-width: 1199px) {
     @content;
@@ -23,6 +29,12 @@
   font-size: map-get($fontSize, '3.5Xl');
   line-height: map-get($lineHeight, '3.5Xl');
   font-weight: map-get($fontWeight, 'Bold');
+}
+
+@mixin text3-25XlSemibold {
+  font-size: map-get($fontSize, '3.25Xl');
+  line-height: map-get($lineHeight, '3.25Xl');
+  font-weight: map-get($fontWeight, 'Semibold');
 }
 
 @mixin text3XlBold {
