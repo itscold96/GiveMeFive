@@ -4,7 +4,7 @@ import S from './AlertModal.module.scss';
 interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAlert: () => void;
+  onAlert: () => Promise<void>;
   message: string;
   alertButtonText?: string;
 }
@@ -19,6 +19,11 @@ const AlertModal: React.FC<AlertModalProps> = function AlertModal({
   if (!isOpen) {
     return null;
   }
+
+  const handleAlertClick = async () => {
+    await onAlert();
+    onClose();
+  };
 
   return (
     <div className={S.modalOverlay}>
@@ -56,13 +61,7 @@ const AlertModal: React.FC<AlertModalProps> = function AlertModal({
           <button className={`${S.modalButton} ${S.modalButtonCancel}`} onClick={onClose}>
             아니오
           </button>
-          <button
-            className={`${S.modalButton} ${S.modalButtonAlert}`}
-            onClick={function () {
-              onAlert();
-              onClose();
-            }}
-          >
+          <button className={`${S.modalButton} ${S.modalButtonAlert}`} onClick={handleAlertClick}>
             {alertButtonText}
           </button>
         </div>
