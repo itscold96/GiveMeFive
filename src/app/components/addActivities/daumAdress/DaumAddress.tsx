@@ -8,11 +8,10 @@ interface DaumAddressProps {
   errors: any;
   register: any;
   setValue: any;
+  getValues: any;
 }
-const DaumAddress = ({ errors, register, setValue }: DaumAddressProps) => {
+const DaumAddress = ({ errors, register, setValue, getValues }: DaumAddressProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [infoAddress, setInfoAddress] = useState('');
-
   const handleComplete = (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -26,7 +25,6 @@ const DaumAddress = ({ errors, register, setValue }: DaumAddressProps) => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    setInfoAddress(fullAddress);
     setValue('address', fullAddress);
     setIsVisible(false);
   };
@@ -44,7 +42,7 @@ const DaumAddress = ({ errors, register, setValue }: DaumAddressProps) => {
         error={errors.address}
         register={register.address}
         message={errors.address?.message}
-        value={infoAddress}
+        value={getValues('adress')}
       />
     </div>
   );

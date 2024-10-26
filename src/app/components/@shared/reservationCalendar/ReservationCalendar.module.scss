@@ -1,0 +1,41 @@
+@use '@/styles/abstracts/core' as *;
+
+.calendarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .levelsGroup {
+    border: 1px solid $gray200;
+    border-radius: 8px;
+    padding: 10px 27.33px;
+  }
+
+  .availableDates {
+    background-color: $green100;
+    color: $green300;
+    &:hover {
+      background-color: rgba($green300, 0.3);
+    }
+  }
+
+  .day {
+    width: 35.71px;
+    height: 32px;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17.7px;
+
+    &[data-weekend] {
+      color: $black;
+    }
+
+    &[data-selected] {
+      background-color: $green300;
+      color: $white;
+    }
+  }
+}
