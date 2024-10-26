@@ -77,6 +77,7 @@
 }
 
 .profileImageContainer {
+  flex-shrink: 0;
   position: relative;
   width: 45px;
   height: 45px;
@@ -95,6 +96,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  flex: 1;
 }
 
 .reviewer {
@@ -115,7 +117,9 @@
 .reviewContent {
   @include textLgRegular;
   color: $nomadBlack;
+  word-break: break-word;
 }
+
 .noReviewContainer {
   display: flex;
   flex-direction: column;
