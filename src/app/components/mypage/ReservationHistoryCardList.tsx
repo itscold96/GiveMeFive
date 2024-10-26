@@ -3,6 +3,8 @@ import ReservationHistoryCard from './ReservationHistoryCard';
 import Dropdown from '../../components/@shared/dropdown/Dropdown';
 import S from './ReservationHistoryCardList.module.scss';
 import { getMyReservations, GetMyReservationsProps } from '@/fetches/reservationHistory';
+import emptyImage from '@/images/empty.svg'; // 빈 상태 이미지를 불러옴
+import Image from 'next/image'; // next/image에서 Image 가져오기
 
 interface Reservation {
   id: number;
@@ -85,14 +87,21 @@ function ReservationHistoryCardList() {
         />
       </div>
       <div className={S.list}>
-        {filteredReservations.map(reservation => (
-          <ReservationHistoryCard
-            key={reservation.id}
-            reservation={reservation}
-            onCancelSuccess={fetchData}
-            onReviewSubmitted={handleReviewSubmitted}
-          />
-        ))}
+        {filteredReservations.length > 0 ? (
+          filteredReservations.map(reservation => (
+            <ReservationHistoryCard
+              key={reservation.id}
+              reservation={reservation}
+              onCancelSuccess={fetchData}
+              onReviewSubmitted={handleReviewSubmitted}
+            />
+          ))
+        ) : (
+          <div className={S.emptyState}>
+            <Image src={emptyImage} alt="빈 상태 이미지" width={100} height={100} />
+            <p>등록된 예약 내역이 없습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );
