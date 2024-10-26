@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import S from './Alarm.module.scss';
 import NotificationModal from '@/app/components/@shared/header/notification/NotificationModal';
 import notificationIcon from '@/images/icons/Icon-notification.svg';
@@ -14,22 +14,22 @@ export default function Alarm() {
   const { data, refetch, isError } = useNotification();
   const notificationList = data ? data.notifications : [];
   const totalCount = data ? data.totalCount : 0;
+  const delayRef = useRef(10 * 1000); // 초기 딜레이값 10초
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    let delay = 10 * 1000; // 초기 딜레이값 10초
 
     if (isError) {
       // 요청 실패가 서버 부하 문제일 수 있으므로 딜레이 2배 증가
-      delay *= 2;
+      delayRef.current *= 2;
     }
 
     const startPolling = () => {
       timer = setTimeout(async function polling() {
         refetch();
         // setInterval과 달리 중첩 setTimeout은 api 요청 시간을 타이머 시간에 포함하지 않음 => 지연 간격을 보장
-        timer = setTimeout(polling, delay);
-      }, delay);
+        timer = setTimeout(polling, delayRef.current);
+      }, delayRef.current);
     };
 
     startPolling();
