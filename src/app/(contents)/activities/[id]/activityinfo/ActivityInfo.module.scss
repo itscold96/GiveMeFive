@@ -6,14 +6,14 @@
   height: 1px;
   opacity: 0.25;
   background-color: $nomadBlack;
-}
 
-.hr {
-  margin: 34px 0;
-}
+  @include tablet {
+    width: 469px;
+  }
 
-.hr2 {
-  margin: 16px 0;
+  @include mobile {
+    width: 327px;
+  }
 }
 
 .activityInfoAndDropdown {
@@ -70,50 +70,108 @@
 .imageContainer {
   margin-top: 25px;
   margin-bottom: 51px;
+  max-width: 1200px;
   height: 534px;
   display: flex;
   gap: 8px;
+
+  @include tablet {
+    height: 400px;
+  }
+}
+
+.mainImageContainer {
+  flex: 1;
+  height: 100%;
+  position: relative;
 }
 
 .subImagesContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .subImage {
-  width: 293.5px;
-  height: 263px;
-  background-color: $gray300;
+  position: relative;
 }
 
-.introductionContainer {
-  width: 790px;
-  display: flex;
-  flex-direction: column;
-
-  gap: 32px;
-  color: $nomadBlack;
-
-  .activityDescription {
-    @include textXlBold;
-  }
-
-  .description {
-    @include textLgRegular;
-    opacity: 0.75;
+.subImageCount1 {
+  .subImage {
+    width: 100%;
+    height: 100%;
   }
 }
 
-.mapContainer {
+.subImageCount2 {
   display: flex;
-  flex-direction: column;
   gap: 8px;
+
+  .subImage {
+    flex: 1;
+    height: 100%;
+  }
 }
 
-.map {
-  width: 800px;
-  height: 476px;
+.subImageCount3,
+.subImageCount4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
 
-  background-color: $gray300;
+  .subImage {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// 서브 이미지 없을 경우
+.mainImageContainer:only-child {
+  flex: 1;
+}
+
+.introductionAndMapContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+
+  max-width: 790px;
+
+  @include tablet {
+    max-width: 469px;
+  }
+
+  @include mobile {
+    max-width: 327px;
+  }
+
+  .introductionContainer {
+    color: $nomadBlack;
+
+    .activityDescription {
+      @include textXlBold;
+    }
+
+    .description {
+      @include textLgRegular;
+      opacity: 0.75;
+    }
+  }
+
+  .mapContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .map {
+    background-color: $gray300;
+    z-index: -1;
+  }
 }
