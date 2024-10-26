@@ -17,7 +17,7 @@ export default function Alarm() {
   const delayRef = useRef(10 * 1000); // 초기 딜레이값 10초
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: NodeJS.Timeout | undefined;
 
     if (isError) {
       // 요청 실패가 서버 부하 문제일 수 있으므로 딜레이 2배 증가
