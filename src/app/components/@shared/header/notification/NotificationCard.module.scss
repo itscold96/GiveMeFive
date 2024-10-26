@@ -1,0 +1,52 @@
+@use '@/styles/abstracts/core' as *;
+
+.notificationContainer {
+  position: relative;
+  border-radius: 10px;
+  padding: 16px 30px 16px 12px;
+  background-color: $white;
+
+  .messageTypeIndicator {
+    margin-bottom: 10px;
+
+    height: 5px;
+    width: 5px;
+
+    background-color: $yellow;
+    border-radius: 50%;
+
+    &.declined {
+      background-color: $red300;
+    }
+
+    &.confirmed {
+      background-color: $blue300;
+    }
+  }
+
+  .closeButtonWrapper {
+    display: flex;
+    justify-content: space-between;
+    .message {
+      @include textMdRegular;
+      padding-bottom: 5px;
+
+      .confirmed {
+        color: $blue300;
+      }
+      .declined {
+        color: $red300;
+      }
+    }
+    .closeButton {
+      position: absolute;
+      top: 12px;
+      right: 5px;
+    }
+  }
+
+  .createdTime {
+    @include textXsRegular;
+    color: $gray600;
+  }
+}
