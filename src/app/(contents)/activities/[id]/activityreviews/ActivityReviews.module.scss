@@ -1,25 +1,34 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
-.hr,
 .hr2 {
-  width: 790px;
+  max-width: 790px;
   height: 1px;
   opacity: 0.25;
   background-color: $nomadBlack;
-}
-
-.hr {
-  margin: 34px 0;
-}
-
-.hr2 {
   margin: 16px 0;
+
+  @include tablet {
+    max-width: 469px;
+  }
+
+  @include mobile {
+    max-width: 327px;
+  }
 }
 
 .activityReviewAndPagination {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-width: 790px;
+
+  @include tablet {
+    max-width: 469px;
+  }
+
+  @include mobile {
+    max-width: 327px;
+  }
 }
 
 .activityReview {
@@ -64,6 +73,7 @@
 .reviewContainer {
   display: flex;
   gap: 16px;
+  width: 100%;
 }
 
 .profileImage {
@@ -105,4 +115,11 @@
   justify-content: center;
   align-items: center;
   gap: 16px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.reviewPagination {
+  display: flex;
+  justify-content: center;
 }
