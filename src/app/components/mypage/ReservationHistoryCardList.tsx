@@ -98,8 +98,8 @@ function ReservationHistoryCardList() {
           ))
         ) : (
           <div className={S.emptyState}>
-            <Image src={emptyImage} alt="빈 상태 이미지" width={100} height={100} />
-            <p>등록된 예약 내역이 없습니다.</p>
+            <Image src={emptyImage} alt="빈 상태 이미지" width={240} height={240} />
+            <p className={S.text}>해당하는 예약 내역이 없어요</p>
           </div>
         )}
       </div>
