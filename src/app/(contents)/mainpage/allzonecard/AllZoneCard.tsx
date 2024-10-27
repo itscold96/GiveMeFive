@@ -33,7 +33,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const isTitleSearched = useMemo(() => title !== '', [title]);
   const itemsPerPage = useMemo(() => (isTitleSearched ? 16 : 8), [isTitleSearched]);
 
-  const { data: activitiesData } = useActivitiesQuery(
+  const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
       category: selectedCategory ?? undefined,
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
@@ -88,7 +88,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
         </div>
       )}
 
-      {!activitiesData || activitiesData.activities.length === 0 ? (
+      {isFetched && (!activitiesData || activitiesData.activities.length === 0) ? (
         <div className={S.noActivityContainer}>
           <Image src={NoActivity} alt="no activity" width={283} height={283} />
           <p className={S.noActivityText}>
@@ -97,7 +97,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
         </div>
       ) : (
         <div className={S.allZoneCardContainer}>
-          {activitiesData.activities.map(activity => (
+          {activitiesData?.activities.map(activity => (
             <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (

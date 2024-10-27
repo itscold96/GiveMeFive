@@ -3,7 +3,7 @@
 import S from './BestZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import ArrowButton from './arrowButton/ArrowButton';
 import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -16,11 +16,12 @@ export default function BestZoneCard({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+  const [page, setPage] = useState(1);
   const [isWideScreen, setIsWideScreen] = useState(false);
   const size = isWideScreen ? 3 : 100; // 와이드스크린일 때 3개, 아닐 때 100개
-  const { data: bestActivitiesData } = useBestActivitiesQuery(Number(page), size, initialBestActivitiesData);
+  const { data: bestActivitiesData, isFetched } = useBestActivitiesQuery(Number(page), size, initialBestActivitiesData);
   const [imgError, setImgError] = useState<Record<string, boolean>>({});
+  const hasTitle = useMemo(() => searchParams.get('title'), [searchParams]);
 
   // 화면 크기 변경 감지
   useEffect(() => {
@@ -40,17 +41,14 @@ export default function BestZoneCard({
   }, [isWideScreen]);
 
   // 활동이 없으면 표시하지 않음
-  if (!bestActivitiesData?.activities || bestActivitiesData.activities.length === 0) {
+  if (isFetched && (!bestActivitiesData?.activities || bestActivitiesData?.activities.length === 0)) {
     return <p>표시할 활동이 없습니다.</p>;
   }
-
-  if (searchParams.get('title')) {
+  if (hasTitle) {
     return null;
   }
 
   // 화면에 표시할 활동 개수
-  const displayedActivities = isWideScreen ? bestActivitiesData.activities : bestActivitiesData.activities;
-
   return (
     <div>
       <div className={S.bestExperienceContainer}>
@@ -63,7 +61,7 @@ export default function BestZoneCard({
       </div>
 
       <div className={S.bestZoneCardContainer}>
-        {displayedActivities.map(activity => (
+        {bestActivitiesData?.activities.map(activity => (
           <div key={activity.id} className={S.bestZoneCard} onClick={() => router.push(`/activities/${activity.id}`)}>
             <div className={S.bestZoneCardImage}>
               {!imgError[activity.id] && (
