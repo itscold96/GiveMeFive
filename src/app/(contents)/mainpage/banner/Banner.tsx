@@ -1,3 +1,5 @@
+'use client';
+
 import S from './Banner.module.scss';
 import Image from 'next/image';
 import { Activity } from '@/fetches/activities';
