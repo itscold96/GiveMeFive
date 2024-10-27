@@ -103,7 +103,9 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
       </div>
 
       <div className={S.introductionAndMapContainer}>
-        <hr className={S.hr} />
+        <div className={S.introductionContainerWrapper}>
+          <hr className={S.hr} />
+        </div>
         <div className={S.introductionContainer}>
           <span className={S.activityDescription}>체험 설명</span>
           <div className={S.description}>{activity?.description}</div>

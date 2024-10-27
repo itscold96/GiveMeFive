@@ -8,10 +8,12 @@
 
   @include tablet {
     width: 469px;
+    margin-left: -24px;
   }
 
   @include mobile {
     width: 327px;
+    margin: 0 auto;
   }
 }
 
@@ -57,6 +59,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+
+  @include mobile {
+    gap: 2px;
+  }
 }
 
 .address {
@@ -83,14 +89,16 @@
 
   @include tablet {
     height: 400px;
+    margin-left: -24px;
   }
 
   @include mobile {
     height: 300px;
     flex-direction: column;
     position: relative;
-    margin-left: -16px;
-    margin-right: -16px;
+    margin-left: -17px;
+    margin-right: -17px;
+    margin-bottom: -10px;
   }
 }
 
@@ -185,11 +193,13 @@
   max-width: 790px;
 
   @include tablet {
-    max-width: 469px;
+    max-width: 428px;
   }
 
   @include mobile {
     max-width: 327px;
+    margin: 0 auto;
+    // margin: 0 17px;
   }
 
   .introductionContainer {
@@ -215,5 +225,17 @@
 
   .map {
     background-color: $gray300;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 0;
+  }
+}
+
+// 모바일 버전에서 hr 숨기기
+.introductionContainerWrapper {
+  @include mobile {
+    .hr {
+      display: none;
+    }
   }
 }
