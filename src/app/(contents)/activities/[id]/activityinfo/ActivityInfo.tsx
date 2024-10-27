@@ -10,8 +10,10 @@ import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import Map from './map';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useUserStore } from '@/stores/useUserStore';
+import { getAvailableSchedule } from '@/fetches/getAvailableSchedule';
+import ResponsiveReservation from '@/app/components/reservation/ResponsiveReservation';
 
 export default function ActivityInfo({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
@@ -20,11 +22,27 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
   const dropdownList = ['수정하기', '삭제하기'];
 
   const { onDropdownChange, toggleDropdown, isDropdownToggle } = useDropdown(dropdownList);
+  const [availableDates, setAvailableDates] = useState<string[] | undefined>(undefined);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const allImages = [activity?.bannerImageUrl, ...(activity?.subImages?.map(img => img.imageUrl) || [])].filter(
     Boolean,
+  );
+
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  const onClickDate = useCallback(
+    async (date: Date) => {
+      setSelectedDate(date);
+      const availableDates = await getAvailableSchedule({
+        activityId,
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      });
+      setAvailableDates(availableDates.map(date => date.date));
+    },
+    [activityId],
   );
 
   const nextImage = () => {
@@ -102,24 +120,27 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
         )}
       </div>
 
-      <div className={S.introductionAndMapContainer}>
-        <div className={S.introductionContainerWrapper}>
+      <div className={S.calendarAndInfoContainer}>
+        <div className={S.introductionAndMapContainer}>
+          <div className={S.introductionContainerWrapper}>
+            <hr className={S.hr} />
+          </div>
+          <div className={S.introductionContainer}>
+            <span className={S.activityDescription}>체험 설명</span>
+            <div className={S.description}>{activity?.description}</div>
+          </div>
+          <hr className={S.hr} />
+          <div className={S.mapContainer}>
+            <div className={S.map}>{activity?.address && <Map address={activity.address} />} </div>
+
+            <div className={S.locationContainer}>
+              <Image src={location} alt="" width={18} height={18} />
+              <span className={S.address}>{activity?.address}</span>
+            </div>
+          </div>
           <hr className={S.hr} />
         </div>
-        <div className={S.introductionContainer}>
-          <span className={S.activityDescription}>체험 설명</span>
-          <div className={S.description}>{activity?.description}</div>
-        </div>
-        <hr className={S.hr} />
-        <div className={S.mapContainer}>
-          <div className={S.map}>{activity?.address && <Map address={activity.address} />} </div>
-
-          <div className={S.locationContainer}>
-            <Image src={location} alt="" width={18} height={18} />
-            <span className={S.address}>{activity?.address}</span>
-          </div>
-        </div>
-        <hr className={S.hr} />
+        <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />
       </div>
     </>
   );
