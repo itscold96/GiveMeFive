@@ -1,14 +1,19 @@
 import { getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/fetches/activities';
 import { useQuery } from '@tanstack/react-query';
 
-export const useActivitiesQuery = (params: GetActivitiesProps) => {
+export const useActivitiesQuery = (params: GetActivitiesProps, initialActivitiesData?: GetActivitiesResponse) => {
   return useQuery<GetActivitiesResponse, Error>({
     queryKey: ['activities', params],
     queryFn: () => getActivities(params),
+    initialData: initialActivitiesData,
   });
 };
 
-export const useBestActivitiesQuery = (page: number, size: number) => {
+export const useBestActivitiesQuery = (
+  page: number,
+  size: number,
+  initialBestActivitiesData?: GetActivitiesResponse,
+) => {
   return useQuery<GetActivitiesResponse, Error>({
     queryKey: ['bestActivities', page, size],
     queryFn: () =>
@@ -18,6 +23,7 @@ export const useBestActivitiesQuery = (page: number, size: number) => {
         page,
         size,
       }),
+    initialData: initialBestActivitiesData,
   });
 };
 

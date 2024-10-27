@@ -6,14 +6,20 @@ import Star from '@/images/star-icon.svg';
 import { useState, useEffect } from 'react';
 import ArrowButton from './arrowButton/ArrowButton';
 import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { GetActivitiesResponse } from '@/fetches/activities';
 
-export default function BestZoneCard() {
+export default function BestZoneCard({
+  initialBestActivitiesData,
+}: {
+  initialBestActivitiesData: GetActivitiesResponse;
+}) {
   const router = useRouter();
-  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [isWideScreen, setIsWideScreen] = useState(false);
   const size = isWideScreen ? 3 : 100; // 와이드스크린일 때 3개, 아닐 때 100개
-  const { data: bestActivitiesData } = useBestActivitiesQuery(page, size);
+  const { data: bestActivitiesData } = useBestActivitiesQuery(Number(page), size, initialBestActivitiesData);
   const [imgError, setImgError] = useState<Record<string, boolean>>({});
 
   // 화면 크기 변경 감지
@@ -36,6 +42,10 @@ export default function BestZoneCard() {
   // 활동이 없으면 표시하지 않음
   if (!bestActivitiesData?.activities || bestActivitiesData.activities.length === 0) {
     return <p>표시할 활동이 없습니다.</p>;
+  }
+
+  if (searchParams.get('title')) {
+    return null;
   }
 
   // 화면에 표시할 활동 개수
