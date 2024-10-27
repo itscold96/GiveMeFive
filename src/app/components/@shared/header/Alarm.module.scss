@@ -1,0 +1,29 @@
+@use '@/styles/abstracts/core' as *;
+
+.alarmContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .notification {
+    display: flex; // 중앙 정렬을 위한 flex
+    border: none;
+    background-color: transparent;
+  }
+
+  .notificationBadge {
+    position: absolute;
+    background-color: $red300;
+    height: 8px;
+    width: 8px;
+    right: 0;
+    right: 6px;
+    top: 1px;
+    border-radius: 50%;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
