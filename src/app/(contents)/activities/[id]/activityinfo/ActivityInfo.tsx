@@ -10,9 +10,8 @@ import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import Map from './map';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useUserStore } from '@/stores/useUserStore';
-import { getAvailableSchedule } from '@/fetches/getAvailableSchedule';
 import ResponsiveReservation from '@/app/components/reservation/ResponsiveReservation';
 
 export default function ActivityInfo({ params }: { params: { id: string } }) {
@@ -22,27 +21,11 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
   const dropdownList = ['수정하기', '삭제하기'];
 
   const { onDropdownChange, toggleDropdown, isDropdownToggle } = useDropdown(dropdownList);
-  const [availableDates, setAvailableDates] = useState<string[] | undefined>(undefined);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const allImages = [activity?.bannerImageUrl, ...(activity?.subImages?.map(img => img.imageUrl) || [])].filter(
     Boolean,
-  );
-
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
-  const onClickDate = useCallback(
-    async (date: Date) => {
-      setSelectedDate(date);
-      const availableDates = await getAvailableSchedule({
-        activityId,
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-      });
-      setAvailableDates(availableDates.map(date => date.date));
-    },
-    [activityId],
   );
 
   const nextImage = () => {
