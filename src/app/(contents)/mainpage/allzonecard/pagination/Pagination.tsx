@@ -15,7 +15,7 @@ export default function Pagination({ onChangePage, totalItems, itemsPerPage, cur
 
   return (
     <div className={`${styles.pagination} ${S.paginationWrapper}`}>
-      <MantinePagination total={totalPages} value={currentPage} onChange={onChangePage} />
+      <MantinePagination total={totalPages} siblings={0} boundaries={1} value={currentPage} onChange={onChangePage} />
     </div>
   );
 }

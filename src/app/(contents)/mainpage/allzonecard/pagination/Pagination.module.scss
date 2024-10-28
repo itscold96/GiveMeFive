@@ -14,8 +14,14 @@
     margin-top: 64px;
     margin-bottom: 64px;
 
+    @include mobile {
+      height: 40px;
+      width: 40px;
+    }
+
     &:hover {
       background-color: $white;
+      cursor: porinter;
     }
 
     &[data-active] {
