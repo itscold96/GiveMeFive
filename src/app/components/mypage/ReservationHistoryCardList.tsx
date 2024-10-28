@@ -33,7 +33,7 @@ function ReservationHistoryCardList() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [allFilteredReservations, setAllFilteredReservations] = useState<Reservation[]>([]); // 모든 필터링된 예약을 저장할 상태
+  const [allFilteredReservations, setAllFilteredReservations] = useState<Reservation[]>([]);
   const loadingRef = useRef<HTMLDivElement>(null);
   const PAGE_SIZE = 10;
 
