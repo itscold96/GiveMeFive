@@ -15,7 +15,8 @@
 }
 
 .bannerImage {
-  position: absolute;
+  display: block;
+  // position: absolute;
   width: 100%;
 
   @include mobile {
@@ -24,13 +25,20 @@
 }
 
 .bannerContentWrapper {
+  // display: flex;
   position: absolute;
-  max-width: 1200px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 35%;
-  right: 50%;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  box-sizing: border-box;
 
   @include mobile {
     top: 30%;
+    max-width: 100%;
+    padding: 0 16px;
   }
 }
 
@@ -41,6 +49,7 @@
   gap: 20px;
 
   @include tablet {
+    max-width: 450px;
     margin-left: 20px;
   }
 
