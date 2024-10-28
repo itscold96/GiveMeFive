@@ -17,6 +17,10 @@
 .bannerImage {
   position: absolute;
   width: 100%;
+
+  @include mobile {
+    height: 240px;
+  }
 }
 
 .bannerContentWrapper {
