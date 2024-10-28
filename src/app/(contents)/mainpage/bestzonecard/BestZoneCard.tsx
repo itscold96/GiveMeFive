@@ -8,6 +8,7 @@ import ArrowButton from './arrowButton/ArrowButton';
 import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
+import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
 
 export default function BestZoneCard({
   initialBestActivitiesData,
@@ -84,7 +85,7 @@ export default function BestZoneCard({
 
                 <div className={S.bestZoneCardTitle}>{activity.title}</div>
                 <div className={S.bestZoneCardPrice}>
-                  ₩ {Number(activity.price).toLocaleString()}
+                  ₩ {getCurrencyFormat(activity.price)}
                   <span className={S.bestZoneCardPriceUnit}> / 인</span>
                 </div>
               </div>

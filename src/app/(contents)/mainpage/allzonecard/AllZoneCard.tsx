@@ -10,6 +10,7 @@ import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
+import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
   const router = useRouter();
@@ -121,7 +122,8 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
 
                 <div className={S.allZoneCardTitle}>{activity.title}</div>
                 <div className={S.allZoneCardPrice}>
-                  ₩ {Number(activity.price).toLocaleString()} <span className={S.allZoneCardPriceUnit}> / 인</span>
+                  ₩ {getCurrencyFormat(activity.price)}
+                  <span className={S.allZoneCardPriceUnit}> / 인</span>
                 </div>
               </div>
             </div>
