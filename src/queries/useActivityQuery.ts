@@ -4,7 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 export const useActivitiesQuery = (params: GetActivitiesProps, initialActivitiesData?: GetActivitiesResponse) => {
   return useQuery<GetActivitiesResponse, Error>({
     queryKey: ['activities', params],
-    queryFn: () => getActivities(params),
+    queryFn: () =>
+      getActivities({
+        ...params,
+        // 검색어가 있을 경우 title과 keyword 모두 사용
+        ...(params.title && {
+          title: params.title,
+          keyword: params.title, // 키워드 검색도 같이
+        }),
+      }),
     initialData: initialActivitiesData,
   });
 };
