@@ -25,10 +25,11 @@
   flex-direction: column;
   gap: 24px;
   max-width: 790px;
-  margin-top: 40px;
+  margin-top: -30px;
 
   @include tablet {
     max-width: 429px;
+    margin-top: 40px;
   }
 
   @include mobile {
