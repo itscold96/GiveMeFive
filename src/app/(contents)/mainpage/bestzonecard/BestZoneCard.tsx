@@ -48,7 +48,6 @@ export default function BestZoneCard({
     return null;
   }
 
-  // 화면에 표시할 활동 개수
   return (
     <div>
       <div className={S.bestExperienceContainer}>
