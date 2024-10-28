@@ -18,7 +18,7 @@ export default function BestZoneCard({
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
   const [isWideScreen, setIsWideScreen] = useState(false);
-  const size = isWideScreen ? 3 : 100; // 와이드스크린일 때 3개, 아닐 때 100개
+  const size = isWideScreen ? 3 : 20; // 와이드스크린일 때 3개, 아닐 때 20개
   const { data: bestActivitiesData, isFetched } = useBestActivitiesQuery(Number(page), size, initialBestActivitiesData);
   const [imgError, setImgError] = useState<Record<string, boolean>>({});
   const hasTitle = useMemo(() => searchParams.get('title'), [searchParams]);
