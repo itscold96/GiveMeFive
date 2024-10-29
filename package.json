@@ -20,6 +20,7 @@
     "classnames": "^2.5.1",
     "cookies-next": "^4.3.0",
     "dayjs": "^1.11.13",
+    "fast-average-color": "^9.4.0",
     "next": "14.2.15",
     "next-svgr": "^0.0.2",
     "react": "^18",
