@@ -20,24 +20,44 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const searchParams = useSearchParams();
   const { updateURL } = useURLManager(router, pathname, searchParams);
 
-  const { selectedSort, selectedCategory, page, imgError, setSelectedSort, setSelectedCategory, setPage, setImgError } =
-    useAllZoneStore();
-
-  useEffect(() => {
-    // 페이지 로드 시 URL 초기화
-    if (searchParams.toString()) {
-      router.push(pathname);
-    }
-
-    // 상태 초기화
-    setSelectedSort(undefined);
-    setSelectedCategory(null);
-    setPage(1);
-  }, []);
+  const {
+    selectedSort,
+    selectedCategory,
+    page,
+    imgError,
+    setSelectedSort,
+    setSelectedCategory,
+    setPage,
+    setImgError,
+    itemsPerPage,
+    setItemsPerPage,
+  } = useAllZoneStore();
 
   const title = useMemo(() => searchParams.get('title') || '', [searchParams]);
   const isTitleSearched = useMemo(() => title !== '', [title]);
-  const itemsPerPage = useMemo(() => (isTitleSearched ? 16 : 8), [isTitleSearched]);
+
+  const getItemsPerPage = () => {
+    if (isTitleSearched) return 16;
+
+    const width = window.innerWidth;
+    if (width >= 1201) return 8; // desktop
+    if (width >= 768) return 9; // tablet
+    return 6; // mobile
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!isTitleSearched) {
+        setItemsPerPage(getItemsPerPage());
+        setPage(1); // 화면 크기 변경 시 첫 페이지로 리셋
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isTitleSearched, setItemsPerPage, setPage]);
 
   const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
@@ -45,7 +65,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       sort: selectedSort ? (selectedSort as 'price_asc' | 'price_desc') : 'latest',
       page,
       size: itemsPerPage,
-      title,
+      title: isTitleSearched ? title : undefined,
     },
     initialActivitiesData,
   );
