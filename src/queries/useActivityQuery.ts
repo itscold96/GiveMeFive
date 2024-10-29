@@ -1,14 +1,21 @@
-import { getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/fetches/activities';
+import { getActivities, GetActivitiesResponse } from '@/fetches/activities';
 import { useQuery } from '@tanstack/react-query';
 
-export const useActivitiesQuery = (params: GetActivitiesProps, initialActivitiesData?: GetActivitiesResponse) => {
+interface ActivityQueryParams {
+  category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+  sort?: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+  size: number;
+  page: number;
+  title?: string;
+}
+
+export const useActivitiesQuery = (params: ActivityQueryParams, initialActivitiesData?: GetActivitiesResponse) => {
   const queryParams = {
-    category: params.category ?? undefined,
-    sort: params.sort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+    category: params.category,
+    sort: params.sort,
     size: params.size,
-    method: 'offset' as 'offset' | 'cursor',
+    method: 'offset' as const,
     page: params.page,
-    // 검색어가 있을 경우 title과 keyword 모두 설정
     ...(params.title && {
       title: params.title,
       keyword: params.title,
