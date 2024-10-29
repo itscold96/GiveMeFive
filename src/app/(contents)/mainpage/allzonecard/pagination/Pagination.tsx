@@ -26,14 +26,14 @@ export default function Pagination({
   const endPage = Math.min(startPage + PAGES_PER_GROUP - 1, totalPages);
 
   const handlePrevGroup = () => {
-    if (startPage > 1) {
-      onChangePage(startPage - PAGES_PER_GROUP);
+    if (currentPage > 1) {
+      onChangePage(currentPage - 1);
     }
   };
 
   const handleNextGroup = () => {
     if (endPage < totalPages) {
-      onChangePage(startPage + PAGES_PER_GROUP);
+      onChangePage(currentPage + 1);
     }
   };
 

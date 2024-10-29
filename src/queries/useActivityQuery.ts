@@ -2,17 +2,22 @@ import { getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/fetc
 import { useQuery } from '@tanstack/react-query';
 
 export const useActivitiesQuery = (params: GetActivitiesProps, initialActivitiesData?: GetActivitiesResponse) => {
+  const queryParams = {
+    category: params.category ?? undefined,
+    sort: params.sort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+    size: params.size,
+    method: 'offset' as 'offset' | 'cursor',
+    page: params.page,
+    // 검색어가 있을 경우 title과 keyword 모두 설정
+    ...(params.title && {
+      title: params.title,
+      keyword: params.title,
+    }),
+  };
+
   return useQuery<GetActivitiesResponse, Error>({
-    queryKey: ['activities', params],
-    queryFn: () =>
-      getActivities({
-        ...params,
-        // 검색어가 있을 경우 title과 keyword 모두 사용
-        ...(params.title && {
-          title: params.title,
-          keyword: params.title, // 키워드 검색도 같이
-        }),
-      }),
+    queryKey: ['activities', queryParams],
+    queryFn: () => getActivities(queryParams),
     initialData: initialActivitiesData,
   });
 };

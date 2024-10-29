@@ -38,11 +38,10 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     {
       category: selectedCategory ?? undefined,
       sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+      page,
       size: itemsPerPage,
       method: 'offset',
-      title: title,
-      keyword: title, // 키워드 검색도 같이
-      page,
+      title,
     },
     initialActivitiesData,
   );
