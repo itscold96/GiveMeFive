@@ -23,8 +23,12 @@ const BREAKPOINTS = {
 
 const getItemsPerPage = () => {
   const width = window.innerWidth;
-  if (width >= BREAKPOINTS.DESKTOP) return 12;
-  if (width >= BREAKPOINTS.TABLET) return 9;
+  if (width >= BREAKPOINTS.DESKTOP) {
+    return 12;
+  }
+  if (width >= BREAKPOINTS.TABLET) {
+    return 9;
+  }
   return 6;
 };
 

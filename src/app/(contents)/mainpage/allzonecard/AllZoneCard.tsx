@@ -37,11 +37,17 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const isTitleSearched = useMemo(() => title !== '', [title]);
 
   const getItemsPerPage = () => {
-    if (isTitleSearched) return 16;
+    if (isTitleSearched) {
+      return 16;
+    }
 
     const width = window.innerWidth;
-    if (width >= 1201) return 8; // desktop
-    if (width >= 768) return 9; // tablet
+    if (width >= 1201) {
+      return 8;
+    } // desktop
+    if (width >= 768) {
+      return 9;
+    } // tablet
     return 6; // mobile
   };
 
