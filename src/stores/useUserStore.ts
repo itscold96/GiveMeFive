@@ -8,12 +8,12 @@ export const useUserStore = create<UserStore>(set => ({
   setUser: (userInfo: { user: SignupReturn; accessToken?: string; refreshToken?: string }) => {
     set(() => {
       const { user, accessToken, refreshToken } = userInfo;
-      const { email, profileImageUrl, nickname } = user;
+      const { email, profileImageUrl, nickname, id } = user;
       if (accessToken && refreshToken) {
         setCookie('accessToken', accessToken);
         setCookie('refreshToken', refreshToken);
       }
-      return { user: { email, profileImageUrl, nickname } };
+      return { user: { email, profileImageUrl, nickname, id } };
     });
   },
   updateProfileImageUrl: newImageUrl => {
