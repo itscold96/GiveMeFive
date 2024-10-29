@@ -15,11 +15,6 @@ export default function BestZoneCard({
 }: {
   initialBestActivitiesData: GetActivitiesResponse;
 }) {
-export default function BestZoneCard({
-  initialBestActivitiesData,
-}: {
-  initialBestActivitiesData: GetActivitiesResponse;
-}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
