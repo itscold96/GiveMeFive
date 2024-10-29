@@ -7,7 +7,11 @@ import ReviewPagination from './pagination/Pagination';
 import noReview from '@/images/empty.svg';
 import { useActivityReviewsQuery, useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import dayjs from 'dayjs';
+import { useState } from 'react';
+
 export default function ActivityReviews({ params }: { params: { id: string } }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const activityId = Number(params.id);
   const activityQuery = useDetailActivitiesQuery(activityId);
   const reviewsQuery = useActivityReviewsQuery(activityId);
@@ -69,10 +73,8 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
         <ReviewPagination
           totalItems={reviews?.totalCount}
           itemsPerPage={reviews?.reviews.length}
-          currentPage={1}
-          onChangePage={page => {
-            console.log(page);
-          }}
+          currentPage={currentPage}
+          onChangePage={page => setCurrentPage(page)}
         />
       </div>
     </>
