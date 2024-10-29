@@ -1,9 +1,41 @@
 import { useEffect, useRef } from 'react';
 
 declare global {
-  interface Window {
-    kakao: any;
+  interface KakaoMap {
+    setCenter(position: KakaoLatLng): void;
+    getCenter(): KakaoLatLng;
+    setLevel(level: number): void;
+    getLevel(): number;
   }
+
+  interface KakaoMarker {
+    setPosition(position: KakaoLatLng): void;
+    getPosition(): KakaoLatLng;
+  }
+
+  interface Window {
+    kakao: {
+      maps: {
+        load: (callback: () => void) => void;
+        services: {
+          Geocoder: new () => {
+            addressSearch: (address: string, callback: (result: KakaoAddressResult[], status: string) => void) => void;
+          };
+          Status: {
+            OK: string;
+          };
+        };
+        LatLng: new (lat: number, lng: number) => KakaoLatLng;
+        Map: new (container: HTMLElement, options: { center: KakaoLatLng; level: number }) => KakaoMap;
+        Marker: new (options: { position: KakaoLatLng; map: KakaoMap }) => KakaoMarker;
+      };
+    };
+  }
+}
+
+interface KakaoLatLng {
+  getLat(): number;
+  getLng(): number;
 }
 
 interface KakaoAddressResult {
@@ -20,13 +52,15 @@ export default function Map({ address }: { address: string }) {
     script.async = true;
     script.onload = () => {
       window.kakao.maps.load(() => {
-        if (!mapRef.current) return;
+        if (!mapRef.current) {
+          return;
+        }
 
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(address, (result: KakaoAddressResult[], status: string) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-            const map = new window.kakao.maps.Map(mapRef.current, {
+            const map = new window.kakao.maps.Map(mapRef.current!, {
               center: coords,
               level: 3,
             });
