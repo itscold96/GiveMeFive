@@ -44,7 +44,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
   };
 
   const user = useUserStore(state => state.user);
-  const isCreator = user?.id === activity?.userId;
+  const isCreator = user && user.id === activity?.userId;
 
   const handleActionSelect = (action: string) => {
     toggleDropdown();
@@ -151,7 +151,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
           </div>
           <hr className={S.hr} />
         </div>
-        <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />
+        {!isCreator && <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />}
       </div>
       <Alert
         isOpen={isAlertOpen}
