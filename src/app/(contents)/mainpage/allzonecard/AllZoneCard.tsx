@@ -4,32 +4,36 @@ import S from './AllZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
+import { useAllZoneStore } from '@/stores/useAllZoneStore';
+import { useURLManager } from '@/utils/getUrl';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { updateURL } = useURLManager(router, pathname, searchParams);
 
-  const [selectedSort, setSelectedSort] = useState<string | undefined>(searchParams.get('sort') || undefined);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(
-    (searchParams.get('category') as CategoryType) || null,
-  );
-  const [page, setPage] = useState(() => {
-    const page = searchParams.get('page');
-    try {
-      return page ? parseInt(page, 10) : 1;
-    } catch (error) {
-      return 1;
+  const { selectedSort, selectedCategory, page, imgError, setSelectedSort, setSelectedCategory, setPage, setImgError } =
+    useAllZoneStore();
+
+  useEffect(() => {
+    // 페이지 로드 시 URL 초기화
+    if (searchParams.toString()) {
+      router.push(pathname);
     }
-  });
-  const [imgError, setImgError] = useState<Record<string, boolean>>({});
+
+    // 상태 초기화
+    setSelectedSort(undefined);
+    setSelectedCategory(null);
+    setPage(1);
+  }, []);
 
   const title = useMemo(() => searchParams.get('title') || '', [searchParams]);
   const isTitleSearched = useMemo(() => title !== '', [title]);
@@ -38,10 +42,9 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
       category: selectedCategory ?? undefined,
-      sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
+      sort: selectedSort ? (selectedSort as 'price_asc' | 'price_desc') : 'latest',
       page,
       size: itemsPerPage,
-      method: 'offset',
       title,
     },
     initialActivitiesData,
@@ -53,48 +56,19 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     setPage(1);
   }, [title, selectedCategory, selectedSort]);
 
-  const updateURL = (params: { page?: number; category?: CategoryType | null; sort?: string }) => {
-    const validParams = Object.fromEntries(Object.entries(params).filter(([_, value]) => value != null));
-
-    const newSearchParams = new URLSearchParams(searchParams);
-    Object.entries(validParams).forEach(([key, value]) => {
-      if (value === null) {
-        newSearchParams.delete(key);
-      } else {
-        newSearchParams.set(key, String(value));
-      }
-    });
-
-    router.push(`${pathname}?${newSearchParams.toString()}`);
-  };
-
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
-    setPage(1);
-    updateURL({
-      category,
-      page: 1,
-      sort: selectedSort,
-    });
+    updateURL({ category, page: 1, sort: selectedSort });
   };
 
   const handleSortChange = (sort: string) => {
-    setSelectedSort(sort);
-    setPage(1);
-    updateURL({
-      sort,
-      page: 1,
-      category: selectedCategory,
-    });
+    setSelectedSort(sort || undefined);
+    updateURL({ sort: sort || undefined, page: 1, category: selectedCategory });
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    updateURL({
-      page: newPage,
-      category: selectedCategory,
-      sort: selectedSort,
-    });
+    updateURL({ page: newPage, category: selectedCategory, sort: selectedSort });
   };
 
   return (
@@ -135,7 +109,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       ) : (
         <div className={S.allZoneCardContainer}>
           {activitiesData?.activities.map(activity => (
-            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)}>
+            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)} className={S.allZoneCard}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
