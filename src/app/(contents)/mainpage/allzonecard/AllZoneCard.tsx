@@ -8,12 +8,13 @@ import { useState, useEffect, useMemo } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [selectedSort, setSelectedSort] = useState<string | undefined>(searchParams.get('sort') || undefined);
@@ -52,9 +53,48 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     setPage(1);
   }, [title, selectedCategory, selectedSort]);
 
+  const updateURL = (params: { page?: number; category?: CategoryType | null; sort?: string }) => {
+    const validParams = Object.fromEntries(Object.entries(params).filter(([_, value]) => value != null));
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    Object.entries(validParams).forEach(([key, value]) => {
+      if (value === null) {
+        newSearchParams.delete(key);
+      } else {
+        newSearchParams.set(key, String(value));
+      }
+    });
+
+    router.push(`${pathname}?${newSearchParams.toString()}`);
+  };
+
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
-    setPage(1); // 카테고리 변경 시 페이지를 1로 리셋
+    setPage(1);
+    updateURL({
+      category,
+      page: 1,
+      sort: selectedSort,
+    });
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSelectedSort(sort);
+    setPage(1);
+    updateURL({
+      sort,
+      page: 1,
+      category: selectedCategory,
+    });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    updateURL({
+      page: newPage,
+      category: selectedCategory,
+      sort: selectedSort,
+    });
   };
 
   return (
@@ -65,7 +105,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
             selectedCategory={selectedCategory as CategoryType}
             setSelectedCategory={handleCategoryChange}
             selectedSort={selectedSort as string}
-            handleSortChange={setSelectedSort}
+            handleSortChange={handleSortChange}
           />
 
           <div className={S.allExperienceContainer}>
@@ -95,7 +135,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       ) : (
         <div className={S.allZoneCardContainer}>
           {activitiesData?.activities.map(activity => (
-            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)} className={S.allZoneCard}>
+            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
@@ -127,7 +167,12 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       )}
       {totalItems > 0 && (
         <div className={S.paginationContainer}>
-          <Pagination onChangePage={setPage} totalItems={totalItems} itemsPerPage={itemsPerPage} currentPage={page} />
+          <Pagination
+            onChangePage={handlePageChange}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            currentPage={page}
+          />
         </div>
       )}
     </div>
