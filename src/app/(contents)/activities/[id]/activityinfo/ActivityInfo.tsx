@@ -17,6 +17,14 @@ import { useRouter } from 'next/navigation';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import { deleteMyActivity } from '@/fetches/myActivities';
 
+interface ErrorResponse {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 export default function ActivityInfo({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
   const { data: activity } = useDetailActivitiesQuery(activityId);
@@ -59,8 +67,9 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
     try {
       await deleteMyActivity(activityId);
       router.push('/');
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || '삭제에 실패했습니다.');
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      setErrorMessage(err.response?.data?.message || '삭제에 실패했습니다.');
       setIsErrorAlertOpen(true);
       setIsAlertOpen(false);
     }
