@@ -4,6 +4,7 @@ import S from './MyExperienceManagementList.module.scss';
 import { useMyActivitiesQuery } from '@/queries/useMyActivitiesQuery';
 import emptyImage from '@/images/empty.svg';
 import Image from 'next/image';
+import { Loader } from '@mantine/core';
 
 function MyExperienceManagementList() {
   const [cursorId, setCursorId] = useState<number | null>(null);
@@ -86,11 +87,11 @@ function MyExperienceManagementList() {
   }, [isFetchingNextPage, cursorId, fetchNextPage]);
 
   if (isLoading) {
-    return <p>로딩 중입니다...</p>;
+    return <Loader />;
   }
 
   if (error) {
-    return <p>데이터를 가져오는 중 오류가 발생했습니다: {error.message}</p>;
+    return <Loader />;
   }
 
   if (!activities.length) {
@@ -110,7 +111,7 @@ function MyExperienceManagementList() {
         <MyExperienceManagementCard key={activity.id} experience={activity} />
       ))}
       <div ref={observerRef} className={S.loading}>
-        {isFetchingNextPage && <p>더 불러오는 중...</p>}
+        {isFetchingNextPage && <Loader />}
       </div>
     </div>
   );

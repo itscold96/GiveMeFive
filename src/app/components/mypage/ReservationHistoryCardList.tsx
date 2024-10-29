@@ -5,6 +5,7 @@ import S from './ReservationHistoryCardList.module.scss';
 import { getMyReservations } from '@/fetches/reservationHistory';
 import emptyImage from '@/images/empty.svg';
 import Image from 'next/image';
+import { Loader } from '@mantine/core';
 
 interface Reservation {
   id: number;
@@ -147,7 +148,7 @@ function ReservationHistoryCardList() {
             ))}
             {hasMore && (
               <div ref={loadingRef} className={S.loadingContainer}>
-                {isLoading && <div className={S.loading}>로딩 중...</div>}
+                {isLoading && <Loader />}
               </div>
             )}
           </>
