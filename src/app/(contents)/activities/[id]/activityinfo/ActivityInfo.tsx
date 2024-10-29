@@ -8,21 +8,28 @@ import right from '@/images/arrow-right.svg';
 import Image from 'next/image';
 import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
-import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import Map from './map';
 import { useState } from 'react';
 import { useUserStore } from '@/stores/useUserStore';
 import ResponsiveReservation from '@/app/components/reservation/ResponsiveReservation';
+import Alert from '@/app/components/@shared/modal/AlertModal';
+import { useRouter } from 'next/navigation';
+import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
+import { deleteMyActivity } from '@/fetches/myActivities';
 
 export default function ActivityInfo({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
   const { data: activity } = useDetailActivitiesQuery(activityId);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const dropdownList = ['수정하기', '삭제하기'];
-
-  const { onDropdownChange, toggleDropdown, isDropdownToggle } = useDropdown(dropdownList);
+  const router = useRouter();
+  const { toggleDropdown, isDropdownToggle } = useDropdown(dropdownList);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   const allImages = [activity?.bannerImageUrl, ...(activity?.subImages?.map(img => img.imageUrl) || [])].filter(
     Boolean,
@@ -37,6 +44,27 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
   };
 
   const user = useUserStore(state => state.user);
+  const isCreator = user?.id === activity?.userId;
+
+  const handleActionSelect = (action: string) => {
+    toggleDropdown();
+    if (action === '수정하기') {
+      router.push(`/editactivities/${activityId}`);
+    } else if (action === '삭제하기') {
+      setIsAlertOpen(true);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteMyActivity(activityId);
+      router.push('/');
+    } catch (error: any) {
+      setErrorMessage(error.response?.data?.message || '삭제에 실패했습니다.');
+      setIsErrorAlertOpen(true);
+      setIsAlertOpen(false);
+    }
+  };
 
   return (
     <>
@@ -47,12 +75,12 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
             <div className={S.title}>{activity?.title}</div>
           </div>
 
-          {/* 비로그인 시 드롭다운 노출 안되게 */}
-          {user && (
+          {/* isCreator 조건 확인 */}
+          {isCreator && (
             <Dropdown
               type="kebab"
               data={dropdownList}
-              onChange={onDropdownChange}
+              onChange={handleActionSelect}
               toggleDropdown={toggleDropdown}
               isDropdownToggle={isDropdownToggle}
             />
@@ -125,6 +153,20 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
         </div>
         <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />
       </div>
+      <Alert
+        isOpen={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
+        onAlert={handleDelete}
+        message="이 체험을 삭제하시겠습니까?"
+        alertButtonText="삭제"
+      />
+      <Alert
+        isOpen={isErrorAlertOpen}
+        onClose={() => setIsErrorAlertOpen(false)}
+        onAlert={async () => setIsErrorAlertOpen(false)}
+        message={errorMessage}
+        alertButtonText="확인"
+      />
     </>
   );
 }
