@@ -59,25 +59,24 @@ const UserInfoForm: React.FC = () => {
   };
 
   return (
-    <div className={S.userInfoForm}>
-      <Title order={2} className={S.title}>
-        내 정보
-      </Title>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className={S.userInfoForm}>
+      <div className={S.titleWrapper}>
+        <Title order={2} className={S.title}>
+          내 정보
+        </Title>
+        <Button
+          buttonColor="nomadBlack"
+          textSize="lg"
+          borderRadius="radius6"
+          padding="padding14"
+          className={S.submitButton}
+          type="submit"
+        >
+          저장하기
+        </Button>
+      </div>
 
-      <form onSubmit={handleSubmit(handleFormSubmit)} className={S.form}>
-        <div className={S.buttonWrapper}>
-          <Button
-            buttonColor="nomadBlack"
-            textSize="lg"
-            borderRadius="radius6"
-            padding="padding14"
-            className={S.submitButton}
-            type="submit"
-          >
-            저장하기
-          </Button>
-        </div>
-
+      <div className={S.form}>
         <Input
           label="닉네임"
           placeholder="닉네임을 입력하세요"
@@ -122,15 +121,16 @@ const UserInfoForm: React.FC = () => {
           type="password"
           className={S.input}
         />
-      </form>
+      </div>
 
       <ConfirmModal
+        className={S.confirmModal}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onConfirm={handleConfirm}
         message="변경되었습니다."
       />
-    </div>
+    </form>
   );
 };
 

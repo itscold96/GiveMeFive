@@ -8,6 +8,12 @@
   z-index: 1;
 }
 
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .title {
   @include text3XlBold;
 }
@@ -17,19 +23,8 @@
   flex-direction: column;
 }
 
-.buttonWrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-}
-
 .input {
   margin-bottom: 1rem;
-}
-
-.label {
-  @include text2XlBold;
 }
 
 .submitButton {
