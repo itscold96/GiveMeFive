@@ -11,7 +11,7 @@ import NoActivity from '@/images/empty.svg';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
-import { useAllZoneStore } from '@/stores/useAllZoneStore';
+import { useAllZoneStore, useItemsPerPage } from '@/stores/useAllZoneStore';
 import { useURLManager } from '@/utils/getUrl';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
@@ -29,41 +29,18 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     setSelectedCategory,
     setPage,
     setImgError,
-    itemsPerPage,
     setItemsPerPage,
+    setIsSearchResult,
   } = useAllZoneStore();
 
   const title = useMemo(() => searchParams.get('title') || '', [searchParams]);
   const isTitleSearched = useMemo(() => title !== '', [title]);
-
-  const getItemsPerPage = () => {
-    if (isTitleSearched) {
-      return 16;
-    }
-
-    const width = window.innerWidth;
-    if (width >= 1201) {
-      return 8;
-    } // desktop
-    if (width >= 768) {
-      return 9;
-    } // tablet
-    return 6; // mobile
-  };
+  const itemsPerPage = useItemsPerPage();
 
   useEffect(() => {
-    const handleResize = () => {
-      if (!isTitleSearched) {
-        setItemsPerPage(getItemsPerPage());
-        setPage(1); // 화면 크기 변경 시 첫 페이지로 리셋
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isTitleSearched, setItemsPerPage, setPage]);
+    setItemsPerPage(itemsPerPage);
+    setIsSearchResult(isTitleSearched);
+  }, [itemsPerPage, setItemsPerPage, isTitleSearched, setIsSearchResult]);
 
   const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
@@ -80,7 +57,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
 
   useEffect(() => {
     setPage(1);
-  }, [title, selectedCategory, selectedSort]);
+  }, [title, selectedCategory, selectedSort, setPage]);
 
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
