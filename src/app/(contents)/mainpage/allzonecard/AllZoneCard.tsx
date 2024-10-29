@@ -95,7 +95,6 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
         <div className={S.searchResultContainer}>
           <span className={S.searchResultText}>
             <span className={S.searchTerm}>{title}</span>
-            <span className={S.searchTerm}>{title}</span>
             (으)로 검색한 결과입니다.
           </span>
           <span className={S.searchResultCount}>총 {totalItems}개의 결과</span>
