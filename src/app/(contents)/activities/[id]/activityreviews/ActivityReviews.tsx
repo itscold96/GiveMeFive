@@ -8,6 +8,7 @@ import noReview from '@/images/empty.svg';
 import { useActivityReviewsQuery, useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { useUserStore } from '@/stores/useUserStore';
 
 export default function ActivityReviews({ params }: { params: { id: string } }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,13 +16,15 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
   const activityId = Number(params.id);
   const activityQuery = useDetailActivitiesQuery(activityId);
   const reviewsQuery = useActivityReviewsQuery(activityId);
+  const user = useUserStore(state => state.user);
+  const isCreator = user && user.id === activityQuery.data?.userId;
 
   const activity = activityQuery.data;
   const reviews = reviewsQuery.data;
 
   if (!reviewsQuery.data?.reviews || reviewsQuery.data?.reviews.length === 0) {
     return (
-      <div className={S.activityReviewAndPagination}>
+      <div className={`${S.activityReviewAndPagination} ${isCreator ? S.fullWidth : ''}`}>
         <div className={S.noReviewContainer}>
           <Image src={noReview} alt="" width={100} height={100} />
           <div>작성된 후기가 없습니다.</div>
