@@ -1,6 +1,7 @@
 import { Category } from '@/app/(contents)/mainpage/allzonecard/category/CategoryAndDropdown';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-export function useURLManager(router: any, pathname: string, searchParams: URLSearchParams) {
+export function useURLManager(router: AppRouterInstance, pathname: string, searchParams: URLSearchParams) {
   const updateURL = (params: { page?: number; category?: Category | null; sort?: string }) => {
     const newParams = new URLSearchParams(searchParams);
 
