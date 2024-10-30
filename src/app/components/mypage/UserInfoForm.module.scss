@@ -6,7 +6,12 @@
   border-radius: 8px;
   background-color: $gray100;
   z-index: 1;
-  position: relative;
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -18,19 +23,8 @@
   flex-direction: column;
 }
 
-.buttonWrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-}
-
 .input {
   margin-bottom: 1rem;
-}
-
-.label {
-  @include text2XlBold;
 }
 
 .submitButton {

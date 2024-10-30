@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import S from './SideMenu.module.scss';
@@ -17,9 +17,15 @@ import { patchUserInfo } from '@/fetches/patchUserInfo';
 
 const SideMenu: React.FC = () => {
   const { data: userInfo } = useUserQuery();
-  const [profileImageUrl, setProfileImageUrl] = useState(userInfo?.profileImageUrl || DefaultProfileImage);
+  const [profileImageUrl, setProfileImageUrl] = useState(DefaultProfileImage);
   const pathname = usePathname();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (userInfo?.profileImageUrl) {
+      setProfileImageUrl(userInfo.profileImageUrl);
+    }
+  }, [userInfo]);
 
   const handleProfileImageClick = () => {
     fileInputRef.current?.click();
@@ -34,13 +40,18 @@ const SideMenu: React.FC = () => {
 
         setProfileImageUrl(newProfileImageUrl);
         await patchUserInfo({ profileImageUrl: newProfileImageUrl });
-
-        console.log('Updated profile image URL:', newProfileImageUrl);
       } catch (error) {
         console.error('Failed to upload profile image:', error);
       }
     }
   };
+
+  const menuItems = [
+    { path: '/mypage/myprofile', icon: MyProfileIcon, label: '내 정보' },
+    { path: '/mypage/reservationhistory', icon: ReservationHistoryIcon, label: '예약 내역' },
+    { path: '/mypage/myexperiencemanagement', icon: MyExperienceManagementIcon, label: '내 체험 관리' },
+    { path: '/mybookingstatus', icon: ReservationStatusIcon, label: '예약 현황' },
+  ];
 
   return (
     <aside className={S.sideMenu}>
@@ -61,29 +72,14 @@ const SideMenu: React.FC = () => {
       </div>
       <nav className={S.menu}>
         <ul>
-          <li className={pathname === '/mypage/myprofile' ? S.active : ''}>
-            <Link href="/mypage/myprofile">
-              <Image src={MyProfileIcon} alt="My Profile" className={S.menuIcon} />내 정보
-            </Link>
-          </li>
-          <li className={pathname === '/mypage/reservationhistory' ? S.active : ''}>
-            <Link href="/mypage/reservationhistory">
-              <Image src={ReservationHistoryIcon} alt="Reservation History" className={S.menuIcon} />
-              예약 내역
-            </Link>
-          </li>
-          <li className={pathname === '/mypage/myexperiencemanagement' ? S.active : ''}>
-            <Link href="/mypage/myexperiencemanagement">
-              <Image src={MyExperienceManagementIcon} alt="My Experience Management" className={S.menuIcon} />내 체험
-              관리
-            </Link>
-          </li>
-          <li className={pathname === '/mybookingstatus' ? S.active : ''}>
-            <Link href="/mybookingstatus">
-              <Image src={ReservationStatusIcon} alt="Reservation Status" className={S.menuIcon} />
-              예약 현황
-            </Link>
-          </li>
+          {menuItems.map(({ path, icon, label }) => (
+            <li key={path} className={pathname === path ? S.active : ''}>
+              <Link href={path}>
+                <Image src={icon} alt={label} className={S.menuIcon} />
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
