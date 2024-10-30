@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import S from './Search.module.scss';
 import Input from '@/app/components/@shared/input/Input';
 import Button from '@/app/components/@shared/button/Button';
