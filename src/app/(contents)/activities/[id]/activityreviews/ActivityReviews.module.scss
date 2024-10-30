@@ -25,17 +25,30 @@
   flex-direction: column;
   gap: 24px;
   max-width: 790px;
-  margin-top: -30px;
+  margin-top: 30px;
+  margin-left: 0;
+
+  &.fullWidth {
+    max-width: 100%;
+    margin: 30px auto 0;
+  }
 
   @include tablet {
     max-width: 429px;
-    margin-top: 40px;
+    margin-top: 30px;
+
+    &.fullWidth {
+      max-width: 100%;
+    }
   }
 
   @include mobile {
     max-width: 327px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 20px;
+
+    &.fullWidth {
+      max-width: 100%;
+    }
   }
 }
 
@@ -126,6 +139,10 @@
   @include textLgRegular;
   color: $nomadBlack;
   word-break: break-word;
+}
+
+.fullWidth {
+  width: 100% !important;
 }
 
 .noReviewContainer {

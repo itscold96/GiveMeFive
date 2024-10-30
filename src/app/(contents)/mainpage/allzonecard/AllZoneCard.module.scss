@@ -12,28 +12,32 @@
 
 .allZoneCardContainer {
   display: grid;
+  gap: 24px;
+  padding: 0 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
 
   @include tablet {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0 20px;
+    grid-template-columns: repeat(3, 221px);
   }
 
   @include mobile {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 0 10px;
+    grid-template-columns: repeat(2, 168px);
   }
 }
 
 .allZoneCardImage {
-  width: 283px;
-  height: 283px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1; // 정사각형 비율 유지
   position: relative;
+  overflow: hidden;
+  border-radius: 20px;
 
   // 엑박일 경우 사진 크기 가늠할 수 있는 보더
-  border-radius: 20px;
   border: 1px solid $gray300;
   background-color: $gray300;
 
@@ -49,7 +53,8 @@
 }
 
 .allZoneCardContent {
-  position: relative;
+  // position: relative;
+  width: 100%;
   margin-top: 15px;
 
   @include tablet {
@@ -58,6 +63,20 @@
 
   @include mobile {
     width: 164px;
+  }
+}
+
+.allZoneCard {
+  cursor: pointer;
+  width: 100%;
+  max-width: 283px; // PC 기준 너비
+
+  @include tablet {
+    max-width: 221px;
+  }
+
+  @include mobile {
+    max-width: 168px;
   }
 }
 

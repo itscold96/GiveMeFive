@@ -24,6 +24,7 @@ export default function Banner({ bestActivity }: BannerProps) {
             src={bestActivity.bannerImageUrl}
             alt=""
             className={S.bannerImage}
+            quality={100}
             width={0}
             height={550}
             objectFit="cover"

@@ -4,43 +4,46 @@ import S from './AllZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
+import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
+import { useAllZoneStore, useItemsPerPage } from '@/stores/useAllZoneStore';
+import { useURLManager } from '@/utils/getUrl';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { updateURL } = useURLManager(router, pathname, searchParams);
 
-  const [selectedSort, setSelectedSort] = useState<string | undefined>(searchParams.get('sort') || undefined);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(
-    (searchParams.get('category') as CategoryType) || null,
-  );
-  const [page, setPage] = useState(() => {
-    const page = searchParams.get('page');
-    try {
-      return page ? parseInt(page, 10) : 1;
-    } catch (error) {
-      return 1;
-    }
-  });
-  const [imgError, setImgError] = useState<Record<string, boolean>>({});
+  const {
+    selectedSort,
+    selectedCategory,
+    page,
+    imgError,
+    setSelectedSort,
+    setSelectedCategory,
+    setPage,
+    setImgError,
+    setItemsPerPage,
+    setIsSearchResult,
+  } = useAllZoneStore();
 
   const title = useMemo(() => searchParams.get('title') || '', [searchParams]);
   const isTitleSearched = useMemo(() => title !== '', [title]);
-  const itemsPerPage = useMemo(() => (isTitleSearched ? 16 : 8), [isTitleSearched]);
+  const itemsPerPage = useItemsPerPage();
 
-  const { data: activitiesData } = useActivitiesQuery(
+  const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
       category: selectedCategory ?? undefined,
-      sort: selectedSort as 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest',
-      size: itemsPerPage,
-      method: 'offset',
-      title,
+      sort: selectedSort ? (selectedSort as 'price_asc' | 'price_desc') : 'latest',
       page,
+      size: itemsPerPage,
+      title: isTitleSearched ? title : undefined,
     },
     initialActivitiesData,
   );
@@ -48,17 +51,34 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const totalItems = useMemo(() => activitiesData?.totalCount || 0, [activitiesData]);
 
   useEffect(() => {
+    router.replace(pathname);
     setPage(1);
-  }, [title, selectedCategory, selectedSort]);
+    setSelectedCategory(null);
+    setSelectedSort(undefined);
+  }, []);
 
-  const handleSortChange = (value: string) => {
-    setSelectedSort(value);
+  useEffect(() => {
+    setItemsPerPage(itemsPerPage);
+    setIsSearchResult(isTitleSearched);
+  }, [itemsPerPage, setItemsPerPage, isTitleSearched, setIsSearchResult]);
+
+  useEffect(() => {
     setPage(1);
-  };
+  }, [title, selectedCategory, selectedSort, setPage]);
 
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
-    setPage(1); // 카테고리 변경 시 페이지를 1로 리셋
+    updateURL({ category, page: 1, sort: selectedSort }, { scroll: false });
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSelectedSort(sort || undefined);
+    updateURL({ sort: sort || undefined, page: 1, category: selectedCategory }, { scroll: false });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    updateURL({ page: newPage, category: selectedCategory, sort: selectedSort }, { scroll: false });
   };
 
   return (
@@ -88,7 +108,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
         </div>
       )}
 
-      {!activitiesData || activitiesData.activities.length === 0 ? (
+      {isFetched && (!activitiesData || activitiesData.activities.length === 0) ? (
         <div className={S.noActivityContainer}>
           <Image src={NoActivity} alt="no activity" width={283} height={283} />
           <p className={S.noActivityText}>
@@ -97,8 +117,8 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
         </div>
       ) : (
         <div className={S.allZoneCardContainer}>
-          {activitiesData.activities.map(activity => (
-            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)}>
+          {activitiesData?.activities.map(activity => (
+            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)} className={S.allZoneCard}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
@@ -120,7 +140,8 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
 
                 <div className={S.allZoneCardTitle}>{activity.title}</div>
                 <div className={S.allZoneCardPrice}>
-                  ₩ {Number(activity.price).toLocaleString()} <span className={S.allZoneCardPriceUnit}> / 인</span>
+                  ₩ {getCurrencyFormat(activity.price)}
+                  <span className={S.allZoneCardPriceUnit}> / 인</span>
                 </div>
               </div>
             </div>
@@ -129,7 +150,12 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       )}
       {totalItems > 0 && (
         <div className={S.paginationContainer}>
-          <Pagination onChangePage={setPage} totalItems={totalItems} itemsPerPage={itemsPerPage} currentPage={page} />
+          <Pagination
+            onChangePage={handlePageChange}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            currentPage={page}
+          />
         </div>
       )}
     </div>

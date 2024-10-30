@@ -12,7 +12,7 @@
   }
 
   @include mobile {
-    width: 327px;
+    width: 100%;
     margin: 0 auto;
   }
 }
@@ -95,8 +95,7 @@
     height: 300px;
     flex-direction: column;
     position: relative;
-    margin-left: -17px;
-    margin-right: -17px;
+    margin-inline: -17px;
     margin-bottom: -10px;
   }
 }
@@ -189,16 +188,16 @@
   display: flex;
   flex-direction: column;
   gap: 34px;
-  max-width: 790px;
+  // max-width: 790px;
 
   @include tablet {
-    max-width: 428px;
+    width: 100%;
+    padding-inline: 20px;
   }
 
   @include mobile {
-    max-width: 327px;
+    width: 100%;
     margin: 0 auto;
-    // margin: 0 17px;
   }
 
   .introductionContainer {
@@ -242,4 +241,43 @@
 .calendarAndInfoContainer {
   display: flex;
   gap: 20px;
+
+  // ResponsiveReservation이 있을 때
+  &:has(> div + div) {
+    .introductionAndMapContainer {
+      max-width: 790px;
+
+      @include tablet {
+        // max-width: 428px;
+      }
+
+      @include mobile {
+        // max-width: 327px;
+      }
+    }
+  }
+
+  // ResponsiveReservation이 없을 때 (creator view)
+  &:not(:has(> div + div)) {
+    width: 100%;
+
+    .introductionAndMapContainer {
+      width: 100%;
+      max-width: 100%;
+
+      .mapContainer {
+        max-width: 100%;
+      }
+
+      .map {
+        width: 100%;
+        height: 400px;
+      }
+    }
+
+    .hr {
+      width: 100%;
+      margin: 0;
+    }
+  }
 }
