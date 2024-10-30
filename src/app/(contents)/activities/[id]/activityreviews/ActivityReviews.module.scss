@@ -27,9 +27,21 @@
   max-width: 790px;
   margin-top: 30px;
 
+  // creator view일 때만 전체 너비 적용
+  .calendarAndInfoContainer:not(:has(~ div[class*='ResponsiveReservation'])) & {
+    width: 100%;
+    max-width: 100%;
+
+    .hr2 {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      margin-top: 16px;
+    }
+  }
+
   @include tablet {
     max-width: 429px;
-    margin-top: 40px;
   }
 
   @include mobile {
