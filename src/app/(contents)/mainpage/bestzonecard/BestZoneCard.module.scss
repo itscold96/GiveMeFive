@@ -47,7 +47,6 @@
 
   // 엑박일 경우 사진 크기 가늠할 수 있는 보더
   border-radius: 20px;
-  border: 1px solid $gray300;
   background-color: $gray900;
 
   @include mobile {
