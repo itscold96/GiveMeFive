@@ -37,11 +37,6 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const isTitleSearched = useMemo(() => title !== '', [title]);
   const itemsPerPage = useItemsPerPage();
 
-  useEffect(() => {
-    setItemsPerPage(itemsPerPage);
-    setIsSearchResult(isTitleSearched);
-  }, [itemsPerPage, setItemsPerPage, isTitleSearched, setIsSearchResult]);
-
   const { data: activitiesData, isFetched } = useActivitiesQuery(
     {
       category: selectedCategory ?? undefined,
@@ -56,22 +51,34 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const totalItems = useMemo(() => activitiesData?.totalCount || 0, [activitiesData]);
 
   useEffect(() => {
+    router.replace(pathname);
+    setPage(1);
+    setSelectedCategory(null);
+    setSelectedSort(undefined);
+  }, []);
+
+  useEffect(() => {
+    setItemsPerPage(itemsPerPage);
+    setIsSearchResult(isTitleSearched);
+  }, [itemsPerPage, setItemsPerPage, isTitleSearched, setIsSearchResult]);
+
+  useEffect(() => {
     setPage(1);
   }, [title, selectedCategory, selectedSort, setPage]);
 
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
-    updateURL({ category, page: 1, sort: selectedSort });
+    updateURL({ category, page: 1, sort: selectedSort }, { scroll: false });
   };
 
   const handleSortChange = (sort: string) => {
     setSelectedSort(sort || undefined);
-    updateURL({ sort: sort || undefined, page: 1, category: selectedCategory });
+    updateURL({ sort: sort || undefined, page: 1, category: selectedCategory }, { scroll: false });
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    updateURL({ page: newPage, category: selectedCategory, sort: selectedSort });
+    updateURL({ page: newPage, category: selectedCategory, sort: selectedSort }, { scroll: false });
   };
 
   return (
