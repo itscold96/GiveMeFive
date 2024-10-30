@@ -16,6 +16,9 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
   const activityQuery = useDetailActivitiesQuery(activityId);
   const reviewsQuery = useActivityReviewsQuery(activityId);
 
+  const activity = activityQuery.data;
+  const reviews = reviewsQuery.data;
+
   if (!reviewsQuery.data?.reviews || reviewsQuery.data?.reviews.length === 0) {
     return (
       <div className={S.activityReviewAndPagination}>
@@ -27,52 +30,51 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
     );
   }
 
-  const activity = activityQuery.data;
-  const reviews = reviewsQuery.data;
-
   return (
     <>
       <div className={S.activityReviewAndPagination}>
         <span className={S.activityReview}>후기</span>
 
         <div className={S.averageRatingAndSatisfaction}>
-          <div className={S.averageRating}>{activity?.rating}</div>
+          <div className={S.averageRating}>{activity?.rating || 0}</div>
 
           <div className={S.satisfaction}>
             <span className={S.satisfactionTitle}>만족도</span>
             <div className={S.reviewCountContainer}>
-              <Image src={star} alt="" width={16} height={16} />
-              <div className={S.reviewCount}>({activity?.reviewCount})개 후기</div>
+              <Image src={star} alt="" width={16} height={16} unoptimized />
+              <div className={S.reviewCount}>({activity?.reviewCount || 0})개 후기</div>
             </div>
           </div>
         </div>
 
         <div className={S.reviewContainer}>
-          <div className={S.profileImageContainer}>
-            <Image
-              src={reviews?.reviews[0]?.user.profileImageUrl}
-              alt=""
-              width={45}
-              height={45}
-              className={S.profileImage}
-            />
-          </div>
-          <div>
-            <div className={S.reviewInfo}>
-              <span className={S.reviewer}>{reviews?.reviews[0]?.user.nickname}</span>
-              <div className={S.dash}>|</div>
-              <div className={S.reviewDate}>{dayjs(reviews?.reviews[0]?.createdAt).format('YYYY.MM.DD')}</div>
+          {reviews?.reviews.map(review => (
+            <div key={review.id} className={S.reviewContainer}>
+              <div className={S.profileImageContainer}>
+                {review.user?.profileImageUrl && (
+                  <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
+                )}
+              </div>
+              <div>
+                <div className={S.reviewInfo}>
+                  <span className={S.reviewer}>{review.user.nickname}</span>
+                  <div className={S.dash}>|</div>
+                  <div className={S.reviewDate}>
+                    {review.createdAt ? dayjs(review.createdAt).format('YYYY.MM.DD') : ''}
+                  </div>
+                </div>
+                <div className={S.reviewContent}>{review.content}</div>
+              </div>
             </div>
-            <div className={S.reviewContent}>{reviews?.reviews[0]?.content}</div>
-          </div>
+          ))}
         </div>
         <hr className={S.hr2} />
       </div>
 
       <div className={S.reviewPagination}>
         <ReviewPagination
-          totalItems={reviews?.totalCount}
-          itemsPerPage={reviews?.reviews.length}
+          totalItems={reviews?.totalCount || 0}
+          itemsPerPage={reviews?.reviews.length || 0}
           currentPage={currentPage}
           onChangePage={page => setCurrentPage(page)}
         />
