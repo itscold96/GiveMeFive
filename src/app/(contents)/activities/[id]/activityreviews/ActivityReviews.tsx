@@ -22,6 +22,11 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
   const activity = activityQuery.data;
   const reviews = reviewsQuery.data;
 
+  const ITEMS_PER_PAGE = 3; // 페이지당 리뷰 개수 상수 추가
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentPageReviews = reviews?.reviews.slice(startIndex, endIndex);
+
   if (!reviewsQuery.data?.reviews || reviewsQuery.data?.reviews.length === 0) {
     return (
       <div className={`${S.activityReviewAndPagination} ${isCreator ? S.fullWidth : ''}`}>
@@ -51,8 +56,8 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
         </div>
 
         <div className={S.reviewContainer}>
-          {reviews?.reviews.map(review => (
-            <div key={review.id} className={S.reviewContainer}>
+          {currentPageReviews?.map((review, index) => (
+            <div key={review.id}>
               <div className={S.profileImageContainer}>
                 {review.user?.profileImageUrl && (
                   <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
@@ -68,10 +73,10 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
                 </div>
                 <div className={S.reviewContent}>{review.content}</div>
               </div>
+              {index < currentPageReviews.length - 1 && <hr className={S.hr2} />}
             </div>
           ))}
         </div>
-        <hr className={S.hr2} />
       </div>
 
       <div className={S.reviewPagination}>

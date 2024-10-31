@@ -164,4 +164,8 @@
 .reviewPagination {
   display: flex;
   justify-content: center;
+
+  @include mobile {
+    margin-top: 24px;
+  }
 }
