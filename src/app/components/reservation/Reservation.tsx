@@ -25,7 +25,7 @@ export default function Reservation({ activityId, price }: ReservationProps) {
         <section className={S.priceContainer}>
           <p>
             {perPersonPrice}
-            <span className={S.perPerson}> /인</span>
+            <span className={S.perPerson}> / 인</span>
           </p>
           <div className={S.separator} />
         </section>
