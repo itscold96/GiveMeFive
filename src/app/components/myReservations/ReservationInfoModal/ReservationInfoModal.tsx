@@ -1,0 +1,77 @@
+import dayjs from 'dayjs';
+import { getReservedSchedule, GetReservedScheduleResponse } from '@/fetches/getReservationDashboard';
+import { useEffect, useState } from 'react';
+import S from './ReservationInfoModal.module.scss';
+import ReservationInfoTabs from '../ReservationInfoTabs/ReservationInfoTabs';
+import deleteXButton from '@/images/delete-X-button.svg';
+import Image from 'next/image';
+
+export interface ReservationCount {
+  declined: number;
+  confirmed: number;
+  pending: number;
+}
+
+interface ReservationInfoModalProps {
+  activityId: number;
+  onClose: () => void;
+  selectedDate: Date;
+  className?: string;
+}
+
+export default function ReservationInfoModal({ activityId, onClose, selectedDate }: ReservationInfoModalProps) {
+  const [reservationCount, setReservationCount] = useState<ReservationCount>();
+  const [selectScheduleId, setSelectScheduleId] = useState<number>(0);
+  const [isToggleTrigger, setIsToggleTrigger] = useState(false);
+  const [scheduleData, setScheduleData] = useState<string[]>();
+  const [selectSchedule, setSelectShedule] = useState<string>();
+  console.log(selectedDate, '선택날짜');
+
+  const formattedDate = dayjs(new Date(selectedDate)).format('YYYY-MM-DD');
+  const fetchReservedSchedule = async () => {
+    try {
+      const response = await getReservedSchedule({ activityId, formattedDate });
+      console.log(response);
+      if (Array.isArray(response) && response.length > 0) {
+        const formattedScheduleData = response.map(item => {
+          const { startTime, endTime } = item;
+          return `${startTime} ~ ${endTime}`; // "00:00 ~ 12:00" 형식으로 변환
+        });
+        console.log(formattedScheduleData);
+        setScheduleData(formattedScheduleData);
+        setReservationCount(response[0].count);
+        setSelectScheduleId(response[0].scheduleId);
+      } else {
+        console.log('예약된 스케줄이 없습니다.');
+      }
+    } catch (error) {
+      console.error('스케줄 데이터를 가져오는 도중 에러 발생:', error);
+    }
+  };
+  useEffect(() => {
+    fetchReservedSchedule();
+  }, [selectedDate, isToggleTrigger]);
+
+  console.log(reservationCount);
+  return (
+    <div className={S.modalContainer}>
+      <div className={S.modalBox}>
+        <div className={S.modalTop}>
+          <div>예약 정보</div>
+          <Image src={deleteXButton} alt="예약 정보 닫기 버튼" width={40} height={40} />
+        </div>
+        <ReservationInfoTabs
+          reservationCount={reservationCount}
+          onClose={onClose}
+          selectScheduleId={selectScheduleId}
+          activityId={activityId}
+          selectedDate={selectedDate}
+          setIsToggleTrigger={setIsToggleTrigger}
+          isToggleTrigger={isToggleTrigger}
+          scheduleData={scheduleData}
+          setSelectShedule={setSelectShedule}
+        />
+      </div>
+    </div>
+  );
+}

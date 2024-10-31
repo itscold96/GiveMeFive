@@ -1,0 +1,22 @@
+@use '@/styles/abstracts/core' as *;
+
+.modalContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.modalBox {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  width: 430px;
+  height: 700px;
+  border: 1px solid $gray300;
+  border-radius: 24px;
+  background-color: $white;
+}
+.modalTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

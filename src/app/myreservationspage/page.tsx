@@ -1,8 +1,9 @@
-import MyReservations from '../components/myReservations/MyReservations';
+import Reservations from '../components/myReservations/Reservations/Reservations';
+
 export default function MyReservationsPage() {
   return (
     <div>
-      <MyReservations />
+      <Reservations />
     </div>
   );
 }

@@ -65,7 +65,7 @@ export default function Dropdown({
             {data.map((item, index) => (
               <div
                 className={S.DropdownInfo}
-                key={item}
+                key={`${item}+${index}`}
                 onClick={() => handleSelectValue(item)}
                 style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #gray300' }}
               >
