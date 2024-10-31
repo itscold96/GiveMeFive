@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 interface DropdownProps {
   data: string[];
-  onChange: (value: string) => void;
+  onChange: (value: string, id?: number) => void;
   toggleDropdown: () => void;
   isDropdownToggle: boolean;
   selectedValue?: string;
@@ -24,8 +24,8 @@ export default function Dropdown({
   type,
 }: DropdownProps) {
   // 항목 클릭 시 선택된 값 설정 및 useDropdown훅의 selectedValue로 전달
-  const handleSelectValue = (value: string) => {
-    onChange(value);
+  const handleSelectValue = (value: string, id: number) => {
+    onChange(value, id);
     toggleDropdown();
   };
 
@@ -66,7 +66,7 @@ export default function Dropdown({
               <div
                 className={S.DropdownInfo}
                 key={`${item}+${index}`}
-                onClick={() => handleSelectValue(item)}
+                onClick={() => handleSelectValue(item, index)}
                 style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #gray300' }}
               >
                 {item}

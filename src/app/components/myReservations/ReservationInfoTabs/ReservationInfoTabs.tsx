@@ -12,36 +12,39 @@ import useDropdown from '@/hooks/useDropdown';
 interface ReservationInfoTabsProps {
   reservationCount?: ReservationCount;
   onClose: () => void;
-  selectScheduleId: number;
   activityId: number;
   selectedDate: Date;
   setIsToggleTrigger: (value: boolean) => void;
   isToggleTrigger: boolean;
   scheduleData?: string[];
-  setSelectShedule = (schedule: string) => void;
+  scheduleKey?: number[];
+  setSelectedIndex: (index: number) => void;
 }
 
 export default function ReservationInfoTabs({
   reservationCount,
   onClose,
-  selectScheduleId,
   activityId,
   selectedDate,
   setIsToggleTrigger,
   isToggleTrigger,
   scheduleData,
-  setSelectShedule,
+  scheduleKey,
+  setSelectedIndex,
 }: ReservationInfoTabsProps) {
-  const [selectStauts, setSelectStatus] = useState<'pending' | 'declined' | 'confirmed'>('pending');
+  const [selectStatus, setSelectStatus] = useState<'pending' | 'declined' | 'confirmed'>('pending');
   const [data, setData] = useState<Reservation[]>();
-  const [dropdownScheduleData, setDropdownScheduleData] = useState<string[]>(scheduleData || ['00:00 ~ 00:00']);
+  const [dropdownScheduleData, setDropdownScheduleData] = useState<string[]>(['스케쥴을 선택해 주세요']);
+  const [dropdownScheduleKey, setDropdownScheduleKey] = useState<number[]>([]);
   const {
     data: dropdownItems,
     onDropdownChange,
     toggleDropdown,
     isDropdownToggle,
     selectedValue,
-  } = useDropdown(dropdownScheduleData);
+    selectedKey,
+    selectedIndex,
+  } = useDropdown(dropdownScheduleData, dropdownScheduleKey);
 
   const formattedDate = dayjs(new Date(selectedDate)).format('YYYY년MM월DD일');
   const onTabChange = (value: string | null) => {
@@ -50,25 +53,27 @@ export default function ReservationInfoTabs({
     }
   };
 
-  const getSelectStautsInfo = async (selectStauts: 'pending' | 'declined' | 'confirmed') => {
-    const response = await getReservedSelectSchedule({ activityId, selectScheduleId, selectStauts });
+  const getSelectStatusInfo = async (selectStatus: 'pending' | 'declined' | 'confirmed') => {
+    const response = await getReservedSelectSchedule({ activityId, selectScheduleId: selectedKey, selectStatus });
     console.log(response, '지정한 status 반환값');
     console.log(response.reservations);
     setData(response.reservations);
   };
 
   useEffect(() => {
-    getSelectStautsInfo(selectStauts);
-  }, [selectStauts, selectScheduleId, isToggleTrigger]);
+    getSelectStatusInfo(selectStatus);
+  }, [selectStatus, selectedKey, isToggleTrigger]);
 
   useEffect(() => {
-    if (scheduleData) {
+    if (scheduleData && scheduleKey) {
       setDropdownScheduleData(scheduleData);
+      setDropdownScheduleKey(scheduleKey);
     }
-  }, [scheduleData]);
+  }, [scheduleData, scheduleKey]);
+
   useEffect(() => {
-    setSelectShedule(selectedValue);
-  }, [selectedValue]);
+    setSelectedIndex(selectedIndex);
+  }, [selectedIndex]);
 
   return (
     <div>

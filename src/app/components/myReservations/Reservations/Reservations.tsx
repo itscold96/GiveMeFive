@@ -22,7 +22,7 @@ export default function Reservations() {
   const { toggleValue, toggleDispatch } = useToggle();
   const [dataTitles, setDataTitles] = useState<string[]>([]);
   const [availableDates, setAvailableDates] = useState<string[]>([]);
-  const { data: Mydata, error, isLoading } = useMyActivitiesQuery({ page: 1, size: 50 });
+  const { data: Mydata, error, isLoading } = useMyActivitiesQuery({ size: 50 });
   const {
     data: dropdownData,
     onDropdownChange,

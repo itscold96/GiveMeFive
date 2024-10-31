@@ -96,17 +96,17 @@ export interface GetReservedSelectScheduleResponse {
 export interface GetReservedSelectScheduleProps {
   activityId: number;
   selectScheduleId: number;
-  selectStauts: 'declined' | 'pending' | 'confirmed';
+  selectStatus: 'declined' | 'pending' | 'confirmed';
 }
 
 // 내 체험 예약 시간대별 예약 내역 조회
 export const getReservedSelectSchedule = async ({
   activityId,
   selectScheduleId,
-  selectStauts,
+  selectStatus,
 }: GetReservedSelectScheduleProps): Promise<GetReservedSelectScheduleResponse> => {
   const response = await axiosAuth.get<GetReservedSelectScheduleResponse>(
-    `/my-activities/${activityId}/reservations?size=10&scheduleId=${selectScheduleId}&status=${selectStauts}`,
+    `/my-activities/${activityId}/reservations?size=10&scheduleId=${selectScheduleId}&status=${selectStatus}`,
   );
 
   return response.data;

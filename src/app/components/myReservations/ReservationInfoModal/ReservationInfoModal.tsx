@@ -21,26 +21,33 @@ interface ReservationInfoModalProps {
 
 export default function ReservationInfoModal({ activityId, onClose, selectedDate }: ReservationInfoModalProps) {
   const [reservationCount, setReservationCount] = useState<ReservationCount>();
-  const [selectScheduleId, setSelectScheduleId] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>();
   const [isToggleTrigger, setIsToggleTrigger] = useState(false);
   const [scheduleData, setScheduleData] = useState<string[]>();
-  const [selectSchedule, setSelectShedule] = useState<string>();
+  const [scheduleKey, setScheduleKey] = useState<number[]>();
   console.log(selectedDate, '선택날짜');
-
+  console.log(scheduleData, scheduleKey);
   const formattedDate = dayjs(new Date(selectedDate)).format('YYYY-MM-DD');
   const fetchReservedSchedule = async () => {
     try {
       const response = await getReservedSchedule({ activityId, formattedDate });
       console.log(response);
+
       if (Array.isArray(response) && response.length > 0) {
         const formattedScheduleData = response.map(item => {
           const { startTime, endTime } = item;
           return `${startTime} ~ ${endTime}`; // "00:00 ~ 12:00" 형식으로 변환
         });
+        const formattedScheduleId = response.map(item => {
+          const { scheduleId } = item;
+          return scheduleId;
+        });
         console.log(formattedScheduleData);
         setScheduleData(formattedScheduleData);
-        setReservationCount(response[0].count);
-        setSelectScheduleId(response[0].scheduleId);
+        setScheduleKey(formattedScheduleId);
+        if (selectedIndex !== undefined) {
+          setReservationCount(response[selectedIndex].count);
+        }
       } else {
         console.log('예약된 스케줄이 없습니다.');
       }
@@ -50,9 +57,8 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
   };
   useEffect(() => {
     fetchReservedSchedule();
-  }, [selectedDate, isToggleTrigger]);
+  }, [selectedDate, selectedIndex]);
 
-  console.log(reservationCount);
   return (
     <div className={S.modalContainer}>
       <div className={S.modalBox}>
@@ -63,13 +69,13 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
         <ReservationInfoTabs
           reservationCount={reservationCount}
           onClose={onClose}
-          selectScheduleId={selectScheduleId}
           activityId={activityId}
           selectedDate={selectedDate}
           setIsToggleTrigger={setIsToggleTrigger}
           isToggleTrigger={isToggleTrigger}
           scheduleData={scheduleData}
-          setSelectShedule={setSelectShedule}
+          scheduleKey={scheduleKey}
+          setSelectedIndex={setSelectedIndex}
         />
       </div>
     </div>
