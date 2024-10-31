@@ -158,7 +158,9 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
               <span className={S.address}>{activity?.address}</span>
             </div>
           </div>
-          <hr className={S.hr} />
+          <div className={S.introductionContainerWrapper}>
+            <hr className={S.hr} />
+          </div>
         </div>
         {!isCreator && <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />}
       </div>

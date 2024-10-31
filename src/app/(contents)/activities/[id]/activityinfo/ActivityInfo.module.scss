@@ -7,8 +7,7 @@
   background-color: $nomadBlack;
 
   @include tablet {
-    width: 469px;
-    margin-left: -24px;
+    width: 100%;
   }
 
   @include mobile {
@@ -192,12 +191,12 @@
 
   @include tablet {
     width: 100%;
-    padding-inline: 20px;
+    // padding-inline: 20px;
   }
 
   @include mobile {
     width: 100%;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
 
   .introductionContainer {
@@ -277,7 +276,6 @@
 
     .hr {
       width: 100%;
-      margin: 0;
     }
   }
 }
