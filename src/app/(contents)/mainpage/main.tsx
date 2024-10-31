@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import S from './main.module.scss';
 import BestZoneCard from './bestzonecard/BestZoneCard';
 import AllZoneCard from './allzonecard/AllZoneCard';
@@ -24,9 +25,15 @@ export default async function Main() {
     <div>
       <Banner bestActivity={firstBestActivity} />
       <div className={S.mainContainer}>
-        <Search />
-        <BestZoneCard initialBestActivitiesData={bestActivitiesData} />
-        <AllZoneCard initialActivitiesData={activitiesData} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Search />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <BestZoneCard initialBestActivitiesData={bestActivitiesData} />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AllZoneCard initialActivitiesData={activitiesData} />
+        </Suspense>
       </div>
     </div>
   );
