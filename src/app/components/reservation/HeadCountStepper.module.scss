@@ -23,6 +23,7 @@
     }
 
     button {
+      display: flex; // 증감 아이콘 이미지 수직 중앙 정렬을 위함
       background-color: $white;
       border: none;
     }

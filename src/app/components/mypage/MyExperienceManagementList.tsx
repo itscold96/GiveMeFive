@@ -21,10 +21,9 @@ function MyExperienceManagementList() {
     size: 10,
   });
 
-  const { data: nextPageData, refetch: fetchNextPage } = useMyActivitiesQuery({
+  const { refetch: fetchNextPage } = useMyActivitiesQuery({
     cursorId,
     size: 10,
-    enabled: false,
   });
 
   useEffect(() => {

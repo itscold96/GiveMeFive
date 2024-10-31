@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import SideMenu from '../../components/mypage/SideMenu';
 import MyExperienceManagementList from '../../components/mypage/MyExperienceManagementList';
 import Footer from '../../components/@shared/footer/Footer';
-import S from './myexperiencemanagement.module.scss';
+import S from './myexperienceManagement.module.scss';
 import Button from '../../components/@shared/button/Button';
 import { Title } from '@mantine/core';
 

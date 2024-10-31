@@ -95,7 +95,6 @@ const UserInfoForm: React.FC = () => {
           {...register.email}
           message={errors.email?.message}
           type="email"
-          disabled
           value={userInfo?.email || ''}
           className={S.input}
         />
@@ -124,7 +123,6 @@ const UserInfoForm: React.FC = () => {
       </div>
 
       <ConfirmModal
-        className={S.confirmModal}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onConfirm={handleConfirm}
