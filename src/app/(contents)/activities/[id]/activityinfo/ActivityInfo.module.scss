@@ -1,13 +1,15 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
 .hr {
-  width: 790px;
+  max-width: 790px;
+  width: 100vw;
   height: 1px;
   opacity: 0.25;
   background-color: $nomadBlack;
 
   @include tablet {
-    width: 100%;
+    width: calc(100% + 40px);
+    margin-left: -24px;
   }
 
   @include mobile {
