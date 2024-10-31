@@ -3,12 +3,13 @@
 .mobileReservationContainer {
   position: fixed;
   z-index: $headerZIndex; // 모달을 여는 부모의 z-index가 header보다 작으면 쌓임 맥락에 의해 모달의 z-index가 아무리 커도 header를 넘을 수 없음
+  left: 0;
   bottom: 0;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100dvw;
   height: $mobileReservationHeight;
   border-top: 1px solid $gray700;
   padding: 0 16px;
