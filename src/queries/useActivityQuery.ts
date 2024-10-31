@@ -1,14 +1,39 @@
-import { getActivities, GetActivitiesProps, GetActivitiesResponse } from '@/fetches/activities';
+import { getActivities, GetActivitiesResponse } from '@/fetches/activities';
 import { useQuery } from '@tanstack/react-query';
 
-export const useActivitiesQuery = (params: GetActivitiesProps) => {
+interface ActivityQueryParams {
+  category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+  sort?: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+  size: number;
+  page: number;
+  title?: string;
+}
+
+export const useActivitiesQuery = (params: ActivityQueryParams, initialActivitiesData?: GetActivitiesResponse) => {
+  const queryParams = {
+    category: params.category,
+    sort: params.sort,
+    size: params.size,
+    method: 'offset' as const,
+    page: params.page,
+    ...(params.title && {
+      title: params.title,
+      keyword: params.title,
+    }),
+  };
+
   return useQuery<GetActivitiesResponse, Error>({
-    queryKey: ['activities', params],
-    queryFn: () => getActivities(params),
+    queryKey: ['activities', queryParams],
+    queryFn: () => getActivities(queryParams),
+    initialData: initialActivitiesData,
   });
 };
 
-export const useBestActivitiesQuery = (page: number, size: number) => {
+export const useBestActivitiesQuery = (
+  page: number,
+  size: number,
+  initialBestActivitiesData?: GetActivitiesResponse,
+) => {
   return useQuery<GetActivitiesResponse, Error>({
     queryKey: ['bestActivities', page, size],
     queryFn: () =>
@@ -18,20 +43,6 @@ export const useBestActivitiesQuery = (page: number, size: number) => {
         page,
         size,
       }),
-  });
-};
-
-export const useSearchActivitiesQuery = (searchTerm: string, page: number, size: number) => {
-  return useQuery<GetActivitiesResponse, Error>({
-    queryKey: ['searchActivities', searchTerm, page, size],
-    queryFn: () =>
-      getActivities({
-        title: searchTerm,
-        sort: 'latest',
-        method: 'offset',
-        page,
-        size,
-      }),
-    enabled: !!searchTerm,
+    initialData: initialBestActivitiesData,
   });
 };

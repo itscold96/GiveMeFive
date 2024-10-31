@@ -4,6 +4,7 @@ export interface User {
   email: string;
   nickname: string;
   profileImageUrl: string;
+  id: number;
 }
 
 export interface UserStore {

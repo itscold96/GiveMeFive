@@ -1,6 +1,23 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
 .paginationWrapper {
+  display: inline-flex;
+  margin-top: 72px;
+
+  @include tablet {
+    margin-top: 90px;
+  }
+
+  @include mobile {
+    margin-top: 24px;
+  }
+
+  :global(.mantine-Pagination-root) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   :global(.mantine-Pagination-control) {
     background-color: white;
     color: $green300;
@@ -11,8 +28,7 @@
     height: 55px;
     width: 55px;
 
-    margin-top: 64px;
-    margin-bottom: 64px;
+    // margin-bottom: 64px;
 
     &:hover {
       background-color: $white;
@@ -25,6 +41,13 @@
       &:hover {
         background-color: $green300;
       }
+    }
+  }
+
+  @include mobile {
+    :global(.mantine-Pagination-control) {
+      height: 40px;
+      width: 40px;
     }
   }
 }

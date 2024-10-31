@@ -1,0 +1,16 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.activityPage {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 78px auto 140px;
+
+  @include tablet {
+    margin: 24px 24px 60px;
+  }
+
+  @include mobile {
+    margin: 16px 16px 140px;
+  }
+}
