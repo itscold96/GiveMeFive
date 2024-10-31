@@ -1,3 +1,5 @@
+'use client';
+
 import S from './Banner.module.scss';
 import Image from 'next/image';
 import { Activity } from '@/fetches/activities';
@@ -22,6 +24,7 @@ export default function Banner({ bestActivity }: BannerProps) {
             src={bestActivity.bannerImageUrl}
             alt=""
             className={S.bannerImage}
+            quality={100}
             width={0}
             height={550}
             objectFit="cover"

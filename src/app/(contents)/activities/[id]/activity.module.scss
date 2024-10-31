@@ -4,15 +4,13 @@
   display: flex;
   flex-direction: column;
   max-width: 1200px;
-  margin: 78px auto;
+  margin: 78px auto 140px;
 
   @include tablet {
-    margin-left: 24px;
-    margin-right: 24px;
+    margin: 24px 24px 60px;
   }
 
   @include mobile {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin: 16px 16px 140px;
   }
 }

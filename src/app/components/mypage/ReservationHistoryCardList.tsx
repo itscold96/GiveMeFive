@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ReservationHistoryCard from './ReservationHistoryCard';
 import Dropdown from '../../components/@shared/dropdown/Dropdown';
 import S from './ReservationHistoryCardList.module.scss';
-import { getMyReservations, GetMyReservationsProps } from '@/fetches/reservationHistory';
-import emptyImage from '@/images/empty.svg'; // 빈 상태 이미지를 불러옴
-import Image from 'next/image'; // next/image에서 Image 가져오기
+import { getMyReservations } from '@/fetches/reservationHistory';
+import emptyImage from '@/images/empty.svg';
+import Image from 'next/image';
+import { Loader } from '@mantine/core';
 
 interface Reservation {
   id: number;
@@ -16,7 +17,7 @@ interface Reservation {
   scheduleId: number;
   teamId: string;
   userId: number;
-  status: string;
+  status: 'pending' | 'completed' | 'declined' | 'canceled' | 'confirmed';
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
@@ -28,32 +29,14 @@ interface Reservation {
 }
 
 function ReservationHistoryCardList() {
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [displayedReservations, setDisplayedReservations] = useState<Reservation[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string>('전체');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    try {
-      const params: GetMyReservationsProps = {
-        page: 1,
-        size: 10,
-        sort: 'latest',
-      };
-
-      const data = await getMyReservations(params);
-      setReservations(data.reservations);
-    } catch (error) {
-      console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
-    }
-  }
-
-  const handleReviewSubmitted = async () => {
-    await fetchData();
-  };
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [allFilteredReservations, setAllFilteredReservations] = useState<Reservation[]>([]);
+  const loadingRef = useRef<HTMLDivElement>(null);
+  const PAGE_SIZE = 10;
 
   const statusMapping: { [key: string]: string } = {
     전체: 'all',
@@ -64,14 +47,80 @@ function ReservationHistoryCardList() {
     '예약 취소': 'canceled',
   };
 
+  const fetchData = async () => {
+    if (isLoading) return;
+
+    try {
+      setIsLoading(true);
+
+      const params = {
+        size: 100,
+        status: statusMapping[selectedStatus] !== 'all' ? statusMapping[selectedStatus] : undefined,
+      };
+
+      const data = await getMyReservations(params);
+
+      if (data.reservations) {
+        setAllFilteredReservations(data.reservations);
+        setDisplayedReservations(data.reservations.slice(0, PAGE_SIZE));
+        setHasMore(data.totalCount > PAGE_SIZE);
+      }
+    } catch (error) {
+      console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [selectedStatus]);
+
+  const loadMore = () => {
+    const nextReservations = allFilteredReservations.slice(
+      displayedReservations.length,
+      displayedReservations.length + PAGE_SIZE,
+    );
+    setDisplayedReservations(prev => [...prev, ...nextReservations]);
+    setHasMore(nextReservations.length === PAGE_SIZE);
+  };
+
+  const observerCallback = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasMore && !isLoading) {
+        loadMore();
+      }
+    },
+    [hasMore, isLoading, displayedReservations, allFilteredReservations],
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(observerCallback, {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0.1,
+    });
+
+    if (loadingRef.current) {
+      observer.observe(loadingRef.current);
+    }
+
+    return () => {
+      if (loadingRef.current) {
+        observer.unobserve(loadingRef.current);
+      }
+      observer.disconnect();
+    };
+  }, [observerCallback]);
+
+  const handleReviewSubmitted = async () => {
+    await fetchData();
+  };
+
   function toggleDropdown() {
     setIsDropdownOpen(prevState => !prevState);
   }
-
-  const filteredReservations =
-    selectedStatus === '전체'
-      ? reservations
-      : reservations.filter(reservation => reservation.status === statusMapping[selectedStatus]);
 
   return (
     <div className={S.container}>
@@ -87,15 +136,22 @@ function ReservationHistoryCardList() {
         />
       </div>
       <div className={S.list}>
-        {filteredReservations.length > 0 ? (
-          filteredReservations.map(reservation => (
-            <ReservationHistoryCard
-              key={reservation.id}
-              reservation={reservation}
-              onCancelSuccess={fetchData}
-              onReviewSubmitted={handleReviewSubmitted}
-            />
-          ))
+        {displayedReservations.length > 0 ? (
+          <>
+            {displayedReservations.map(reservation => (
+              <ReservationHistoryCard
+                key={reservation.id}
+                reservation={reservation}
+                onCancelSuccess={handleReviewSubmitted}
+                onReviewSubmitted={handleReviewSubmitted}
+              />
+            ))}
+            {hasMore && (
+              <div ref={loadingRef} className={S.loadingContainer}>
+                {isLoading && <Loader />}
+              </div>
+            )}
+          </>
         ) : (
           <div className={S.emptyState}>
             <Image src={emptyImage} alt="빈 상태 이미지" width={240} height={240} />

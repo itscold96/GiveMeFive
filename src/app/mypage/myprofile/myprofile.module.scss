@@ -5,6 +5,7 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: $gray100;
+  z-index: 1;
 }
 
 .container {
@@ -17,14 +18,29 @@
   margin: 0 auto;
   width: 100%;
   gap: 20px;
+  position: relative;
+  z-index: 0;
 }
 
 .sideMenuContainer {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  z-index: 0;
 }
 
 .formContainer {
   flex: 2;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .footer {

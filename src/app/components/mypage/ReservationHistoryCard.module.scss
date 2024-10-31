@@ -6,7 +6,8 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   margin-bottom: 12px;
   background-color: $white;
-  width: 756px;
+  width: 100%;
+  max-width: 756px;
   height: 204px;
   gap: 10px;
 }
@@ -16,16 +17,18 @@
   height: 204px;
   border-radius: 24px 0px 0px 24px;
   object-fit: cover;
+  @media (max-width: 510px) {
+    width: 130px;
+    height: 204px;
+    border-radius: 24px 0px 0px 24px;
+    object-fit: cover;
+  }
 }
 
 .info {
   margin-top: 10px;
   flex: 1;
   margin-left: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
 }
 
 .status {
@@ -73,6 +76,9 @@
   margin-bottom: 25px;
   color: $gray900;
   @include textXlSemibold;
+  @media (max-width: 515px) {
+    margin-top: -30px;
+  }
 }
 
 .buttonContainer {

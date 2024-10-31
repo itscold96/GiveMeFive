@@ -1,7 +1,6 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
-.hr,
-.hr2 {
+.hr {
   width: 790px;
   height: 1px;
   opacity: 0.25;
@@ -9,24 +8,19 @@
 
   @include tablet {
     width: 469px;
+    margin-left: -24px;
   }
 
   @include mobile {
-    width: 327px;
+    width: 100%;
+    margin: 0 auto;
   }
-}
-
-.activityInfoAndDropdown {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .activityInfo {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   color: $nomadBlack;
 
   .category {
@@ -38,33 +32,51 @@
     @include text3XlBold;
   }
 }
+
+.categoryAndTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .ratingAndAddressContainer {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 10px;
+  max-width: 100%;
 }
 
 .ratingContainer {
   display: flex;
-  gap: 6px;
   align-items: center;
-}
-
-.rating {
-  @include textMdRegular;
-  color: $black;
+  white-space: nowrap; // 내부 텍스트가 줄바꿈되지 않도록 설정
+  flex-shrink: 0;
+  gap: 6px;
 }
 
 .locationContainer {
   display: flex;
-  gap: 2px;
   align-items: center;
+  gap: 6px;
+
+  @include mobile {
+    gap: 2px;
+  }
 }
 
 .address {
   @include textMdRegular;
   color: $nomadBlack;
   opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis; // 넘치는 텍스트를 줄임표(...)로 표시
+  white-space: nowrap;
+
+  @include mobile {
+    white-space: normal;
+    word-break: break-word; // 텍스트가 컨테이너의 너비를 초과할 때 단어를 어떻게 나눌지 결정하는 속성
+  }
 }
 
 .imageContainer {
@@ -78,12 +90,47 @@
   @include tablet {
     height: 400px;
   }
+
+  @include mobile {
+    height: 300px;
+    flex-direction: column;
+    position: relative;
+    margin-inline: -17px;
+    margin-bottom: -10px;
+  }
 }
 
 .mainImageContainer {
   flex: 1;
   height: 100%;
   position: relative;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.imageNavigation {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  display: none;
+
+  @include mobile {
+    display: flex;
+  }
+}
+
+.navButton {
+  background-color: transparent; // 요소 배경색을 투명하게 만드는 속성
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .subImagesContainer {
@@ -92,6 +139,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+
+  @include mobile {
+    display: none;
+  }
 }
 
 .subImage {
@@ -137,15 +188,16 @@
   display: flex;
   flex-direction: column;
   gap: 34px;
-
-  max-width: 790px;
+  // max-width: 790px;
 
   @include tablet {
-    max-width: 469px;
+    width: 100%;
+    padding-inline: 20px;
   }
 
   @include mobile {
-    max-width: 327px;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .introductionContainer {
@@ -165,13 +217,67 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     max-width: 800px;
     width: 100%;
   }
 
   .map {
     background-color: $gray300;
-    z-index: -1;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 0;
+  }
+}
+
+// 모바일 버전에서 hr 숨기기
+.introductionContainerWrapper {
+  @include mobile {
+    .hr {
+      display: none;
+    }
+  }
+}
+
+.calendarAndInfoContainer {
+  display: flex;
+  gap: 20px;
+
+  // ResponsiveReservation이 있을 때
+  &:has(> div + div) {
+    .introductionAndMapContainer {
+      max-width: 790px;
+
+      @include tablet {
+        // max-width: 428px;
+      }
+
+      @include mobile {
+        // max-width: 327px;
+      }
+    }
+  }
+
+  // ResponsiveReservation이 없을 때 (creator view)
+  &:not(:has(> div + div)) {
+    width: 100%;
+
+    .introductionAndMapContainer {
+      width: 100%;
+      max-width: 100%;
+
+      .mapContainer {
+        max-width: 100%;
+      }
+
+      .map {
+        width: 100%;
+        height: 400px;
+      }
+    }
+
+    .hr {
+      width: 100%;
+      margin: 0;
+    }
   }
 }

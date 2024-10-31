@@ -22,7 +22,7 @@ export interface GetMyActivitiesResponse {
 }
 
 export interface GetMyActivitiesProps {
-  page?: number;
+  cursorId?: number | null;
   size?: number;
   sort?: 'latest' | 'most_reviewed';
   category?: string;
@@ -32,7 +32,7 @@ export const getMyActivities = async (params: GetMyActivitiesProps) => {
   const response = await axiosAuth.get<GetMyActivitiesResponse>('/my-activities', {
     params: {
       ...params,
-      method: 'offset',
+      method: 'cursor',
     },
   });
   return response.data;

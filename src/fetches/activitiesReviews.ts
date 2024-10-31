@@ -12,8 +12,8 @@ export interface Review {
   activityId: number;
   rating: number;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface GetActivityReviewsResponse {

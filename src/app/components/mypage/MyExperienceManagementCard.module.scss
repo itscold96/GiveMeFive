@@ -5,7 +5,8 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   margin-bottom: 12px;
   background-color: $white;
-  width: 756px;
+  width: 100%; // 너비를 100%로 설정하여 부모 요소의 너비에 맞추기
+  max-width: 756px; // 최대 너비 설정
   height: 204px;
   gap: 10px;
 }
@@ -15,6 +16,12 @@
   height: 204px;
   border-radius: 24px 0px 0px 24px;
   object-fit: cover;
+  @media (max-width: 510px) {
+    width: 130px;
+    height: 204px;
+    border-radius: 24px 0px 0px 24px;
+    object-fit: cover;
+  }
 }
 
 .info {
@@ -39,6 +46,9 @@
   margin-top: 80px;
   color: $gray900;
   @include textXlSemibold;
+  @media (max-width: 515px) {
+    margin-top: 30px;
+  }
 }
 
 .actions {
