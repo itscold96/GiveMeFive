@@ -1,15 +1,18 @@
 @use '@/styles/abstracts/core' as *;
 
 .headerContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+
   height: $headerHeight;
-  width: 100%;
+  width: 100dvw;
+
   border-bottom: 1px solid $gray300;
   background-color: $white;
   z-index: $headerZIndex;
@@ -17,12 +20,12 @@
 
 .headerContents {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   max-width: 1200px;
   margin: 0 24px;
-
-  justify-content: space-between;
-  align-items: center;
 }
 
 .notLoggedInContainer {
