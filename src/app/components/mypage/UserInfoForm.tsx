@@ -88,8 +88,8 @@ const UserInfoForm: React.FC = () => {
         />
 
         <Input
-          label="메일"
-          placeholder="메일을 입력하세요"
+          label="이메일"
+          placeholder="이메일을 입력하세요"
           htmlFor="email"
           error={errors.email}
           {...register.email}
