@@ -9,6 +9,10 @@
 
   box-shadow: 0 4px 16px 0 #1122110d;
 
+  @include tablet {
+    width: 251px;
+  }
+
   .submitButton {
     width: 100%;
   }

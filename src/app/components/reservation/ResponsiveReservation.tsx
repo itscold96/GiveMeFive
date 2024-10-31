@@ -11,7 +11,7 @@ const MobileReservation = dynamic(() => import('@/app/components/reservation/Mob
 const Reservation = dynamic(() => import('@/app/components/reservation/Reservation'), { ssr: false });
 
 export default function ResponsiveReservation({ activityId, price }: ReservationProps) {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   return (
     <>
