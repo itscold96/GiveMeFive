@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 import { Tabs } from '@mantine/core';
 import { ReservationCount } from '../ReservationInfoModal/ReservationInfoModal';
-import BackDrop from '../../@shared/backdrop/BackDrop';
-import { GetReservedScheduleResponse, getReservedSelectSchedule, Reservation } from '@/fetches/getReservationDashboard';
+import { getReservedSelectSchedule, Reservation } from '@/fetches/getReservationDashboard';
 import { useEffect, useState } from 'react';
 import ReservationCard from '../ReservationCard/ReservationCard';
 import S from './ReservationInfoTabs.module.scss';
@@ -11,7 +10,6 @@ import useDropdown from '@/hooks/useDropdown';
 
 interface ReservationInfoTabsProps {
   reservationCount?: ReservationCount;
-  onClose: () => void;
   activityId: number;
   selectedDate: Date;
   setIsToggleTrigger: (value: boolean) => void;
@@ -23,7 +21,6 @@ interface ReservationInfoTabsProps {
 
 export default function ReservationInfoTabs({
   reservationCount,
-  onClose,
   activityId,
   selectedDate,
   setIsToggleTrigger,
@@ -34,7 +31,7 @@ export default function ReservationInfoTabs({
 }: ReservationInfoTabsProps) {
   const [selectStatus, setSelectStatus] = useState<'pending' | 'declined' | 'confirmed'>('pending');
   const [data, setData] = useState<Reservation[]>();
-  const [dropdownScheduleData, setDropdownScheduleData] = useState<string[]>(['스케쥴을 선택해 주세요']);
+  const [dropdownScheduleData, setDropdownScheduleData] = useState<string[]>([]);
   const [dropdownScheduleKey, setDropdownScheduleKey] = useState<number[]>([]);
   const {
     data: dropdownItems,
@@ -62,7 +59,7 @@ export default function ReservationInfoTabs({
 
   useEffect(() => {
     getSelectStatusInfo(selectStatus);
-  }, [selectStatus, selectedKey, isToggleTrigger]);
+  }, [selectStatus, selectedKey, isToggleTrigger, selectedDate]);
 
   useEffect(() => {
     if (scheduleData && scheduleKey) {
@@ -79,22 +76,25 @@ export default function ReservationInfoTabs({
     <div>
       {/* <BackDrop onClose={onClose} /> */}
       <Tabs color="#112211" defaultValue="pending" onChange={onTabChange}>
-        <Tabs.List>
+        <Tabs.List className={S.topText}>
           <Tabs.Tab value="pending">신청 {reservationCount?.pending}</Tabs.Tab>
           <Tabs.Tab value="confirmed">승인 {reservationCount?.confirmed}</Tabs.Tab>
           <Tabs.Tab value="declined">거절 {reservationCount?.declined}</Tabs.Tab>
         </Tabs.List>
-        <div>예약 날짜</div>
-        <div>{formattedDate}</div>
-        <Dropdown
-          type="category"
-          data={dropdownItems}
-          onChange={onDropdownChange}
-          isDropdownToggle={isDropdownToggle}
-          toggleDropdown={toggleDropdown}
-          selectedValue={selectedValue}
-        />
-        <div>예약 내역</div>
+        <div className={S.infoTitle}>예약 날짜</div>
+        <div className={S.infoDate}>{formattedDate}</div>
+        <div className={S.dropdown}>
+          <Dropdown
+            type="category"
+            data={dropdownItems}
+            onChange={onDropdownChange}
+            isDropdownToggle={isDropdownToggle}
+            toggleDropdown={toggleDropdown}
+            selectedValue={selectedValue}
+            placeholder="스케쥴을 선택해 주세요"
+          />
+        </div>
+        <div className={S.infoTitle}>예약 내역</div>
         <Tabs.Panel value="pending">
           <div className={S.CardWrapper}>
             {data && data.length > 0 ? (

@@ -1,3 +1,34 @@
+@use '@/styles/abstracts/core' as *;
+
 .reservationsContainer {
   position: relative;
+  width: 100%;
+}
+
+.title {
+  @include text3XlBold;
+  margin-bottom: 38px;
+}
+
+.reservationsBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.emptyBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 80px;
+  @include tablet {
+    margin-top: 64px;
+  }
+
+  @include mobile {
+    margin-top: 50px;
+  }
 }

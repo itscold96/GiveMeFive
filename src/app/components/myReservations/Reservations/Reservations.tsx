@@ -14,6 +14,8 @@ import { useReservationStore } from '@/stores/useReservationStore';
 import ReservationInfoModal from '../ReservationInfoModal/ReservationInfoModal';
 import { useToggle } from '@/hooks/useToggle';
 import S from './Reservations.module.scss';
+import Image from 'next/image';
+import emptySvg from '@/images/empty.svg';
 
 export default function Reservations() {
   const [activityId, setActivityId] = useState<number>();
@@ -29,6 +31,7 @@ export default function Reservations() {
     toggleDropdown,
     isDropdownToggle,
     selectedValue,
+    selectedIndex,
   } = useDropdown(dataTitles);
 
   const fetchReservationData = async ({ activityId, year, month }: GetReservationDashboardProps) => {
@@ -53,32 +56,27 @@ export default function Reservations() {
       console.error('오류 발생:', error);
     }
   };
-  const now = dayjs();
-  const year = now.get('year');
-  const monthString = now.format('MM');
+  const selectDate = dayjs(selectedDate);
+  const year = selectDate.get('year');
+  const monthString = selectDate.format('MM');
   const month = parseInt(monthString, 10);
   useEffect(() => {
+    if (!Mydata?.totalCount) {
+      return;
+    }
     if (Mydata?.activities) {
       const dataTitle = Mydata.activities.map(item => item.title);
       setDataTitles(dataTitle);
-      const activityId: number = Mydata?.activities[0].id;
-      setActivityId(activityId);
-      fetchReservationData({ activityId, year, month });
+      if (selectedIndex) {
+        const selectedActivityId = Mydata.activities[selectedIndex - 1].id;
+        setActivityId(selectedActivityId);
+        fetchReservationData({ activityId: selectedActivityId, year, month });
+      }
+      const selectedActivityId = Mydata.activities[0].id;
+      setActivityId(selectedActivityId);
+      fetchReservationData({ activityId: selectedActivityId, year, month });
     }
-  }, [Mydata]);
-
-  useEffect(() => {
-    const findSelectedId = () => {
-      const selectedItem = Mydata?.activities.find(item => item.title === selectedValue);
-      return selectedItem ? selectedItem.id : null;
-    };
-    const activityId = findSelectedId();
-    console.log(activityId);
-    if (activityId) {
-      setActivityId(activityId);
-      fetchReservationData({ activityId, year, month });
-    }
-  }, [selectedValue]);
+  }, [Mydata, selectedIndex, activityId, selectedDate]);
 
   useEffect(() => {
     console.log(availableDates);
@@ -88,28 +86,42 @@ export default function Reservations() {
     toggleDispatch({ type: 'on' });
   };
 
+  if (!Mydata?.totalCount) {
+    return (
+      <div className={S.reservationsContainer}>
+        <div className={S.title}>예약현황</div>
+        <div className={S.emptyBox}>
+          <Image src={emptySvg} alt="등록한 체험이 없습니다 이미지" />
+          <div>아직 등록한 체험이 없어요</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={S.reservationsContainer}>
-      예약현황
-      <Dropdown
-        type="category"
-        data={dropdownData}
-        onChange={onDropdownChange}
-        toggleDropdown={toggleDropdown}
-        isDropdownToggle={isDropdownToggle}
-        selectedValue={selectedValue}
-      />
-      <ReservationCalendar
-        selectedDate={selectedDate} // 선택된 날짜
-        onClickDate={date => {
-          setSelectedDate(date);
-          OnClickDate();
-        }} // 날짜 클릭 시 실행될 함수, 자동으로 매개변수로 클릭한 날짜 (date:Date)를 받도록 제작하였습니다.
-        availableDates={availableDates} // 선택 가능한 날짜를 (YYYY-MM-DD) 포맷 배열로 넣어주면 됩니다.
-        onNextMonth={date => setSelectedDate(date)}
-        onPreviousMonth={date => setSelectedDate(date)}
-        highlightToday
-      />
+      <div className={S.title}>예약현황</div>
+      <div className={S.reservationsBox}>
+        <Dropdown
+          type="category"
+          data={dropdownData}
+          onChange={onDropdownChange}
+          toggleDropdown={toggleDropdown}
+          isDropdownToggle={isDropdownToggle}
+          selectedValue={selectedValue}
+        />
+        <ReservationCalendar
+          selectedDate={selectedDate} // 선택된 날짜
+          onClickDate={date => {
+            setSelectedDate(date);
+            OnClickDate();
+          }} // 날짜 클릭 시 실행될 함수, 자동으로 매개변수로 클릭한 날짜 (date:Date)를 받도록 제작하였습니다.
+          availableDates={availableDates} // 선택 가능한 날짜를 (YYYY-MM-DD) 포맷 배열로 넣어주면 됩니다.
+          onNextMonth={date => setSelectedDate(date)}
+          onPreviousMonth={date => setSelectedDate(date)}
+          highlightToday
+        />
+      </div>
       {toggleValue && activityId && (
         <ReservationInfoModal
           activityId={activityId}

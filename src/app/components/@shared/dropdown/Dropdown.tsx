@@ -13,6 +13,7 @@ interface DropdownProps {
   isDropdownToggle: boolean;
   selectedValue?: string;
   type?: 'hide' | 'kebab' | 'category' | 'default';
+  placeholder?: string;
 }
 
 export default function Dropdown({
@@ -22,6 +23,7 @@ export default function Dropdown({
   isDropdownToggle,
   selectedValue,
   type,
+  placeholder,
 }: DropdownProps) {
   // 항목 클릭 시 선택된 값 설정 및 useDropdown훅의 selectedValue로 전달
   const handleSelectValue = (value: string, id: number) => {
@@ -40,12 +42,12 @@ export default function Dropdown({
           </div>
         ) : type === 'category' ? (
           <div className={S.categoryWrapper} onClick={toggleDropdown}>
-            <div className={S.categoryValue}>{selectedValue ? selectedValue : data[0]}</div>
+            <div className={S.categoryValue}> {selectedValue ? selectedValue : placeholder || data[0]} </div>
             <Image src={dropdownThinArrow} alt="카테고리 아이콘" width={24} height={24} />
           </div>
         ) : (
           <div className={S.dropdownButton} onClick={toggleDropdown}>
-            <div>{selectedValue ? selectedValue : data[0]}</div>
+            <div> {selectedValue ? selectedValue : placeholder || data[0]}</div>
             <Image src={dropdownArrow} alt="드롭다운 화살표" width={22} height={22} />
           </div>
         )}

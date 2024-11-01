@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
-import { getReservedSchedule, GetReservedScheduleResponse } from '@/fetches/getReservationDashboard';
+import { getReservedSchedule } from '@/fetches/getReservationDashboard';
 import { useEffect, useState } from 'react';
 import S from './ReservationInfoModal.module.scss';
 import ReservationInfoTabs from '../ReservationInfoTabs/ReservationInfoTabs';
 import deleteXButton from '@/images/delete-X-button.svg';
 import Image from 'next/image';
+import BackDrop from '../../@shared/backdrop/BackDrop';
 
 export interface ReservationCount {
   declined: number;
@@ -45,8 +46,8 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
         console.log(formattedScheduleData);
         setScheduleData(formattedScheduleData);
         setScheduleKey(formattedScheduleId);
-        if (selectedIndex !== undefined) {
-          setReservationCount(response[selectedIndex].count);
+        if (selectedIndex) {
+          setReservationCount(response[selectedIndex - 1].count);
         }
       } else {
         console.log('예약된 스케줄이 없습니다.');
@@ -57,27 +58,29 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
   };
   useEffect(() => {
     fetchReservedSchedule();
-  }, [selectedDate, selectedIndex]);
+  }, [selectedDate, selectedIndex, isToggleTrigger]);
 
   return (
-    <div className={S.modalContainer}>
-      <div className={S.modalBox}>
-        <div className={S.modalTop}>
-          <div>예약 정보</div>
-          <Image src={deleteXButton} alt="예약 정보 닫기 버튼" width={40} height={40} />
+    <>
+      <BackDrop onClose={onClose} />
+      <div className={S.modalContainer}>
+        <div className={S.modalBox}>
+          <div className={S.modalTop}>
+            <div className={S.modalTitle}>예약 정보</div>
+            <Image onClick={onClose} src={deleteXButton} alt="예약 정보 닫기 버튼" width={40} height={40} />
+          </div>
+          <ReservationInfoTabs
+            reservationCount={reservationCount}
+            activityId={activityId}
+            selectedDate={selectedDate}
+            setIsToggleTrigger={setIsToggleTrigger}
+            isToggleTrigger={isToggleTrigger}
+            scheduleData={scheduleData}
+            scheduleKey={scheduleKey}
+            setSelectedIndex={setSelectedIndex}
+          />
         </div>
-        <ReservationInfoTabs
-          reservationCount={reservationCount}
-          onClose={onClose}
-          activityId={activityId}
-          selectedDate={selectedDate}
-          setIsToggleTrigger={setIsToggleTrigger}
-          isToggleTrigger={isToggleTrigger}
-          scheduleData={scheduleData}
-          scheduleKey={scheduleKey}
-          setSelectedIndex={setSelectedIndex}
-        />
       </div>
-    </div>
+    </>
   );
 }

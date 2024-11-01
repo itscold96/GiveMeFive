@@ -1,4 +1,5 @@
 @use '@/styles/abstracts/core' as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,6 +8,12 @@
   display: flex;
   width: 100%;
   padding-bottom: 20px;
+  @include tablet {
+  }
+
+  @include mobile {
+    justify-content: space-between;
+  }
 }
 
 .message {
@@ -19,11 +26,25 @@
   max-width: 380px;
   width: 100%;
   margin-right: 20px;
+  @include tablet {
+  }
+
+  @include mobile {
+    width: 30.8%;
+    min-width: 130px;
+    margin: 0;
+  }
 }
 
 .timeWrapper {
   max-width: 140px;
   width: 100%;
+  @include tablet {
+  }
+
+  @include mobile {
+    width: 80px;
+  }
 }
 
 .tilde {
@@ -31,6 +52,13 @@
   justify-content: center;
   align-items: center;
   margin: 25px 12px 0;
+  @include tablet {
+    display: none;
+  }
+
+  @include mobile {
+    display: none;
+  }
 }
 
 .plusButton {
@@ -39,9 +67,22 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  @include tablet {
+    margin: 0;
+  }
+
+  @include mobile {
+    margin: 25px 0 0 4px;
+  }
+}
+
+.buttonImage {
+  width: 44px;
+  height: 44px;
 }
 
 .itemDateTimeContainer {
+  width: 100%;
   padding-top: 20px;
   border-top: 1px solid $gray300;
   display: flex;
@@ -49,8 +90,17 @@
   gap: 20px;
 }
 .itemDateTime {
+  width: 100%;
   display: flex;
   align-items: center;
+  gap: 4px;
+  @include tablet {
+  }
+
+  @include mobile {
+    justify-content: space-between;
+    gap: 0;
+  }
 }
 
 .itemDate {
@@ -63,6 +113,13 @@
   align-items: center;
   padding: 16px;
   margin-right: 20px;
+  @include tablet {
+  }
+
+  @include mobile {
+    width: 130px;
+    margin: 0;
+  }
 }
 
 .itemTime {
@@ -74,12 +131,26 @@
   border: 1px solid $gray800;
   border-radius: 6px;
   padding: 16px;
+  @include tablet {
+  }
+
+  @include mobile {
+    width: 80px;
+    margin: 0;
+  }
 }
 .itemTilde {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 12px 0;
+  @include tablet {
+    display: none;
+  }
+
+  @include mobile {
+    display: none;
+  }
 }
 
 .minusButton {
@@ -88,4 +159,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  @include tablet {
+  }
+
+  @include mobile {
+    margin: 0;
+  }
 }
