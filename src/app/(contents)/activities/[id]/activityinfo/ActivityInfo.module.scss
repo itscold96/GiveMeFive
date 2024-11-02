@@ -1,14 +1,14 @@
 @use '@/styles/abstracts/_core.scss' as *;
 
 .hr {
-  width: 790px;
+  max-width: 100vw;
+  width: 100%;
   height: 1px;
   opacity: 0.25;
   background-color: $nomadBlack;
 
   @include tablet {
-    width: 469px;
-    margin-left: -24px;
+    width: 100%;
   }
 
   @include mobile {
@@ -192,12 +192,12 @@
 
   @include tablet {
     width: 100%;
-    padding-inline: 20px;
+    // padding-inline: 20px;
   }
 
   @include mobile {
     width: 100%;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
 
   .introductionContainer {
@@ -246,13 +246,23 @@
   &:has(> div + div) {
     .introductionAndMapContainer {
       max-width: 790px;
+    }
+
+    .hr {
+      max-width: 790px;
+      width: 100vw;
+      height: 1px;
+      opacity: 0.25;
+      background-color: $nomadBlack;
 
       @include tablet {
-        // max-width: 428px;
+        width: calc(100% + 40px);
+        margin-left: -24px;
       }
 
       @include mobile {
-        // max-width: 327px;
+        width: 100%;
+        margin: 0 auto;
       }
     }
   }
@@ -277,7 +287,6 @@
 
     .hr {
       width: 100%;
-      margin: 0;
     }
   }
 }

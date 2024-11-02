@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import S from './Header.module.scss';
-import logoImg from '@/images/logos/logo-md.svg';
+import logoImg from '@/images/logos/logo-md.png';
 import Link from 'next/link';
 
 import { useUserStore } from '@/stores/useUserStore';
@@ -37,7 +37,7 @@ export default function Header() {
     <header className={S.headerContainer}>
       <div className={S.headerContents}>
         <Link href="/" className={S.headerLogo}>
-          <Image src={logoImg} alt="로고 이미지" width={172} height={30} priority />
+          <Image src={logoImg} alt="로고 이미지" width={228} height={30} priority />
         </Link>
         {user ? (
           <LoggedInContainer nickname={user.nickname} profileImageUrl={user.profileImageUrl} logout={logout} />

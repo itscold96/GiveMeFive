@@ -2,7 +2,7 @@
 
 import S from './Auth.module.scss';
 import Image from 'next/image';
-import logo from '@/images/logos/logo-big.svg';
+import logo from '@/images/logos/logo-big.png';
 import google from '@/images/logos/logo-google.svg';
 import kakao from '@/images/logos/logo-kakao.svg';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ export default function Auth({ type }: AuthProps) {
   return (
     <div className={S.authContainer}>
       <Link href="/">
-        <Image src={logo} alt="로고 이미지" height={192} width={340} priority />
+        <Image src={logo} alt="로고 이미지" height={214} width={340} priority />
       </Link>
 
       {type === 'login' ? <LoginForm /> : <SignupForm />}
