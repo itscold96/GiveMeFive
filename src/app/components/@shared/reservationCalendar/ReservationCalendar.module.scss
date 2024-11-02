@@ -9,8 +9,12 @@
 
   div[data-calendar='true'] {
     width: 100%;
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 2px;
+    }
   }
-
   .levelsGroup {
     display: flex;
     justify-content: center;
@@ -28,23 +32,27 @@
       background-color: rgba($green300, 0.3);
     }
   }
-
   .day {
-    // width: 35.71px;
-    width: 14vw;
-    height: 154px;
+    width: calc(700% / 7);
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
     line-height: 17.7px;
     border: 2px solid $gray500;
-    &[data-weekend] {
-      color: $black;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -2px;
+      width: 2px;
+      height: 100%;
+      background-color: $gray500;
     }
 
-    &[data-selected] {
-      background-color: $green300;
-      color: $white;
+    &[data-weekend] {
+      color: $black;
     }
   }
 }
