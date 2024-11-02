@@ -9,6 +9,8 @@
   width: 100%;
   padding-bottom: 20px;
   @include tablet {
+    gap: 5px;
+    justify-content: space-between;
   }
 
   @include mobile {
@@ -30,8 +32,7 @@
   }
 
   @include mobile {
-    width: 30.8%;
-    min-width: 130px;
+    width: 130px;
     margin: 0;
   }
 }
@@ -68,7 +69,7 @@
   align-items: center;
   cursor: pointer;
   @include tablet {
-    margin: 0;
+    margin: 25px 0 0 0;
   }
 
   @include mobile {
@@ -95,6 +96,7 @@
   align-items: center;
   gap: 4px;
   @include tablet {
+    justify-content: space-between;
   }
 
   @include mobile {
@@ -160,6 +162,7 @@
   align-items: center;
   cursor: pointer;
   @include tablet {
+    margin: 0;
   }
 
   @include mobile {
