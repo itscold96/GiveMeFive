@@ -14,7 +14,9 @@
 
 ## useDropdown 커스텀 훅
 
-만들어둔 dropdownData를 인자로 전달하여 Dropdown가 필요한 컴포넌트에서 useDropdown을 호출합니다.
+만들어둔 dropdownData를 인자로 전달하여 Dropdown이 필요한 컴포넌트에서 useDropdown을 호출합니다.
+옵셔널로 dropdownKey: number[] 를 두번째 인자로 전달하여 selectedKey라는 반환값에서 선택한 data와 연동되는 키값을 얻을 수 있습니다.
+
 useDropdown훅은 이 다섯 가지를 반환합니다:
 
 - data: string[]: 문자열 형식의 배열을 받습니다 드롭 다운을 클릭했을 때 나올 내용입니다.
@@ -22,6 +24,14 @@ useDropdown훅은 이 다섯 가지를 반환합니다:
 - toggleDropdown: () => void; 형식의 아래의 예시처럼 특정 div나 이미지에 드롭다운을 여닫을 수 있는 함수입니다.
 - isDropdownToggle: 드롭다운의 토글 상태를 boolean 값으로 전달합니다.
 - selectedValue: 현재 선택된 값 기본적으로 data[0]이 들어가 있습니다.
+- selectedKey: 선택한 Value와 연동되는 키값을 얻을 수 있습니다.
+- selectedIndex: 선택한 Value와 연동되는 Index값을 얻을 수 있습니다.
+  (
+  주의점:selectedIndex는 기본값으로 0을 반환합니다.
+  사용자가 선택할 경우 1 이상의 truthy 값을 반환하게 됩니다.
+  따라서 실제로 사용할 때는 selectedIndex 값에서 -1을 해야 원하는 인덱스를 찾을 수 있습니다.
+  이는 초기 렌더링 시 아무것도 선택되지 않은 드롭다운의 반환값이 truthy한 상태가 되는 것을 방지하기 위한 것입니다.
+  )
 
 ## Dropdown 컴포넌트 Props
 
@@ -31,6 +41,7 @@ useDropdown훅은 이 다섯 가지를 반환합니다:
 - isDropdownToggle: boolean: 드롭다운의 토글 상태를 boolean 값으로 전달합니다.(필수)
 - selectedValue?: string;: 현재 선택된 값이 화면에 보여야 하는 type이라면 Props로 내려줄 수 있습니다(선택)
 - type?: 'hide' | 'kebab' | 'category' | 'default'; : 드롭다운 타입을 지정할 수 있습니다.
+- placehorder?: string; : 기본적으로 들어가있는 String을 작성할 수 있습니다.
 
 ## 사용 예시
 

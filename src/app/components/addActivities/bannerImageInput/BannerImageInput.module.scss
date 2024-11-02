@@ -1,4 +1,5 @@
 @use '@/styles/abstracts/core' as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -36,6 +37,15 @@
   border-radius: 12px;
   gap: 30px;
   cursor: pointer;
+  @include tablet {
+    width: 206px;
+    height: 206px;
+  }
+
+  @include mobile {
+    width: 167px;
+    height: 167px;
+  }
 }
 .message {
   color: $red300;
@@ -52,10 +62,31 @@
   display: flex;
   position: relative;
   width: 180px;
+  height: 180px;
   margin-left: 24px;
+  @include tablet {
+    width: 206px;
+    height: 206px;
+    margin-left: 50px;
+  }
+
+  @include mobile {
+    width: 167px;
+    height: 167px;
+    margin-left: 24px;
+  }
 }
 .imagePreview {
   border-radius: 12px;
+  @include tablet {
+    width: 206px;
+    height: 206px;
+  }
+
+  @include mobile {
+    width: 167px;
+    height: 167px;
+  }
 }
 .deleteButton {
   position: absolute;

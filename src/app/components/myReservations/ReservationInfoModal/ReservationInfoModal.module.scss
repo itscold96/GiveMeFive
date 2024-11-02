@@ -1,0 +1,54 @@
+@use '@/styles/abstracts/core' as *;
+
+.modalContainer {
+  position: absolute;
+  top: 18%;
+  right: 0;
+  z-index: 2;
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 100%;
+  }
+}
+.modalBox {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  width: 430px;
+  height: 700px;
+  border: 1px solid $gray300;
+  border-radius: 24px;
+  background-color: $white;
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 100%;
+  }
+}
+.modalTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include text2XlBold;
+
+  @include tablet {
+  }
+
+  @include mobile {
+  }
+}
+
+.modalTitle {
+  @include tablet {
+  }
+
+  @include mobile {
+  }
+}

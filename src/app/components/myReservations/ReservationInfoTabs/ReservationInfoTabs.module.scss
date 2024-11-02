@@ -1,0 +1,24 @@
+@use '@/styles/abstracts/core' as *;
+
+.CardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.topText {
+  @include textXlBold;
+}
+
+.infoTitle {
+  margin: 24px 0 16px;
+  @include textXlSemibold;
+}
+
+.infoDate {
+  @include textXlRegular;
+}
+.dropdown {
+  display: grid;
+  width: 100%;
+}

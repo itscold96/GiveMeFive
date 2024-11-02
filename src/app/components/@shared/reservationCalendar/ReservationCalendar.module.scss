@@ -5,14 +5,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+
+  div[data-calendar='true'] {
+    width: 100%;
+  }
 
   .levelsGroup {
+    display: flex;
+    justify-content: center;
     border: 1px solid $gray200;
     border-radius: 8px;
-    padding: 10px 27.33px;
+    // padding: 10px 27.33px;
+    width: 100%;
   }
 
   .availableDates {
+    width: 100%;
     background-color: $green100;
     color: $green300;
     &:hover {
@@ -21,14 +30,14 @@
   }
 
   .day {
-    width: 35.71px;
-    height: 32px;
+    // width: 35.71px;
+    width: 14vw;
+    height: 154px;
     border-radius: 8px;
-
     font-size: 13px;
     font-weight: 600;
     line-height: 17.7px;
-
+    border: 2px solid $gray500;
     &[data-weekend] {
       color: $black;
     }

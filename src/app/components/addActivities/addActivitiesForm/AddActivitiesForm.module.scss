@@ -1,4 +1,16 @@
 @use '@/styles/abstracts/core' as *;
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include tablet {
+  }
+
+  @include mobile {
+  }
+}
 .head {
   display: flex;
   justify-content: space-between;
