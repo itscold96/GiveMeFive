@@ -1,5 +1,6 @@
 import React from 'react';
 import S from './AlertModal.module.scss';
+import Button from '../button/Button';
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -58,12 +59,26 @@ const AlertModal: React.FC<AlertModalProps> = function AlertModal({
         </div>
         <p className={S.modalMessage}>{message}</p>
         <div className={S.modalButtons}>
-          <button className={`${S.modalButton} ${S.modalButtonCancel}`} onClick={onClose}>
+          <Button
+            buttonColor="white"
+            textSize="md"
+            borderRadius="radius4"
+            padding="padding8"
+            className={S.modalButton}
+            onClick={onClose}
+          >
             아니오
-          </button>
-          <button className={`${S.modalButton} ${S.modalButtonAlert}`} onClick={handleAlertClick}>
+          </Button>
+          <Button
+            buttonColor="nomadBlack"
+            textSize="md"
+            borderRadius="radius4"
+            padding="padding8"
+            className={S.modalButton}
+            onClick={handleAlertClick}
+          >
             {alertButtonText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

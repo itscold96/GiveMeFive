@@ -1,5 +1,6 @@
 import React from 'react';
 import S from './ConfirmModal.module.scss';
+import Button from '../button/Button';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -25,15 +26,19 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
       <div className={S.modalContent}>
         <p className={S.modalMessage}>{message}</p>
         <div className={S.modalButtons}>
-          <button
-            className={`${S.modalButton} ${S.modalButtonConfirm}`}
+          <Button
+            className={S.modalButton}
+            buttonColor="nomadBlack"
+            textSize="lg"
+            borderRadius="radius4"
+            padding="padding8"
             onClick={() => {
               onConfirm();
               onClose();
             }}
           >
             {confirmButtonText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

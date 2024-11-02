@@ -15,7 +15,23 @@
       border-spacing: 2px;
     }
   }
+  .levelsGroup {
+    display: flex;
+    justify-content: center;
+    border: 1px solid $gray200;
+    border-radius: 8px;
+    // padding: 10px 27.33px;
+    width: 100%;
+  }
 
+  .availableDates {
+    width: 100%;
+    background-color: $green100;
+    color: $green300;
+    &:hover {
+      background-color: rgba($green300, 0.3);
+    }
+  }
   .day {
     width: calc(700% / 7);
     border-radius: 8px;
