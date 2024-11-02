@@ -16,7 +16,7 @@ import { postProfileImage } from '@/fetches/postProfileImage';
 import { patchUserInfo } from '@/fetches/patchUserInfo';
 
 const SideMenu: React.FC = () => {
-  const { data: userInfo } = useUserQuery();
+  const { data: userInfo, refetch } = useUserQuery();
   const [profileImageUrl, setProfileImageUrl] = useState(DefaultProfileImage);
   const pathname = usePathname();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -40,6 +40,8 @@ const SideMenu: React.FC = () => {
 
         setProfileImageUrl(newProfileImageUrl);
         await patchUserInfo({ profileImageUrl: newProfileImageUrl });
+
+        refetch();
       } catch (error) {
         console.error('Failed to upload profile image:', error);
       }
@@ -50,7 +52,7 @@ const SideMenu: React.FC = () => {
     { path: '/mypage/myprofile', icon: MyProfileIcon, label: '내 정보' },
     { path: '/mypage/reservationhistory', icon: ReservationHistoryIcon, label: '예약 내역' },
     { path: '/mypage/myexperiencemanagement', icon: MyExperienceManagementIcon, label: '내 체험 관리' },
-    { path: '/mybookingstatus', icon: ReservationStatusIcon, label: '예약 현황' },
+    { path: '/myreservations', icon: ReservationStatusIcon, label: '예약 현황' },
   ];
 
   return (

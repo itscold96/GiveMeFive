@@ -2,7 +2,6 @@
 import React from 'react';
 import SideMenu from '../../../components/mypage/SideMenu';
 import S from './reservationhistory.module.scss';
-import Footer from '../../../components/@shared/footer/Footer';
 import ReservationHistoryCardList from '../../../components/mypage/ReservationHistoryCardList';
 
 function ReservationHistory() {
@@ -16,7 +15,6 @@ function ReservationHistory() {
           <ReservationHistoryCardList />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

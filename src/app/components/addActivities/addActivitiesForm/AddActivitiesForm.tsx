@@ -110,7 +110,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
     };
     try {
       await postActivities(typedData);
-      router.replace('/');
+      router.replace('/mypage/myexperiencemanagement');
     } catch (error: any) {
       if (error.response) {
         // 서버에서 보낸 응답이 있는 경우
@@ -151,7 +151,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
 
     try {
       await editActivities(typedData, activityId);
-      router.replace('/');
+      router.replace('/mypage/myexperiencemanagement');
     } catch (error: any) {
       if (error.response) {
         // 서버에서 보낸 응답이 있는 경우

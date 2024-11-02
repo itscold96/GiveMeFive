@@ -3,7 +3,6 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import SideMenu from '../../../components/mypage/SideMenu';
 import MyExperienceManagementList from '../../../components/mypage/MyExperienceManagementList';
-import Footer from '../../../components/@shared/footer/Footer';
 import S from './myexperienceManagement.module.scss';
 import Button from '../../../components/@shared/button/Button';
 import { Title } from '@mantine/core';
@@ -12,7 +11,7 @@ export default function MyExperienceManagement() {
   const router = useRouter();
 
   const handleAddActivityClick = () => {
-    router.push('/addactivities');
+    router.push('myexperiencemanagement/addactivities');
   };
 
   return (
@@ -41,7 +40,6 @@ export default function MyExperienceManagement() {
           <MyExperienceManagementList />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

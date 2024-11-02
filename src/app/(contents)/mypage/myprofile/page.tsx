@@ -16,7 +16,6 @@ function Myprofile() {
           <UserInfoForm />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
