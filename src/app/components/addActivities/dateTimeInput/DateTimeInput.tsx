@@ -174,7 +174,7 @@ export default function DateTimeInput({
           />
         </div>
         <div className={S.plusButton} onClick={onAddSchedule}>
-          <Image src={plusIcon} alt="일정 등록 버튼" width={56} height={56} />
+          <Image className={S.buttonImage} src={plusIcon} alt="일정 등록 버튼" width={56} height={56} />
         </div>
       </div>
       <div className={S.itemDateTimeContainer}>
@@ -186,7 +186,7 @@ export default function DateTimeInput({
               <div className={S.itemTilde}>~</div>
               <div className={S.itemTime}>{item.endTime}</div>
               <div className={S.minusButton} onClick={() => onRemoveSchedule(index)}>
-                <Image src={minusIcon} alt="일정 삭제 버튼" width={56} height={56} />
+                <Image className={S.buttonImage} src={minusIcon} alt="일정 삭제 버튼" width={56} height={56} />
               </div>
             </div>
           ))}

@@ -194,10 +194,7 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(handleSubmitType)}
-        style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '50px' }}
-      >
+      <form className={S.formBox} onSubmit={handleSubmit(handleSubmitType)}>
         <div className={S.head}>
           <div className={S.headText}>내 체험 등록</div>
           <Button

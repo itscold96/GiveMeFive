@@ -1,0 +1,43 @@
+@use '@/styles/abstracts/core' as *;
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  border: 1px solid $gray300;
+  padding: 12px 16px;
+}
+.cardContainerInfoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.infoText {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  @include textMdSemibold;
+}
+.infoHead {
+  color: $gray800;
+}
+.infoBody {
+  color: $black;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: right;
+  gap: 6px;
+}
+.confirmed {
+  border-radius: 26.5px;
+  padding: 10px 15px;
+  background-color: $orange100;
+  color: $orange200;
+}
+.declined {
+  border-radius: 26.5px;
+  padding: 10px 15px;
+  background-color: $red100;
+  color: $red300;
+}
