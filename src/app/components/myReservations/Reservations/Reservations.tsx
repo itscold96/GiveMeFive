@@ -42,12 +42,9 @@ export default function Reservations() {
         month,
       });
 
-      console.log('응답 데이터:', reservationDataResponse);
       if (Array.isArray(reservationDataResponse) && reservationDataResponse.length > 0) {
         const datesArray = reservationDataResponse.map(reservationData => reservationData.date);
-        // 상태에 설정
         setAvailableDates(datesArray);
-        console.log('예약 데이터 배열:', datesArray);
       } else {
         console.warn('예약 데이터가 없습니다', reservationDataResponse);
         setAvailableDates([]);
@@ -77,10 +74,6 @@ export default function Reservations() {
       fetchReservationData({ activityId: selectedActivityId, year, month });
     }
   }, [Mydata, selectedIndex, activityId, selectedDate]);
-
-  useEffect(() => {
-    console.log(availableDates);
-  }, [availableDates]);
 
   const OnClickDate = () => {
     toggleDispatch({ type: 'on' });

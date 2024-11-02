@@ -26,13 +26,11 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
   const [isToggleTrigger, setIsToggleTrigger] = useState(false);
   const [scheduleData, setScheduleData] = useState<string[]>();
   const [scheduleKey, setScheduleKey] = useState<number[]>();
-  console.log(selectedDate, '선택날짜');
-  console.log(scheduleData, scheduleKey);
+
   const formattedDate = dayjs(new Date(selectedDate)).format('YYYY-MM-DD');
   const fetchReservedSchedule = async () => {
     try {
       const response = await getReservedSchedule({ activityId, formattedDate });
-      console.log(response);
 
       if (Array.isArray(response) && response.length > 0) {
         const formattedScheduleData = response.map(item => {
@@ -43,14 +41,12 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
           const { scheduleId } = item;
           return scheduleId;
         });
-        console.log(formattedScheduleData);
         setScheduleData(formattedScheduleData);
         setScheduleKey(formattedScheduleId);
+
         if (selectedIndex) {
           setReservationCount(response[selectedIndex - 1].count);
         }
-      } else {
-        console.log('예약된 스케줄이 없습니다.');
       }
     } catch (error) {
       console.error('스케줄 데이터를 가져오는 도중 에러 발생:', error);

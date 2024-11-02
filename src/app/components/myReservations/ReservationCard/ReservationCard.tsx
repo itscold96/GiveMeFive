@@ -32,7 +32,6 @@ function ReservationCard({ reservation, setIsToggleTrigger, isToggleTrigger }: R
     const reservationId = reservation.id;
     const status = 'confirmed';
     const response = await patchReservatonsStatus({ activityId, reservationId, status });
-    console.log(response);
     setIsToggleTrigger?.(!isToggleTrigger);
   };
   const onClickDeclined = async () => {
@@ -40,7 +39,6 @@ function ReservationCard({ reservation, setIsToggleTrigger, isToggleTrigger }: R
     const reservationId = reservation.id;
     const status = 'declined';
     const response = await patchReservatonsStatus({ activityId, reservationId, status });
-    console.log(response);
     setIsToggleTrigger?.(!isToggleTrigger);
   };
   return (

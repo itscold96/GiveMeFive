@@ -52,8 +52,6 @@ export default function ReservationInfoTabs({
 
   const getSelectStatusInfo = async (selectStatus: 'pending' | 'declined' | 'confirmed') => {
     const response = await getReservedSelectSchedule({ activityId, selectScheduleId: selectedKey, selectStatus });
-    console.log(response, '지정한 status 반환값');
-    console.log(response.reservations);
     setData(response.reservations);
   };
 
