@@ -5,57 +5,37 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
 
-  div[data-calendar='true'] {
-    width: 100%;
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 2px;
-    }
-  }
   .levelsGroup {
-    display: flex;
-    justify-content: center;
     border: 1px solid $gray200;
     border-radius: 8px;
-    // padding: 10px 27.33px;
-    width: 100%;
+    padding: 10px 27.33px;
   }
 
   .availableDates {
-    width: 100%;
     background-color: $green100;
     color: $green300;
     &:hover {
       background-color: rgba($green300, 0.3);
     }
   }
+
   .day {
-    width: calc(700% / 7);
+    width: 35.71px;
+    height: 32px;
     border-radius: 8px;
+
     font-size: 13px;
     font-weight: 600;
     line-height: 17.7px;
-    border: 2px solid $gray500;
-    position: relative;
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: -2px;
-      width: 2px;
-      height: 100%;
-      background-color: $gray500;
+    &[data-weekend] {
+      color: $black;
     }
+
     &[data-selected] {
       background-color: $green300;
       color: $white;
-    }
-    &[data-weekend] {
-      color: $black;
     }
   }
 }
