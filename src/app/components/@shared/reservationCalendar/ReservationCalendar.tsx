@@ -6,7 +6,7 @@ import classNames from 'classnames';
 interface ReservationCalendarProps extends CalendarProps {
   selectedDate: Date;
   onClickDate: (date: Date) => void;
-  mantineCalendarClassNames?: Record<CalendarStylesNames, string>;
+  mantineCalendarClassNames?: Partial<Record<CalendarStylesNames, string>>;
   availableDates?: string[];
   availableDatesStyle?: string;
 }
