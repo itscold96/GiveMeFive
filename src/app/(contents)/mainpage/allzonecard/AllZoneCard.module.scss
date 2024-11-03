@@ -70,6 +70,7 @@
   cursor: pointer;
   width: 100%;
   max-width: 283px; // PC 기준 너비
+  text-decoration: none;
 
   @include tablet {
     max-width: 221px;

@@ -129,6 +129,7 @@
 .bestZoneCard {
   min-width: 384px;
   height: 384px;
+  text-decoration: none;
 
   @include mobile {
     min-width: 186px;
