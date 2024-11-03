@@ -79,6 +79,13 @@ export default function DateTimeInput({
 
   const onAddSchedule = () => {
     if (!(dateTime.date && dateTime.startTime && dateTime.endTime)) return;
+    const isDuplicate = dateTimeBox.some(
+      item => item.startTime === dateTime.startTime || item.endTime === dateTime.endTime,
+    );
+    if (isDuplicate) {
+      console.log('이미 동일한 시간의 일정이 존재합니다.');
+      return;
+    }
     if (defaultDataSchedules) {
       const currentScheduleToAdd = getValues('schedulesToAdd');
       const newScheduleToAdd = Array.isArray(currentScheduleToAdd) ? currentScheduleToAdd : [];
@@ -180,7 +187,7 @@ export default function DateTimeInput({
       <div className={S.itemDateTimeContainer}>
         {dateTimeBox &&
           dateTimeBox.map((item, index) => (
-            <div key={`${item}-${index}`} className={S.itemDateTime}>
+            <div key={`${item}`} className={S.itemDateTime}>
               <div className={S.itemDate}>{dayjs(item.date).format('YY/MM/DD')}</div>
               <div className={S.itemTime}>{item.startTime}</div>
               <div className={S.itemTilde}>~</div>

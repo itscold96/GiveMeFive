@@ -32,3 +32,30 @@
     margin-top: 50px;
   }
 }
+
+.myLevelsGroup {
+  display: flex !important;
+  justify-content: center !important;
+  flex-grow: 1 !important;
+  width: 100% !important;
+}
+
+.availableDates {
+  width: 100% !important;
+  background-color: $green100 !important;
+  color: $green300 !important;
+}
+
+.day {
+  width: clamp(50px, 6vw, 95px) !important;
+  height: 100px !important;
+  @include tablet {
+    width: clamp(40px, 6vw, 80px) !important;
+    height: 80px !important;
+  }
+
+  @include mobile {
+    width: clamp(20px, 10vw, 80px) !important;
+    height: 70px !important;
+  }
+}
