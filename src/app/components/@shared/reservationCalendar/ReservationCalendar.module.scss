@@ -41,5 +41,12 @@
     &[data-today] {
       border: 1px solid $gray900;
     }
+
+    &[data-disabled] {
+      cursor: not-allowed;
+      &:hover {
+        opacity: 0.2;
+      }
+    }
   }
 }
