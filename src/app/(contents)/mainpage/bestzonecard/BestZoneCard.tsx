@@ -6,16 +6,16 @@ import Star from '@/images/star-icon.svg';
 import { useState, useEffect, useMemo } from 'react';
 import ArrowButton from './arrowButton/ArrowButton';
 import { useBestActivitiesQuery } from '@/queries/useActivityQuery';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { GetActivitiesResponse } from '@/fetches/activities';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
+import Link from 'next/link';
 
 export default function BestZoneCard({
   initialBestActivitiesData,
 }: {
   initialBestActivitiesData: GetActivitiesResponse;
 }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
   const [isWideScreen, setIsWideScreen] = useState(false);
@@ -62,7 +62,7 @@ export default function BestZoneCard({
 
       <div className={S.bestZoneCardContainer}>
         {bestActivitiesData?.activities.map(activity => (
-          <div key={activity.id} className={S.bestZoneCard} onClick={() => router.push(`/activities/${activity.id}`)}>
+          <Link key={activity.id} href={`/activities/${activity.id}`} className={S.bestZoneCard}>
             <div className={S.bestZoneCardImage}>
               {!imgError[activity.id] && (
                 <Image
@@ -90,7 +90,7 @@ export default function BestZoneCard({
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -13,6 +13,7 @@ import { GetActivitiesResponse } from '@/fetches/activities';
 import { getCurrencyFormat } from '@/utils/getCurrencyFormat';
 import { useAllZoneStore, useItemsPerPage } from '@/stores/useAllZoneStore';
 import { useURLManager } from '@/utils/getUrl';
+import Link from 'next/link';
 
 export default function AllZoneCard({ initialActivitiesData }: { initialActivitiesData: GetActivitiesResponse }) {
   const router = useRouter();
@@ -118,7 +119,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
       ) : (
         <div className={S.allZoneCardContainer}>
           {activitiesData?.activities.map(activity => (
-            <div key={activity.id} onClick={() => router.push(`/activities/${activity.id}`)} className={S.allZoneCard}>
+            <Link key={activity.id} href={`/activities/${activity.id}`} className={S.allZoneCard}>
               <div className={S.allZoneCardImage}>
                 {!imgError[activity.id] && (
                   <Image
@@ -144,7 +145,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
                   <span className={S.allZoneCardPriceUnit}> / 인</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
