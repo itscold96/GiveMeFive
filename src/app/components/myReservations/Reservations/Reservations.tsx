@@ -97,17 +97,12 @@ export default function Reservations() {
           : [];
 
       if (filteredData.length === 0) {
+        //TODO: 알림창이나 경고문구로 수정 예정
         console.log('일치하는 데이터가 없거나 예약이 없습니다.');
         setFilterAvailableDates([]);
       } else {
-        console.log('필터링된 데이터:', filteredData);
-
-        // 각 객체의 date를 추출하여 문자열 배열로 변환
         const filteredDates = filteredData.map(item => item.date);
-
-        // filteredDates를 setFilterAvailableDates 함수에 전달
         setFilterAvailableDates(filteredDates);
-        console.log(filteredDates);
       }
     }
   }, [dataResponse, availableDates, selectedIndex, activityId]);
