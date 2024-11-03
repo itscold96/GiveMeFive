@@ -37,5 +37,9 @@
       background-color: $green300;
       color: $white;
     }
+
+    &[data-today] {
+      border: 1px solid $gray900;
+    }
   }
 }
