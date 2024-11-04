@@ -4,10 +4,15 @@ import { IconCalendar, IconClock } from '@tabler/icons-react';
 import { ActionIcon, rem } from '@mantine/core';
 import { DatePickerInput, TimeInput } from '@mantine/dates';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import Image from 'next/image';
 import S from './DateTimeInput.module.scss';
 import plusIcon from '@/images/add-plus-button.svg';
 import minusIcon from '@/images/delete-minus-button.svg';
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+
 type DateTimeType = {
   id?: number;
   startTime: string;
@@ -32,6 +37,7 @@ export default function DateTimeInput({
   message,
   defaultDataSchedules,
 }: DateTimeInputProps) {
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [dateTime, setDateTime] = useState<DateTimeType>({
     startTime: '',
     endTime: '',
@@ -78,12 +84,30 @@ export default function DateTimeInput({
   };
 
   const onAddSchedule = () => {
-    if (!(dateTime.date && dateTime.startTime && dateTime.endTime)) return;
-    const isDuplicate = dateTimeBox.some(
-      item => item.startTime === dateTime.startTime || item.endTime === dateTime.endTime,
-    );
+    // 날짜, 시작 시간, 종료시간을 다 입력했는지 검사
+    if (!(dateTime.date && dateTime.startTime && dateTime.endTime)) {
+      setErrorMessage('날짜, 시작 시간, 종료 시간을 입력해 주세요');
+      return;
+    }
+    const newStart = dayjs(`${dateTime.date} ${dateTime.startTime}`);
+    const newEnd = dayjs(`${dateTime.date} ${dateTime.endTime}`);
+    // 종료 시간이 시작 시간보다 빠른지 검사
+    if (newEnd.isBefore(newStart)) {
+      setErrorMessage('종료 시간이 시작 시간보다 빠를 수 없습니다.');
+      return;
+    }
+    const isDuplicate = dateTimeBox.some(item => {
+      const existingStart = dayjs(`${item.date} ${item.startTime}`);
+      const existingEnd = dayjs(`${item.date} ${item.endTime}`);
+      return (
+        (newStart.isSameOrAfter(existingStart) && newStart.isBefore(existingEnd)) || // 시작 시간이 기존 범위에 포함될 때
+        (newEnd.isAfter(existingStart) && newEnd.isSameOrBefore(existingEnd)) || // 종료 시간이 기존 범위에 포함될 때
+        (newStart.isBefore(existingStart) && newEnd.isAfter(existingEnd)) // 기존 시간 범위 전체를 포함할 때
+      );
+    });
+    // 새로 추가할 스케쥴이 기존 스케쥴 시간대와 겹치는지 검사
     if (isDuplicate) {
-      console.log('이미 동일한 시간의 일정이 존재합니다.');
+      setErrorMessage('이미 동일한 시간의 일정이 존재합니다.');
       return;
     }
     if (defaultDataSchedules) {
@@ -91,9 +115,11 @@ export default function DateTimeInput({
       const newScheduleToAdd = Array.isArray(currentScheduleToAdd) ? currentScheduleToAdd : [];
       setValue('schedulesToAdd', [...newScheduleToAdd, dateTime]);
       setDateTimeBox(prevState => [...prevState, dateTime]);
+      setErrorMessage('');
       return;
     }
     setDateTimeBox(prevState => [...prevState, dateTime]);
+    setErrorMessage('');
   };
   const onRemoveSchedule = (index: number) => {
     setDateTimeBox(prevState => {
@@ -198,6 +224,7 @@ export default function DateTimeInput({
             </div>
           ))}
       </div>
+      {errorMessage && <p className={S.message}>{errorMessage}</p>}
       {error && <p className={S.message}>{message?.toString()}</p>}
     </div>
   );
