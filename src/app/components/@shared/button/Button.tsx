@@ -2,7 +2,7 @@ import S from './Button.module.scss';
 import { ButtonHTMLAttributes } from 'react';
 
 type ButtonProps = {
-  buttonColor: 'nomadBlack' | 'white' | 'gray';
+  buttonColor: 'nomadBlack' | 'white' | 'gray' | 'giveMeNavy';
   textSize: 'md' | 'lg'; //md : 14px, lg : 16px
   borderRadius: 'radius6' | 'radius4';
   padding: 'padding8' | 'padding14';

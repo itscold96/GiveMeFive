@@ -23,6 +23,11 @@
     color: $white;
   }
 
+  &.giveMeNavyButtonColor {
+    background-color: $giveMeNavy;
+    color: $white;
+  }
+
   &.radius6BorderRadius {
     border-radius: 6px;
   }
