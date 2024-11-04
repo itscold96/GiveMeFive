@@ -143,6 +143,11 @@ export default function Reservations() {
           highlightToday
           mantineCalendarClassNames={{ levelsGroup: S.myLevelsGroup, day: S.day }}
           availableDatesStyle={S.availableDates}
+          styles={{
+            calendarHeader: {
+              margin: '0 auto 10px',
+            },
+          }}
         />
       </div>
       {toggleValue && activityId && (
