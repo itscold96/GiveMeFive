@@ -4,12 +4,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-
-  @include tablet {
-  }
-
-  @include mobile {
-  }
 }
 .head {
   display: flex;
@@ -35,5 +29,25 @@
   /* Firefox  */
   input[type='number'] {
     -moz-appearance: textfield;
+  }
+  label {
+    @include text2XlBold;
+  }
+  @include tablet {
+  }
+
+  @include mobile {
+    @include textXlBold;
+  }
+}
+
+.dateTimeInputLabel {
+  @include text2XlBold;
+
+  @include tablet {
+  }
+
+  @include mobile {
+    display: none;
   }
 }

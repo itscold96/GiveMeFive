@@ -236,7 +236,9 @@ export default function AddActivitiesForm({ defaultData, activityId }: AddActivi
           className={S.priceInput}
         />
         <DaumAddress errors={errors} register={register} setValue={setValue} getValues={getValues} />
-        <label htmlFor="availableTime">예약 가능한 시간대</label>
+        <label className={S.dateTimeInputLabel} htmlFor="availableTime">
+          예약 가능한 시간대
+        </label>
         <DateTimeInput
           setValue={setValue}
           getValues={getValues}
