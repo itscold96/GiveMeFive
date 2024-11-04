@@ -50,7 +50,14 @@
 .message {
   color: $red300;
   display: block;
-  margin-top: 10px;
+  padding-top: 10px;
+  @include tablet {
+    padding-top: 30px;
+  }
+
+  @include mobile {
+    padding-top: 10px;
+  }
 }
 .imagePreviewContainer {
   display: flex;
