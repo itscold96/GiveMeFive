@@ -4,7 +4,7 @@ import S from './AllZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
@@ -20,6 +20,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { updateURL } = useURLManager(router, pathname, searchParams);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   const {
     selectedSort,
@@ -70,20 +71,33 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
     updateURL({ category, page: 1, sort: selectedSort }, { scroll: false });
+
+    setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const handleSortChange = (sort: string) => {
     setSelectedSort(sort || undefined);
     updateURL({ sort: sort || undefined, page: 1, category: selectedCategory }, { scroll: false });
+
+    // 상태 업데이트 후 스크롤 실행
+    setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     updateURL({ page: newPage, category: selectedCategory, sort: selectedSort }, { scroll: false });
+
+    setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
-    <div>
+    <div ref={titleRef}>
       {!isTitleSearched && (
         <>
           <CategoryAndDropdown
@@ -94,7 +108,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
           />
 
           <div className={S.allExperienceContainer}>
-            <span className={S.experienceText}>🛼 모든체험</span>
+            <span className={S.experienceText}>🛼 {selectedCategory ? `${selectedCategory} 체험` : '모든체험'}</span>
           </div>
         </>
       )}
