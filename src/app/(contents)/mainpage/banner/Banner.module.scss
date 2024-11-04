@@ -60,6 +60,8 @@
   flex-direction: column;
   gap: 20px;
 
+  white-space: keep-all;
+
   @include tablet {
     max-width: 450px;
     margin-left: 20px;
