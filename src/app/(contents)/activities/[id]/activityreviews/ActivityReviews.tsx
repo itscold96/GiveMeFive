@@ -57,13 +57,13 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
 
         <div className={S.reviewContainer}>
           {currentPageReviews?.map((review, index) => (
-            <div key={review.id}>
+            <div key={review.id} className={S.review}>
               <div className={S.profileImageContainer}>
                 {review.user?.profileImageUrl && (
                   <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
                 )}
               </div>
-              <div>
+              <div className={S.reviewInfoContainer}>
                 <div className={S.reviewInfo}>
                   <span className={S.reviewer}>{review.user.nickname}</span>
                   <div className={S.dash}>|</div>
