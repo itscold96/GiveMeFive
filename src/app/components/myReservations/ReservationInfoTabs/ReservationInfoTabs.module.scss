@@ -18,7 +18,12 @@
 .infoDate {
   @include textXlRegular;
 }
+
 .dropdown {
   display: grid;
   width: 100%;
+}
+
+.noInfoText {
+  padding-bottom: 10px;
 }
