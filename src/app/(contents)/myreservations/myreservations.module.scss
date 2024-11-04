@@ -32,12 +32,12 @@
 .formContainer {
   max-width: 756px;
   flex: 2;
-  @media (max-width: 768px) {
+  @include mobile {
     width: 100%;
   }
 }
 
-@media (max-width: 768px) {
+@include mobile {
   .container {
     flex-direction: column;
     align-items: center;
