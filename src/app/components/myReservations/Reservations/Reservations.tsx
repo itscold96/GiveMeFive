@@ -24,6 +24,10 @@ export default function Reservations() {
   const { toggleValue, toggleDispatch } = useToggle();
   const [dataTitles, setDataTitles] = useState<string[]>([]);
   const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [filterAvailableDates, setFilterAvailableDates] = useState<string[]>([]);
+  const [dataResponse, setDataResponse] = useState<GetReservationDashboardResponse>();
+  console.log(availableDates);
+  console.log(dataResponse);
   const { data: Mydata, error, isLoading } = useMyActivitiesQuery({ size: 50 });
   const {
     data: dropdownData,
@@ -41,8 +45,9 @@ export default function Reservations() {
         year,
         month,
       });
-
+      console.log(reservationDataResponse);
       if (Array.isArray(reservationDataResponse) && reservationDataResponse.length > 0) {
+        setDataResponse(reservationDataResponse);
         const datesArray = reservationDataResponse.map(reservationData => reservationData.date);
         setAvailableDates(datesArray);
       } else {
@@ -68,16 +73,39 @@ export default function Reservations() {
         const selectedActivityId = Mydata.activities[selectedIndex - 1].id;
         setActivityId(selectedActivityId);
         fetchReservationData({ activityId: selectedActivityId, year, month });
+        return;
       }
       const selectedActivityId = Mydata.activities[0].id;
       setActivityId(selectedActivityId);
       fetchReservationData({ activityId: selectedActivityId, year, month });
     }
   }, [Mydata, selectedIndex, activityId, selectedDate]);
-
+  console.log(activityId);
   const OnClickDate = () => {
     toggleDispatch({ type: 'on' });
   };
+
+  useEffect(() => {
+    if (dataResponse) {
+      const filteredData: any[] =
+        Array.isArray(dataResponse) && Array.isArray(availableDates)
+          ? dataResponse.filter(
+              item =>
+                availableDates.includes(item.date) &&
+                !(item.reservations.confirmed === 0 && item.reservations.pending === 0),
+            )
+          : [];
+
+      if (filteredData.length === 0) {
+        //TODO: 알림창이나 경고문구로 수정 예정
+        console.log('일치하는 데이터가 없거나 예약이 없습니다.');
+        setFilterAvailableDates([]);
+      } else {
+        const filteredDates = filteredData.map(item => item.date);
+        setFilterAvailableDates(filteredDates);
+      }
+    }
+  }, [dataResponse, availableDates, selectedIndex, activityId]);
 
   if (!Mydata?.totalCount) {
     return (
@@ -90,7 +118,7 @@ export default function Reservations() {
       </div>
     );
   }
-
+  console.log(filterAvailableDates);
   return (
     <div className={S.reservationsContainer}>
       <div className={S.title}>예약현황</div>
@@ -109,10 +137,17 @@ export default function Reservations() {
             setSelectedDate(date);
             OnClickDate();
           }} // 날짜 클릭 시 실행될 함수, 자동으로 매개변수로 클릭한 날짜 (date:Date)를 받도록 제작하였습니다.
-          availableDates={availableDates} // 선택 가능한 날짜를 (YYYY-MM-DD) 포맷 배열로 넣어주면 됩니다.
+          availableDates={filterAvailableDates} // 선택 가능한 날짜를 (YYYY-MM-DD) 포맷 배열로 넣어주면 됩니다.
           onNextMonth={date => setSelectedDate(date)}
           onPreviousMonth={date => setSelectedDate(date)}
           highlightToday
+          mantineCalendarClassNames={{ levelsGroup: S.myLevelsGroup, day: S.day }}
+          availableDatesStyle={S.availableDates}
+          styles={{
+            calendarHeader: {
+              margin: '0 auto 10px',
+            },
+          }}
         />
       </div>
       {toggleValue && activityId && (
