@@ -25,8 +25,8 @@ export default function Banner({ bestActivity }: BannerProps) {
             alt=""
             className={S.bannerImage}
             quality={100}
-            width={0}
-            height={550}
+            fill
+            sizes="100vw"
             objectFit="cover"
             onError={() => setImgError(prev => ({ ...prev, [bestActivity.id]: true }))}
           />

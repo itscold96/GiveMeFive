@@ -25,5 +25,8 @@ export const useReservationStore = create<ReservationStore>(set => ({
         reservation: { ...prevState.reservation, headCount: Math.max(prevState.reservation.headCount - 1, 1) },
       }));
     },
+    reset: () => {
+      set({ reservation: initialReservation });
+    },
   },
 }));

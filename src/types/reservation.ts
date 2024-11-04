@@ -16,6 +16,7 @@ export interface ReservationAction {
   setSelectedTime: (time: Time) => void;
   increaseHeadCount: () => void;
   decreaseHeadCount: () => void;
+  reset: () => void;
 }
 
 export interface ReservationProps {
