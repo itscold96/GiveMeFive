@@ -162,6 +162,7 @@ export default function DateTimeInput({
                 maxWidth: '380px',
                 height: '56px',
                 border: error ? '1px solid #ff472e' : '',
+                cursor: 'pointer',
               },
               root: { borderColor: 'blue' },
             }}
