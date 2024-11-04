@@ -25,12 +25,14 @@
 .labelName {
   margin-bottom: 24px;
   display: inline-block;
+  @include text2XlBold;
   @include tablet {
     margin-top: 12px;
   }
 
   @include mobile {
     margin-top: 0;
+    @include textXlBold;
   }
 }
 .addImageButton {
@@ -115,10 +117,10 @@
   padding-top: 24px;
   color: $gray900;
   @include tablet {
-    padding-top: 12px;
+    padding-top: 44px;
   }
 
   @include mobile {
-    padding-top: 0;
+    padding-top: 24px;
   }
 }

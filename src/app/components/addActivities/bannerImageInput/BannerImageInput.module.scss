@@ -25,6 +25,14 @@
 .labelName {
   margin-bottom: 24px;
   display: inline-block;
+  @include text2XlBold;
+
+  @include tablet {
+  }
+
+  @include mobile {
+    @include textXlBold;
+  }
 }
 .addImageButton {
   display: flex;

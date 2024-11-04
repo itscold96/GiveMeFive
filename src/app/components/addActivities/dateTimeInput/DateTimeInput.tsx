@@ -152,8 +152,8 @@ export default function DateTimeInput({
             label="날짜"
             valueFormat="YY/MM/DD"
             rightSection={icon}
-            leftSectionPointerEvents="none"
             placeholder="YY/MM/DD"
+            rightSectionPointerEvents="none"
             onChange={onDateSelectChange}
             value={dateTime.date ? dayjs(dateTime.date).toDate() : null}
             styles={{
