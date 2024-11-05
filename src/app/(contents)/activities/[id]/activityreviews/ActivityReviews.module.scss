@@ -2,9 +2,10 @@
 
 .hr2 {
   max-width: 790px;
+  width: 100%;
   height: 1px;
   opacity: 0.25;
-  background-color: $giveMeNavy;
+  background-color: $nomadBlack;
   margin-top: 16px;
 
   @include tablet {
@@ -90,6 +91,7 @@
 
 .reviewContainer {
   display: flex;
+  flex-direction: column;
   gap: 16px;
   width: 100%;
 }
@@ -174,6 +176,6 @@
 
 .review {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   gap: 16px;
 }

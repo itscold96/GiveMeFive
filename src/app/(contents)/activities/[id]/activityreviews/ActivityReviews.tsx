@@ -57,24 +57,26 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
 
         <div className={S.reviewContainer}>
           {currentPageReviews?.map((review, index) => (
-            <div key={review.id} className={S.review}>
-              <div className={S.profileImageContainer}>
-                {review.user?.profileImageUrl && (
-                  <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
-                )}
-              </div>
-              <div className={S.reviewInfoContainer}>
-                <div className={S.reviewInfo}>
-                  <span className={S.reviewer}>{review.user.nickname}</span>
-                  <div className={S.dash}>|</div>
-                  <div className={S.reviewDate}>
-                    {review.createdAt ? dayjs(review.createdAt).format('YYYY.MM.DD') : ''}
-                  </div>
+            <>
+              <div key={review.id} className={S.review}>
+                <div className={S.profileImageContainer}>
+                  {review.user?.profileImageUrl && (
+                    <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
+                  )}
                 </div>
-                <div className={S.reviewContent}>{review.content}</div>
+                <div className={S.reviewInfoContainer}>
+                  <div className={S.reviewInfo}>
+                    <span className={S.reviewer}>{review.user.nickname}</span>
+                    <div className={S.dash}>|</div>
+                    <div className={S.reviewDate}>
+                      {review.createdAt ? dayjs(review.createdAt).format('YYYY.MM.DD') : ''}
+                    </div>
+                  </div>
+                  <div className={S.reviewContent}>{review.content}</div>
+                </div>
               </div>
               {index < currentPageReviews.length - 1 && <hr className={S.hr2} />}
-            </div>
+            </>
           ))}
         </div>
       </div>
