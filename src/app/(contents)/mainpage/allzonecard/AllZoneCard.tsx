@@ -21,6 +21,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const searchParams = useSearchParams();
   const { updateURL } = useURLManager(router, pathname, searchParams);
   const titleRef = useRef<HTMLDivElement>(null);
+  const isInitialRender = useRef(true);
 
   const {
     selectedSort,
@@ -68,32 +69,32 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     setPage(1);
   }, [title, selectedCategory, selectedSort, setPage]);
 
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [selectedCategory, selectedSort, page]);
+
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
     updateURL({ category, page: 1, sort: selectedSort }, { scroll: false });
-
-    setTimeout(() => {
-      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
   };
 
   const handleSortChange = (sort: string) => {
     setSelectedSort(sort || undefined);
     updateURL({ sort: sort || undefined, page: 1, category: selectedCategory }, { scroll: false });
-
-    // 상태 업데이트 후 스크롤 실행
-    setTimeout(() => {
-      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     updateURL({ page: newPage, category: selectedCategory, sort: selectedSort }, { scroll: false });
-
-    setTimeout(() => {
-      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
   };
 
   return (
