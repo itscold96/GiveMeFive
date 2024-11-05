@@ -31,9 +31,7 @@ export default function Header() {
       // 새로 유저 정보를 받아왔으므로 전역 상태 업데이트
       setUser({ user });
     }
-    if (!user || isError) {
-      // 쿠키에 accessToken이 삭제되는 등의 이유로 accessToken이 없다면 useUserQuery가 enabled 속성에 의해
-      // 작동하지 않으므로 이때에도 로그아웃이 필요.
+    if (isError) {
       // 네트워크 에러, 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
       logout();
     }
