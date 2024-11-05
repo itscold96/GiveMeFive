@@ -47,10 +47,18 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
           <div className={S.averageRating}>{activity?.rating || 0}</div>
 
           <div className={S.satisfaction}>
-            <span className={S.satisfactionTitle}>만족도</span>
+            <span className={S.satisfactionTitle}>
+              {activity?.rating && activity?.rating >= 4
+                ? '매우 만족'
+                : activity?.rating && activity?.rating === 3
+                  ? '만족'
+                  : activity?.rating && activity?.rating >= 1
+                    ? '불만족'
+                    : ''}
+            </span>
             <div className={S.reviewCountContainer}>
               <Image src={star} alt="" width={16} height={16} unoptimized />
-              <div className={S.reviewCount}>({activity?.reviewCount || 0})개 후기</div>
+              <div className={S.reviewCount}>{activity?.reviewCount || 0}개 후기</div>
             </div>
           </div>
         </div>
