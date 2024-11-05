@@ -26,7 +26,7 @@ export default function MyExperienceManagement() {
               내 체험 관리
             </Title>
             <Button
-              buttonColor="nomadBlack"
+              buttonColor="giveMeNavy"
               textSize="lg"
               borderRadius="radius6"
               padding="padding14"
