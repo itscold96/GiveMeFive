@@ -24,7 +24,7 @@
 
   .availableTime {
     min-width: fit-content;
-    border: 1px solid $nomadBlack;
+    border: 1px solid $giveMeNavy;
     border-radius: 8px;
     padding: 10px 12px;
     @include textLgMedium;
@@ -34,7 +34,7 @@
     }
 
     &.selectedTime {
-      background-color: $nomadBlack;
+      background-color: $giveMeNavy;
       color: $white;
     }
   }
