@@ -46,10 +46,10 @@ export default function Search() {
     <div className={S.inputContainer}>
       <span className={S.inputText}>무엇을 체험하고 싶으신가요?</span>
       <form onSubmit={handleSearch} className={S.searchInputContainer}>
-        <Input className={S.searchInput} placeholder="내가 원하는 체험은" register={register('title')} />
+        <Input className={S.searchInput} placeholder="🖐️ &#x2000;내가 원하는 체험은" register={register('title')} />
         <Button
           type="submit"
-          buttonColor="nomadBlack"
+          buttonColor="giveMeNavy"
           textSize="lg"
           borderRadius="radius4"
           padding="padding8"

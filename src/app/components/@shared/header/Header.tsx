@@ -21,14 +21,20 @@ export default function Header() {
   // 서버에 유저 정보를 요청하는 과정이 필요하다.
   // 만약, 그 사이에 accessToken이 만료되었다면 refreshToken으로 토큰을 업데이트하고,
   // refreshToken까지 만료되었다면 쿠기를 제거하여 완전히 로그아웃한다.
-  // useEffect를 통해 페이지 새로 고침 시에도 마찬가지로 작동한다.
   useEffect(() => {
+    // useEffect가 없으면 무한루프에 빠진다.
+    // setUser로 useUserStore가 변경되면 리렌더링이 일어나고,
+    // 리렌더링 시 useUserQuery가 다시 실행되는 것이 반복되기 때문이다.
+    // 설계 당시 store와 action을 분리하였다면 좋았겠지만, 현재 다른 팀원분들이 useUserStore를 많이 쓰고 있어
+    // useUserStore를 수정하기보다는 useEffect를 활용하였다.
     if (user) {
       // 새로 유저 정보를 받아왔으므로 전역 상태 업데이트
       setUser({ user });
     }
-    if (isError) {
-      // 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
+    if (!user || isError) {
+      // 쿠키에 accessToken이 삭제되는 등의 이유로 accessToken이 없다면 useUserQuery가 enabled 속성에 의해
+      // 작동하지 않으므로 이때에도 로그아웃이 필요.
+      // 네트워크 에러, 리프레시 토큰 만료 등의 이유로, 유저 데이터를 받아오지 못한다면 로그아웃
       logout();
     }
   }, [user, isError]);

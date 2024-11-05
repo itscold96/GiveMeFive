@@ -10,10 +10,11 @@
     padding: 10px 27.33px;
   }
   .availableDates {
-    background-color: $green100;
-    color: $green300;
+    background-color: rgba($giveMeNavyPalest, 0.3);
+    color: $giveMeNavy;
     &:hover {
-      background-color: rgba($green300, 0.3);
+      // background-color: rgba($giveMeNavyPale, 0.3);
+      background-color: $giveMeNavyPale;
     }
   }
   .day {
@@ -27,7 +28,7 @@
       color: $black;
     }
     &[data-selected] {
-      background-color: $green300;
+      background-color: $giveMeNavy;
       color: $white;
     }
 
