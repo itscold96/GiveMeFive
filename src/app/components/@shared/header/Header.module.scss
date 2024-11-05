@@ -26,26 +26,26 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 24px;
-}
 
-.notLoggedInContainer {
-  display: flex;
-  gap: 25px;
-  @include textMdMedium;
-
-  a {
-    color: $black;
-    text-decoration: none;
-  }
-}
-
-@include mobile {
   .headerLogo {
-    img {
-      @include mobile {
-        width: 140px;
-        height: auto;
+    display: flex; // 수직 중앙 정렬
+    @include mobile {
+      img {
+        @include mobile {
+          width: 140px;
+        }
       }
+    }
+  }
+
+  .notLoggedInContainer {
+    display: flex;
+    gap: 25px;
+    @include textMdMedium;
+
+    a {
+      color: $black;
+      text-decoration: none;
     }
   }
 }
