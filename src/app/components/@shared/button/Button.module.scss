@@ -8,7 +8,7 @@
   width: auto;
 
   &.nomadBlackButtonColor {
-    background-color: $nomadBlack;
+    background-color: $giveMeNavy;
     color: $white;
   }
 
@@ -20,6 +20,11 @@
 
   &.grayButtonColor {
     background-color: $gray600;
+    color: $white;
+  }
+
+  &.giveMeNavyButtonColor {
+    background-color: $giveMeNavy;
     color: $white;
   }
 
