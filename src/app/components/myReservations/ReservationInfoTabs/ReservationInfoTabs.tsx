@@ -105,7 +105,7 @@ export default function ReservationInfoTabs({
                 />
               ))
             ) : (
-              <div>예약 내역이 없습니다.</div>
+              <div className={S.noInfoText}>예약 내역이 없습니다.</div>
             )}
           </div>
         </Tabs.Panel>

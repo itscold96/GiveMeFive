@@ -26,8 +26,6 @@ export default function Reservations() {
   const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [filterAvailableDates, setFilterAvailableDates] = useState<string[]>([]);
   const [dataResponse, setDataResponse] = useState<GetReservationDashboardResponse>();
-  console.log(availableDates);
-  console.log(dataResponse);
   const { data: Mydata, error, isLoading } = useMyActivitiesQuery({ size: 50 });
   const {
     data: dropdownData,
@@ -45,7 +43,6 @@ export default function Reservations() {
         year,
         month,
       });
-      console.log(reservationDataResponse);
       if (Array.isArray(reservationDataResponse) && reservationDataResponse.length > 0) {
         setDataResponse(reservationDataResponse);
         const datesArray = reservationDataResponse.map(reservationData => reservationData.date);
@@ -80,7 +77,7 @@ export default function Reservations() {
       fetchReservationData({ activityId: selectedActivityId, year, month });
     }
   }, [Mydata, selectedIndex, activityId, selectedDate]);
-  console.log(activityId);
+
   const OnClickDate = () => {
     toggleDispatch({ type: 'on' });
   };
@@ -97,8 +94,6 @@ export default function Reservations() {
           : [];
 
       if (filteredData.length === 0) {
-        //TODO: 알림창이나 경고문구로 수정 예정
-        console.log('일치하는 데이터가 없거나 예약이 없습니다.');
         setFilterAvailableDates([]);
       } else {
         const filteredDates = filteredData.map(item => item.date);
@@ -118,7 +113,7 @@ export default function Reservations() {
       </div>
     );
   }
-  console.log(filterAvailableDates);
+
   return (
     <div className={S.reservationsContainer}>
       <div className={S.title}>예약현황</div>
