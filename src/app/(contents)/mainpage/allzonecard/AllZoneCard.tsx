@@ -4,7 +4,7 @@ import S from './AllZoneCard.module.scss';
 import Image from 'next/image';
 import Star from '@/images/star-icon.svg';
 import CategoryAndDropdown, { Category as CategoryType } from './category/CategoryAndDropdown';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Pagination from './pagination/Pagination';
 import { useActivitiesQuery } from '@/queries/useActivityQuery';
 import NoActivity from '@/images/empty.svg';
@@ -20,6 +20,8 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { updateURL } = useURLManager(router, pathname, searchParams);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const isInitialRender = useRef(true);
 
   const {
     selectedSort,
@@ -67,6 +69,19 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
     setPage(1);
   }, [title, selectedCategory, selectedSort, setPage]);
 
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [selectedCategory, selectedSort, page]);
+
   const handleCategoryChange = (category: CategoryType | null) => {
     setSelectedCategory(category);
     updateURL({ category, page: 1, sort: selectedSort }, { scroll: false });
@@ -83,7 +98,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
   };
 
   return (
-    <div>
+    <div ref={titleRef}>
       {!isTitleSearched && (
         <>
           <CategoryAndDropdown
@@ -94,7 +109,7 @@ export default function AllZoneCard({ initialActivitiesData }: { initialActiviti
           />
 
           <div className={S.allExperienceContainer}>
-            <span className={S.experienceText}>🛼 모든체험</span>
+            <span className={S.experienceText}>🛼 {selectedCategory ? `${selectedCategory} 체험` : '모든체험'}</span>
           </div>
         </>
       )}
