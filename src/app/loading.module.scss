@@ -1,3 +1,5 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
 .loaderWrapper {
   position: fixed;
   width: 100vw;
