@@ -97,6 +97,10 @@
     position: relative;
     margin-inline: -17px;
     margin-bottom: -10px;
+
+    > div:not(.mainImageContainer) {
+      display: none;
+    }
   }
 }
 
@@ -111,21 +115,20 @@
 }
 
 .imageNavigation {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
   display: none;
 
   @include mobile {
+    position: absolute;
+    inset: 0;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
   }
 }
 
 .navButton {
-  background-color: transparent; // 요소 배경색을 투명하게 만드는 속성
+  background-color: transparent;
   border: none;
   display: flex;
   justify-content: center;
@@ -188,16 +191,13 @@
   display: flex;
   flex-direction: column;
   gap: 34px;
-  // max-width: 790px;
 
   @include tablet {
     width: 100%;
-    // padding-inline: 20px;
   }
 
   @include mobile {
     width: 100%;
-    // margin: 0 auto;
   }
 
   .introductionContainer {

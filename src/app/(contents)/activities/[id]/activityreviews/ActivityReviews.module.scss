@@ -24,7 +24,7 @@
   flex-direction: column;
   gap: 24px;
   max-width: 790px;
-  margin-left: 0;
+  margin-top: 30px;
 
   &.fullWidth {
     max-width: 100%;
@@ -40,7 +40,6 @@
   }
 
   @include mobile {
-    max-width: 327px;
     margin: 0;
 
     &.fullWidth {
@@ -151,7 +150,6 @@
   gap: 16px;
   margin-top: 50px;
   width: 100%;
-  max-width: 790px;
 
   @include tablet {
     margin-top: 24px;
