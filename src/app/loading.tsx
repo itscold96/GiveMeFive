@@ -1,9 +1,9 @@
 import { Loader as MantineLoader } from '@mantine/core';
-import styles from './Loader.module.scss';
+import S from './loading.module.scss';
 
 export default function Loader() {
   return (
-    <div className={styles.loaderWrapper}>
+    <div className={S.loaderWrapper}>
       <MantineLoader size="lg" />
     </div>
   );
