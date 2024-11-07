@@ -12,6 +12,7 @@
   padding: 32px 24px 64px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   flex-wrap: wrap;
   max-width: 1200px;
@@ -46,6 +47,7 @@
 .footerSocialSection {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .footerIcon {
