@@ -51,7 +51,7 @@ export default function Search() {
           type="submit"
           buttonColor="giveMeNavy"
           textSize="lg"
-          borderRadius="radius4"
+          borderRadius="radius6"
           padding="padding8"
           className={S.buttonWidth}
         >
