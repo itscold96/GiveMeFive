@@ -53,5 +53,8 @@
 .dropdownContainer {
   flex-shrink: 0;
   padding-left: 35px;
-  min-width: 150px;
+  min-width: 162px;
+
+  @include text2LgMedium;
+  color: $giveMeNavy;
 }
