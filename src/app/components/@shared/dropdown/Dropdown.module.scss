@@ -4,6 +4,7 @@
   display: inline-flex;
   flex-direction: column;
   position: relative;
+  width: 100%;
 }
 
 .KebabIconWrapper {
@@ -20,7 +21,14 @@
   padding: 16px 20px;
 }
 
-.categoryValue {
+.categoryWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid $gray800;
+  border-radius: 6px;
+  padding: 16px 20px;
 }
 
 .categoryWrapper {
@@ -33,20 +41,6 @@
   padding: 16px 20px;
 }
 
-.categoryValue {
-}
-
-.categoryWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  border: 1px solid $gray800;
-  border-radius: 6px;
-  padding: 16px 20px;
-}
-.categoryValue {
-}
 .dropdownButton {
   display: flex;
   align-items: center;
