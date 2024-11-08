@@ -31,7 +31,6 @@ export default function ReservationInfoModal({ activityId, onClose, selectedDate
   const fetchReservedSchedule = async () => {
     try {
       const response = await getReservedSchedule({ activityId, formattedDate });
-      console.log(response);
       if (Array.isArray(response) && response.length > 0) {
         const formattedScheduleData = response.map(item => {
           const { startTime, endTime } = item;

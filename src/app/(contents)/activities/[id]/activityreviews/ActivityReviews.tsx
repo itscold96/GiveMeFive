@@ -47,34 +47,44 @@ export default function ActivityReviews({ params }: { params: { id: string } }) 
           <div className={S.averageRating}>{activity?.rating || 0}</div>
 
           <div className={S.satisfaction}>
-            <span className={S.satisfactionTitle}>만족도</span>
+            <span className={S.satisfactionTitle}>
+              {activity?.rating && activity?.rating >= 4
+                ? '매우 만족'
+                : activity?.rating && activity?.rating === 3
+                  ? '만족'
+                  : activity?.rating && activity?.rating >= 1
+                    ? '불만족'
+                    : ''}
+            </span>
             <div className={S.reviewCountContainer}>
               <Image src={star} alt="" width={16} height={16} unoptimized />
-              <div className={S.reviewCount}>({activity?.reviewCount || 0})개 후기</div>
+              <div className={S.reviewCount}>{activity?.reviewCount || 0}개 후기</div>
             </div>
           </div>
         </div>
 
         <div className={S.reviewContainer}>
           {currentPageReviews?.map((review, index) => (
-            <div key={review.id} className={S.review}>
-              <div className={S.profileImageContainer}>
-                {review.user?.profileImageUrl && (
-                  <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
-                )}
-              </div>
-              <div className={S.reviewInfoContainer}>
-                <div className={S.reviewInfo}>
-                  <span className={S.reviewer}>{review.user.nickname}</span>
-                  <div className={S.dash}>|</div>
-                  <div className={S.reviewDate}>
-                    {review.createdAt ? dayjs(review.createdAt).format('YYYY.MM.DD') : ''}
-                  </div>
+            <>
+              <div key={review.id} className={S.review}>
+                <div className={S.profileImageContainer}>
+                  {review.user?.profileImageUrl && (
+                    <Image src={review.user.profileImageUrl} alt="" width={45} height={45} className={S.profileImage} />
+                  )}
                 </div>
-                <div className={S.reviewContent}>{review.content}</div>
+                <div className={S.reviewInfoContainer}>
+                  <div className={S.reviewInfo}>
+                    <span className={S.reviewer}>{review.user.nickname}</span>
+                    <div className={S.dash}>|</div>
+                    <div className={S.reviewDate}>
+                      {review.createdAt ? dayjs(review.createdAt).format('YYYY.MM.DD') : ''}
+                    </div>
+                  </div>
+                  <div className={S.reviewContent}>{review.content}</div>
+                </div>
               </div>
               {index < currentPageReviews.length - 1 && <hr className={S.hr2} />}
-            </div>
+            </>
           ))}
         </div>
       </div>
