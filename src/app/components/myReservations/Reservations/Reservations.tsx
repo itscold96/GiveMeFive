@@ -74,6 +74,7 @@ export default function Reservations() {
       }
       const selectedActivityId = Mydata.activities[0].id;
       setActivityId(selectedActivityId);
+      onDropdownChange(Mydata.activities[0].title);
       fetchReservationData({ activityId: selectedActivityId, year, month });
     }
   }, [Mydata, selectedIndex, activityId, selectedDate]);

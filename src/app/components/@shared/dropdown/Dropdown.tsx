@@ -5,6 +5,9 @@ import dropdownArrow from '@/images/dropdown-arrow.svg';
 import kebabIcon from '@/images/kebab-icon.svg';
 import dropdownThinArrow from '@/images/dropdown-thin-arrow.svg';
 import Image from 'next/image';
+import BackDrop from '../backdrop/BackDrop';
+import { useToggle } from '@/hooks/useToggle';
+import { useEffect } from 'react';
 
 interface DropdownProps {
   data: string[];
@@ -53,28 +56,31 @@ export default function Dropdown({
         )}
 
         {isDropdownToggle && (
-          <div
-            className={
-              type === 'category'
-                ? S.categoryDropdownInfo
-                : type === 'kebab'
-                  ? S.kebabDropdownInfo
-                  : type === 'hide'
-                    ? S.hideDropdownInfo
-                    : S.categoryDropdownInfo // 나머지 타입에 대한 클래스
-            }
-          >
-            {data.map((item, index) => (
-              <div
-                className={S.DropdownInfo}
-                key={`${item}+${index}`}
-                onClick={() => handleSelectValue(item, index)}
-                style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #gray300' }}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
+          <>
+            <BackDrop onClose={toggleDropdown} />
+            <div
+              className={
+                type === 'category'
+                  ? S.categoryDropdownInfo
+                  : type === 'kebab'
+                    ? S.kebabDropdownInfo
+                    : type === 'hide'
+                      ? S.hideDropdownInfo
+                      : S.categoryDropdownInfo // 나머지 타입에 대한 클래스
+              }
+            >
+              {data.map((item, index) => (
+                <div
+                  className={`${S.DropdownInfo} ${selectedValue === item ? S.selectDropdownInfo : ''}`}
+                  key={`${item}+${index}`}
+                  onClick={() => handleSelectValue(item, index)}
+                  style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #gray300' }}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </>

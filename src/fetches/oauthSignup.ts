@@ -7,7 +7,7 @@ export const oauthSignup = async ({ provider, nickname, code }: OauthSignupParam
     redirectUri:
       provider === 'kakao'
         ? process.env.NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URI
-        : `http://localhost:3000/oauth/${provider}`,
+        : process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
     token: code,
   });
 
