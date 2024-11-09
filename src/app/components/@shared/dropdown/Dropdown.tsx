@@ -6,8 +6,6 @@ import kebabIcon from '@/images/kebab-icon.svg';
 import dropdownThinArrow from '@/images/dropdown-thin-arrow.svg';
 import Image from 'next/image';
 import BackDrop from '../backdrop/BackDrop';
-import { useToggle } from '@/hooks/useToggle';
-import { useEffect } from 'react';
 
 interface DropdownProps {
   data: string[];
