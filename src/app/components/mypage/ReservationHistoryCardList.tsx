@@ -126,14 +126,16 @@ function ReservationHistoryCardList() {
     <div className={S.container}>
       <div className={S.header}>
         <div className={S.title}>예약 내역</div>
-        <Dropdown
-          data={Object.keys(statusMapping)}
-          onChange={value => setSelectedStatus(value)}
-          toggleDropdown={toggleDropdown}
-          isDropdownToggle={isDropdownOpen}
-          type="category"
-          selectedValue={selectedStatus}
-        />
+        <div className={S.dropdownWrapper}>
+          <Dropdown
+            data={Object.keys(statusMapping)}
+            onChange={value => setSelectedStatus(value)}
+            toggleDropdown={toggleDropdown}
+            isDropdownToggle={isDropdownOpen}
+            type="category"
+            selectedValue={selectedStatus}
+          />
+        </div>
       </div>
       <div className={S.list}>
         {displayedReservations.length > 0 ? (

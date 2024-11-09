@@ -6,7 +6,7 @@ import { useRef, useEffect } from 'react';
 export type Category = '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
 const categoryList: Category[] = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-export type Sort = 'price_asc' | 'price_desc';
+export type Sort = 'price_asc' | 'price_desc' | 'default';
 const sortList: Sort[] = ['price_asc', 'price_desc'];
 
 interface CategoryProps {
@@ -27,7 +27,15 @@ export default function CategoryAndDropdown({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleDropdownChange = (value: string) => {
-    const sortValue = value === '가격이 낮은 순' ? 'price_asc' : 'price_desc';
+    const currentSortValue = selectedSort;
+    let sortValue: Sort = 'default';
+
+    if (value === '가격이 낮은 순') {
+      sortValue = currentSortValue === 'price_asc' ? 'default' : 'price_asc';
+    } else if (value === '가격이 높은 순') {
+      sortValue = currentSortValue === 'price_desc' ? 'default' : 'price_desc';
+    }
+
     handleSortChange(sortValue);
   };
 
