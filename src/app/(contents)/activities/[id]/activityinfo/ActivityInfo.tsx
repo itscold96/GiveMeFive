@@ -117,14 +117,16 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
           {allImages[currentImageIndex] && (
             <Image src={allImages[currentImageIndex]} alt="" layout="fill" objectFit="cover" />
           )}
-          <div className={S.imageNavigation}>
-            <button onClick={prevImage} className={S.navButton}>
-              <Image src={left} alt="" width={24} height={47} />
-            </button>
-            <button onClick={nextImage} className={S.navButton}>
-              <Image src={right} alt="" width={24} height={47} />
-            </button>
-          </div>
+          {allImages.length > 1 && (
+            <div className={S.imageNavigation}>
+              <button onClick={prevImage} className={S.navButton}>
+                <Image src={left} alt="" width={24} height={47} />
+              </button>
+              <button onClick={nextImage} className={S.navButton}>
+                <Image src={right} alt="" width={24} height={47} />
+              </button>
+            </div>
+          )}
         </div>
         {allImages.length > 1 && (
           <div className={`${S.subImagesContainer} ${S[`subImageCount${Math.min(allImages.length - 1, 4)}`]}`}>

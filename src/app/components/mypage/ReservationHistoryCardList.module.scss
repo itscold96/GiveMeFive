@@ -41,8 +41,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 756px;
+  max-width: 756px;
+  width: 100%;
   margin: 0 auto;
+  padding: 16px;
 }
 
 .loadingContainer {
@@ -54,4 +56,7 @@
 .loading {
   @include textLgRegular;
   color: $gray600;
+}
+.dropdownWrapper {
+  width: 150px;
 }

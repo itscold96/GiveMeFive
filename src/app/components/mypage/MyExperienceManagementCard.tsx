@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image'; // Import Next.js Image component
 import S from './MyExperienceManagementCard.module.scss';
 import Dropdown from '../../components/@shared/dropdown/Dropdown';
 import useDropdown from '../../../hooks/useDropdown';
@@ -6,7 +7,7 @@ import AlertModal from '../../components/@shared/modal/AlertModal';
 import { deleteMyActivity } from '../../../fetches/myActivities';
 import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // useRouter를 임포트합니다.
+import { useRouter } from 'next/navigation';
 
 interface Experience {
   id: number;
@@ -28,12 +29,12 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
   const { toggleDropdown, isDropdownToggle } = useDropdown(actionList);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const queryClient = useQueryClient();
-  const router = useRouter(); // useRouter를 사용하여 router 객체를 가져옵니다.
+  const router = useRouter();
 
   function handleActionSelect(action: string) {
     toggleDropdown();
     if (action === '수정하기') {
-      router.push(`/editactivities/${experience.id}`); // 수정 페이지로 이동
+      router.push(`/editactivities/${experience.id}`);
     } else if (action === '삭제하기') {
       setIsAlertOpen(true);
     }
@@ -55,7 +56,14 @@ function MyExperienceManagementCard({ experience }: MyExperienceManagementCardPr
 
   return (
     <div className={S.card}>
-      <img src={experience.bannerImageUrl} alt={experience.title} className={S.image} />
+      <Image
+        src={experience.bannerImageUrl}
+        alt={experience.title}
+        className={S.image}
+        width={204}
+        height={204}
+        style={{ objectFit: 'cover' }}
+      />
       <div className={S.info}>
         <div className={S.rating}>
           ⭐ {experience.rating} ({experience.reviewCount})

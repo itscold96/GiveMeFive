@@ -6,6 +6,7 @@ import Modal from '../../components/@shared/modal/Modal';
 import { cancelReservation } from '@/fetches/reservationHistory';
 import Link from 'next/link';
 import WriteReview from './WriteReview';
+import Image from 'next/image';
 
 interface Reservation {
   id: number;
@@ -116,7 +117,14 @@ function ReservationHistoryCard({ reservation, onCancelSuccess, onReviewSubmitte
 
   return (
     <div className={S.card}>
-      <img src={activity.bannerImageUrl} alt={activity.title} className={S.image} />
+      <Image
+        src={activity.bannerImageUrl}
+        alt={activity.title}
+        className={S.image}
+        width={204}
+        height={204}
+        style={{ objectFit: 'cover' }}
+      />
       <div className={S.info}>
         <div className={`${S.status} ${S[currentStatus]}`}>{getStatusLabel()}</div>
         <Link href={`/activities/${activity.id}`} className={S.title}>
