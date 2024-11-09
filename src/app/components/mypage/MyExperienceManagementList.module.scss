@@ -6,15 +6,17 @@
 .emptyState {
   display: flex;
   flex-direction: column;
-  align-items: center; // 중앙 정렬
-  width: 756px; // 너비 설정
-  margin: 0 auto; // 가운데 정렬
+  align-items: center;
+  max-width: 756px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .imageContainer {
-  width: 100%; // 컨테이너 너비를 100%로 설정
+  width: 100%;
   display: flex;
-  justify-content: center; // 이미지 중앙 정렬
+  justify-content: center;
 }
 
 .text {
