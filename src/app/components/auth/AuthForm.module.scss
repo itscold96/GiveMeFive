@@ -1,3 +1,5 @@
+@use '/src/styles/abstracts/core' as *;
+
 .authForm {
   display: flex;
   flex-direction: column;
@@ -6,5 +8,15 @@
 
   button {
     height: 48px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &.active {
+      background-color: $giveMeYellow;
+      color: $giveMeNavy;
+      cursor: pointer;
+    }
   }
 }

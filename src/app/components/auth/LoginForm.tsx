@@ -13,6 +13,7 @@ import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
 import ConfirmModal from '../@shared/modal/ConfirmModal';
 import { useUserStore } from '@/stores/useUserStore';
+import classNames from 'classnames';
 
 const loginConfig: ValidationConfig = {
   email: {
@@ -30,7 +31,7 @@ export default function LoginForm() {
   const { setUser } = useUserStore();
   const { toggleValue, toggleDispatch } = useToggle();
   const [errorMessage, setErrorMessage] = useState('');
-  const { register, handleSubmit, errors } = useValidForm({ validationConfig: loginConfig });
+  const { register, handleSubmit, errors, isValid } = useValidForm({ validationConfig: loginConfig });
 
   const handleSignupFormSubmit = async (formData: FieldValues) => {
     if (formData.email && formData.password) {
@@ -71,7 +72,14 @@ export default function LoginForm() {
         type="password"
       />
 
-      <Button buttonColor="gray" borderRadius="radius6" textSize="md" padding="padding8">
+      <Button
+        buttonColor="gray"
+        borderRadius="radius6"
+        textSize="md"
+        padding="padding8"
+        disabled={!isValid}
+        className={classNames({ [S.active]: isValid })}
+      >
         로그인 하기
       </Button>
       <ConfirmModal
