@@ -77,6 +77,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
   };
 
   const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
     // 임시로 alert으로 대체
     alert('체험이 복사되었습니다.');
   };
