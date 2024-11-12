@@ -53,6 +53,13 @@ export default function LoginForm() {
 
   return (
     <form className={S.authForm} onSubmit={handleSubmit(handleSignupFormSubmit)}>
+      <div className={S.testAccount}>
+        <h3>Test Account</h3>
+        <div>
+          <p>ID: 123123@email.com</p>
+          <p>PW: 123123ggg</p>
+        </div>
+      </div>
       <Input
         label="이메일"
         placeholder="이메일을 입력해주세요"
