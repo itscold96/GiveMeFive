@@ -49,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
+        <div id="toast" />
         <Providers>
           <Header />
           <div>{children}</div>
