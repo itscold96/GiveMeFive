@@ -7,10 +7,13 @@ import iconError from '@/images/icons/icon-error.svg';
 import { useToastStore } from '@/stores/useToastStore';
 import { Toast as ToastProps, ToastTypes } from '@/types/toast';
 import classNames from 'classnames';
+import { useToggle } from '@/hooks/useToggle';
 
-const DELAY = 2 * 1000; // 토스트 삭제 딜레이 2초
+const DELAY = 4 * 1000; // 토스트 삭제 딜레이 4초
+const EXIT_ANIMATION_DELAY = 1000; // 자연스러운 삭제 애니메이션을 위한 유예 시간 1초
 
 export default function Toast({ id, type, message }: ToastProps) {
+  const { toggleValue: isExit, toggleDispatch } = useToggle();
   const { removeToast } = useToastStore(state => state.action);
 
   useEffect(() => {
@@ -18,7 +21,14 @@ export default function Toast({ id, type, message }: ToastProps) {
       removeToast(id);
     }, DELAY);
 
-    return () => clearTimeout(timerId);
+    const exitTimerId = setTimeout(() => {
+      toggleDispatch({ type: 'on' });
+    }, DELAY - EXIT_ANIMATION_DELAY);
+
+    return () => {
+      clearTimeout(timerId);
+      clearTimeout(exitTimerId);
+    };
   }, []);
 
   return (
@@ -27,6 +37,7 @@ export default function Toast({ id, type, message }: ToastProps) {
         [S.success]: type === 'success',
         [S.warn]: type === 'warn',
         [S.error]: type === 'error',
+        [S.exit]: isExit,
       })}
     >
       <div className={S.content}>

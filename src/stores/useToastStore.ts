@@ -6,6 +6,10 @@ export const useToastStore = create<ToastStore>(set => ({
   action: {
     addToast: newToast => {
       set(prevState => {
+        // 토스트 개수 3개 이하로 제한
+        if (prevState.toastList.length >= 3) {
+          return { toastList: [...prevState.toastList] };
+        }
         return { toastList: [...prevState.toastList, { ...newToast, id: Date.now().toString() }] };
       });
     },

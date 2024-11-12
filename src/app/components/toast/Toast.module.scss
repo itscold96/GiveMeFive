@@ -4,8 +4,9 @@
   padding: 20px;
   box-shadow: 0 4px 20px 0 #0000000d;
   border-radius: 20px;
-
   max-width: 90dvw;
+  animation: $fadeIn;
+  transition: transform 0.4s ease-out;
 
   @include textXlBold;
 
@@ -30,6 +31,11 @@
     border: 1px solid $errorRed200;
     background-color: $errorRed100;
     color: $errorRed200;
+  }
+
+  &.exit {
+    animation: $fadeOut;
+    transform: translate(0, -40px);
   }
 
   .content {
