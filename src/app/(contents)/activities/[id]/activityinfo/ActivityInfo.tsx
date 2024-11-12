@@ -79,7 +79,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
     <>
       <div className={S.activityInfo}>
         <div className={S.categoryAndTitleContainer}>
-          <div>
+          <div className={S.categoryAndTitle}>
             <div className={S.category}>{activity?.category}</div>
             <div className={S.title}>{activity?.title}</div>
           </div>

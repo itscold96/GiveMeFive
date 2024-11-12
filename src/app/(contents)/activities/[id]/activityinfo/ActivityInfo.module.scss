@@ -20,8 +20,21 @@
 .activityInfo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   gap: 10px;
+}
+
+.categoryAndTitleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  gap: 10px;
+  min-height: 80px;
+}
+
+.categoryAndTitle {
   color: $nomadBlack;
 
   .category {
@@ -32,15 +45,6 @@
   .title {
     @include text3XlBold;
   }
-}
-
-.categoryAndTitleContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  min-height: 80px;
 }
 
 .ratingAndAddressContainer {
