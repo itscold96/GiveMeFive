@@ -10,7 +10,7 @@ export const useToastStore = create<ToastStore>(set => ({
         if (prevState.toastList.length >= 3) {
           return { toastList: [...prevState.toastList] };
         }
-        return { toastList: [...prevState.toastList, { ...newToast, id: Date.now().toString() }] };
+        return { toastList: [{ ...newToast, id: Date.now().toString() }, ...prevState.toastList] };
       });
     },
     removeToast: id => {

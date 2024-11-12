@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { useToggle } from '@/hooks/useToggle';
 
 const DELAY = 4 * 1000; // 토스트 삭제 딜레이 4초
-const EXIT_ANIMATION_DELAY = 1000; // 자연스러운 삭제 애니메이션을 위한 유예 시간 1초
+const EXIT_ANIMATION_DELAY = 600; // 자연스러운 삭제 애니메이션을 위한 유예 시간 0.6초
 
 export default function Toast({ id, type, message }: ToastProps) {
   const { toggleValue: isExit, toggleDispatch } = useToggle();
