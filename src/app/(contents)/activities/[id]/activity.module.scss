@@ -5,6 +5,7 @@
   flex-direction: column;
   max-width: 1200px;
   margin: 78px auto 140px;
+  position: relative;
 
   @include tablet {
     margin: 24px 24px 60px;
@@ -12,5 +13,41 @@
 
   @include mobile {
     margin: 16px 16px 140px;
+  }
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.noDateMessage {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+
+  p {
+    @include textLgRegular;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background: $giveMeNavy;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: $giveMeNavyPale;
+    }
   }
 }
