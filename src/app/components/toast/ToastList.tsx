@@ -8,7 +8,7 @@ export default function ToastList() {
   return (
     <div className={S.toastContainer}>
       {toastList.map(toast => (
-        <Toast key={toast.id} id={toast.id} type={toast.type} message={toast.message + toast.id} />
+        <Toast key={toast.id} id={toast.id} type={toast.type} message={toast.message} />
       ))}
     </div>
   );
