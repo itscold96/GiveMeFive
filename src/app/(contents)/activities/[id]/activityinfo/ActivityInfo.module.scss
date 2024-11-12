@@ -44,7 +44,14 @@
 
   .title {
     @include text3XlBold;
+    display: flex;
+    gap: 6px;
   }
+}
+
+.copyIcon {
+  display: flex;
+  align-self: flex-end;
 }
 
 .ratingAndAddressContainer {

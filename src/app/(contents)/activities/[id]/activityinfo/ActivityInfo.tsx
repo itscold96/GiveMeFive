@@ -16,6 +16,7 @@ import Alert from '@/app/components/@shared/modal/AlertModal';
 import { useRouter } from 'next/navigation';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import { deleteMyActivity } from '@/fetches/myActivities';
+import copy from '@/images/copy-icon.png';
 
 interface ErrorResponse {
   response?: {
@@ -75,13 +76,22 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
     }
   };
 
+  const handleCopy = () => {
+    console.log('체험이 복사되었습니다.');
+  };
+
   return (
     <>
       <div className={S.activityInfo}>
         <div className={S.categoryAndTitleContainer}>
           <div className={S.categoryAndTitle}>
             <div className={S.category}>{activity?.category}</div>
-            <div className={S.title}>{activity?.title}</div>
+            <div className={S.title}>
+              {activity?.title}
+              <div className={S.copyIcon} onClick={handleCopy}>
+                <Image src={copy} width={16} height={16} alt="복사" />
+              </div>
+            </div>
           </div>
 
           <div className={S.ratingAndAddressContainer}>
