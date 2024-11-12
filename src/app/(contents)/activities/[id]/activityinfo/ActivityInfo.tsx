@@ -84,8 +84,23 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
             <div className={S.title}>{activity?.title}</div>
           </div>
 
-          {/* isCreator 조건 확인 */}
-          {isCreator && (
+          <div className={S.ratingAndAddressContainer}>
+            <div className={S.ratingContainer}>
+              <Image src={star} alt="" width={16} height={16} />
+
+              <div className={S.rating}>
+                {activity?.rating} ({activity?.reviewCount})
+              </div>
+            </div>
+
+            <div className={S.locationContainer}>
+              <Image src={location} alt="" width={18} height={18} />
+              <div className={S.address}>{activity?.address}</div>
+            </div>
+          </div>
+        </div>
+        {isCreator && (
+          <div className={S.dropdownWrapper}>
             <Dropdown
               type="kebab"
               data={dropdownList}
@@ -93,23 +108,8 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
               toggleDropdown={toggleDropdown}
               isDropdownToggle={isDropdownToggle}
             />
-          )}
-        </div>
-
-        <div className={S.ratingAndAddressContainer}>
-          <div className={S.ratingContainer}>
-            <Image src={star} alt="" width={16} height={16} />
-
-            <div className={S.rating}>
-              {activity?.rating} ({activity?.reviewCount})
-            </div>
           </div>
-
-          <div className={S.locationContainer}>
-            <Image src={location} alt="" width={18} height={18} />
-            <div className={S.address}>{activity?.address}</div>
-          </div>
-        </div>
+        )}
       </div>
 
       <div className={S.imageContainer}>

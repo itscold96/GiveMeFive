@@ -19,7 +19,8 @@
 
 .activityInfo {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+
   gap: 10px;
   color: $nomadBlack;
 
@@ -35,8 +36,11 @@
 
 .categoryAndTitleContainer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  min-height: 80px;
 }
 
 .ratingAndAddressContainer {
@@ -44,7 +48,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  max-width: 100%;
+  width: 100%;
 }
 
 .ratingContainer {
@@ -292,4 +296,9 @@
       width: 100%;
     }
   }
+}
+
+.dropdownWrapper {
+  display: flex;
+  align-items: center;
 }
