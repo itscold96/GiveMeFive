@@ -28,7 +28,13 @@ interface ErrorResponse {
   };
 }
 
-export default function ActivityInfo({ params }: { params: { id: string } }) {
+export default function ActivityInfo({
+  params,
+  hasAvailableDates,
+}: {
+  params: { id: string };
+  hasAvailableDates: boolean;
+}) {
   const activityId = Number(params.id);
   const { data: activity } = useDetailActivitiesQuery(activityId);
   const {
@@ -104,6 +110,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
               <div className={S.copyIcon} onClick={handleCopy}>
                 <Image src={copy} width={16} height={16} alt="복사" />
               </div>
+              {!hasAvailableDates && <span className={S.noDateWarning}>예약 가능한 날짜가 없습니다.</span>}
             </div>
           </div>
 
@@ -187,7 +194,9 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
             <hr className={S.hr} />
           </div>
         </div>
-        {!isCreator && <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />}
+        {!isCreator && hasAvailableDates && (
+          <ResponsiveReservation activityId={activityId} price={activity?.price || 0} />
+        )}
       </div>
       <Alert
         isOpen={isAlertOpen}

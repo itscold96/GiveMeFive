@@ -4,12 +4,10 @@ import S from './activity.module.scss';
 import ActivityInfo from './activityinfo/ActivityInfo';
 import ActivityReviews from './activityreviews/ActivityReviews';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { getAvailableSchedule } from '@/fetches/getAvailableSchedule';
 
 export default function ActivityPage({ params }: { params: { id: string } }) {
   const [hasAvailableDates, setHasAvailableDates] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const checkAvailableDates = async () => {
@@ -56,18 +54,9 @@ export default function ActivityPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   return (
-    <div className={S.activityPage}>
-      <ActivityInfo params={{ id: params.id }} />
-      <ActivityReviews params={{ id: params.id }} />
-
-      {!hasAvailableDates && (
-        <div className={S.popup}>
-          <div className={S.noDateMessage}>
-            <p>예약 가능한 날짜가 없습니다.</p>
-            <button onClick={() => router.back()}>뒤로 가기</button>
-          </div>
-        </div>
-      )}
+    <div className={`${S.activityPage} ${!hasAvailableDates ? S.noCalendar : ''}`}>
+      <ActivityInfo params={{ id: params.id }} hasAvailableDates={hasAvailableDates} />
+      <ActivityReviews params={{ id: params.id }} hasAvailableDates={hasAvailableDates} />
     </div>
   );
 }

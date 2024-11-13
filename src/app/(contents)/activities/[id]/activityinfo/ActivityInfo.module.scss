@@ -288,6 +288,7 @@
   &:not(:has(> div + div)) {
     width: 100%;
     margin-bottom: 20px;
+    flex-direction: column;
 
     .introductionAndMapContainer {
       width: 100%;
@@ -312,4 +313,13 @@
 .dropdownWrapper {
   display: flex;
   align-items: center;
+}
+
+.noDateWarning {
+  display: flex;
+  align-items: flex-end;
+  color: $red300;
+  @include textMdBold;
+
+  margin-left: 8px;
 }
