@@ -31,14 +31,14 @@ function ReservationCard({ reservation, setIsToggleTrigger, isToggleTrigger }: R
     const activityId = reservation.activityId;
     const reservationId = reservation.id;
     const status = 'confirmed';
-    const response = await patchReservatonsStatus({ activityId, reservationId, status });
+    await patchReservatonsStatus({ activityId, reservationId, status });
     setIsToggleTrigger?.(!isToggleTrigger);
   };
   const onClickDeclined = async () => {
     const activityId = reservation.activityId;
     const reservationId = reservation.id;
     const status = 'declined';
-    const response = await patchReservatonsStatus({ activityId, reservationId, status });
+    await patchReservatonsStatus({ activityId, reservationId, status });
     setIsToggleTrigger?.(!isToggleTrigger);
   };
   return (
