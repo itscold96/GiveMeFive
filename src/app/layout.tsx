@@ -47,6 +47,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="preload" href="/images/sidemenuIcon/myprofile-Icon.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/images/sidemenuIcon/reservationhistory-Icon.svg" as="image" type="image/svg+xml" />
+        <link
+          rel="preload"
+          href="/images/sidemenuIcon/myexperiencemanagement-Icon.svg"
+          as="image"
+          type="image/svg+xml"
+        />
+        <link rel="preload" href="/images/sidemenuIcon/reservationstatus-Icon.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/images/sidemenuIcon/profile-button-icon.svg" as="image" type="image/svg+xml" />
       </head>
       <body>
         <Providers>
