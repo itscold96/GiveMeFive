@@ -20,7 +20,6 @@ function MyExperienceManagementList() {
     cursorId: null,
     size: 10,
   });
-
   const { refetch: fetchNextPage } = useMyActivitiesQuery({
     cursorId,
     size: 10,
@@ -106,8 +105,16 @@ function MyExperienceManagementList() {
 
   return (
     <div className={S.list}>
-      {activities.map(activity => (
-        <MyExperienceManagementCard key={activity.id} experience={activity} />
+      {activities.map((activity, index) => (
+        <div
+          key={activity.id}
+          className={S.cardItem}
+          style={{
+            animationDelay: `${index * 100}ms`,
+          }}
+        >
+          <MyExperienceManagementCard experience={activity} />
+        </div>
       ))}
       <div ref={observerRef} className={S.loading}>
         {isFetchingNextPage && <Loader />}
