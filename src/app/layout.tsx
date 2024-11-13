@@ -59,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/images/sidemenuIcon/profile-button-icon.svg" as="image" type="image/svg+xml" />
       </head>
       <body>
+        <div id="toast" />
         <Providers>
           <Header />
           <div>{children}</div>
