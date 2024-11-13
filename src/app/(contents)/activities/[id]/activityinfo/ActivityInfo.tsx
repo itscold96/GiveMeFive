@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Dropdown from '@/app/components/@shared/dropdown/Dropdown';
 import useDropdown from '@/hooks/useDropdown';
 import Map from './map';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useUserStore } from '@/stores/useUserStore';
 import ResponsiveReservation from '@/app/components/reservation/ResponsiveReservation';
 import Alert from '@/app/components/@shared/modal/AlertModal';
@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import { useDetailActivitiesQuery } from '@/queries/useActivityInfoQuery';
 import { deleteMyActivity } from '@/fetches/myActivities';
 import copy from '@/images/copy-icon.png';
+import { useActivityStore } from '@/stores/useActivityStore';
+import { useToastStore } from '@/stores/useToastStore';
 
 interface ErrorResponse {
   response?: {
@@ -29,27 +31,37 @@ interface ErrorResponse {
 export default function ActivityInfo({ params }: { params: { id: string } }) {
   const activityId = Number(params.id);
   const { data: activity } = useDetailActivitiesQuery(activityId);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const {
+    currentImageIndex,
+    setCurrentImageIndex,
+    allImages,
+    setAllImages,
+    isAlertOpen,
+    setIsAlertOpen,
+    isErrorAlertOpen,
+    setIsErrorAlertOpen,
+    errorMessage,
+    setErrorMessage,
+  } = useActivityStore();
 
   const dropdownList = ['수정하기', '삭제하기'];
   const router = useRouter();
   const { toggleDropdown, isDropdownToggle } = useDropdown(dropdownList);
+  const { addToast } = useToastStore(state => state.action);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
-
-  const allImages = [activity?.bannerImageUrl, ...(activity?.subImages?.map(img => img.imageUrl) || [])].filter(
-    Boolean,
-  );
+  useEffect(() => {
+    const images = [activity?.bannerImageUrl, ...(activity?.subImages?.map(img => img.imageUrl) || [])].filter(
+      Boolean,
+    ) as string[];
+    setAllImages(images);
+  }, [activity]);
 
   const nextImage = () => {
-    setCurrentImageIndex(prevIndex => (prevIndex + 1) % allImages.length);
+    setCurrentImageIndex((currentImageIndex + 1) % allImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(prevIndex => (prevIndex - 1 + allImages.length) % allImages.length);
+    setCurrentImageIndex((currentImageIndex - 1 + allImages.length) % allImages.length);
   };
 
   const user = useUserStore(state => state.user);
@@ -78,8 +90,7 @@ export default function ActivityInfo({ params }: { params: { id: string } }) {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
-    // 임시로 alert으로 대체
-    alert('체험이 복사되었습니다.');
+    addToast({ message: '체험이 복사되었습니다.', type: 'success' });
   };
 
   return (
