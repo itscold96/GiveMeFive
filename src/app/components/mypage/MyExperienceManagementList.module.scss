@@ -18,7 +18,7 @@
 
 .cardItem {
   opacity: 0;
-  transform: translateY(1rem);
+  transform: translateY(0);
   animation: slideIn 0.5s ease-out forwards;
 }
 
