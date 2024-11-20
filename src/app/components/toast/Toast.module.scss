@@ -1,0 +1,50 @@
+@use '@/styles/abstracts/_core.scss' as *;
+
+.toast {
+  padding: 15px 18px;
+  box-shadow: 0 4px 20px 0 #0000000d;
+  border-radius: 20px;
+  max-width: 90dvw;
+  animation: $fadeIn;
+
+  @include textXlBold;
+
+  &.success {
+    border: 1px solid $successGreen200;
+    background-color: $successGreen100;
+    color: $successGreen200;
+  }
+
+  &.warn {
+    border: 1px solid $warnYellow200;
+    background-color: $white;
+    color: $warnYellow200;
+
+    .yellow {
+      filter: $yellowFilter;
+    }
+  }
+
+  &.error {
+    border: 1px solid $errorRed200;
+    background-color: $errorRed100;
+    color: $errorRed200;
+  }
+
+  &.exit {
+    animation: $fadeOut;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+
+    .message {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

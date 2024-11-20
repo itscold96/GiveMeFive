@@ -26,7 +26,7 @@ export default function Reservations() {
   const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [filterAvailableDates, setFilterAvailableDates] = useState<string[]>([]);
   const [dataResponse, setDataResponse] = useState<GetReservationDashboardResponse>();
-  const { data: Mydata, error, isLoading } = useMyActivitiesQuery({ size: 50 });
+  const { data: Mydata } = useMyActivitiesQuery({ size: 50 });
   const {
     data: dropdownData,
     onDropdownChange,

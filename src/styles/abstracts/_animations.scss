@@ -1,0 +1,4 @@
+@use '/src/styles/abstracts/keyframes' as *;
+
+$fadeIn: fadeIn 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+$fadeOut: fadeOut 0.6s ease-out both;

@@ -1,8 +1,27 @@
 @use '@/styles/abstracts/core' as *;
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .list {
   display: flex;
   flex-direction: column;
 }
+
+.cardItem {
+  opacity: 0;
+  transform: translateY(1rem);
+  animation: slideIn 0.5s ease-out forwards;
+}
+
 .emptyState {
   display: flex;
   flex-direction: column;

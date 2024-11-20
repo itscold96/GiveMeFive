@@ -140,13 +140,20 @@ function ReservationHistoryCardList() {
       <div className={S.list}>
         {displayedReservations.length > 0 ? (
           <>
-            {displayedReservations.map(reservation => (
-              <ReservationHistoryCard
+            {displayedReservations.map((reservation, index) => (
+              <div
                 key={reservation.id}
-                reservation={reservation}
-                onCancelSuccess={handleReviewSubmitted}
-                onReviewSubmitted={handleReviewSubmitted}
-              />
+                className={S.cardItem}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <ReservationHistoryCard
+                  reservation={reservation}
+                  onCancelSuccess={handleReviewSubmitted}
+                  onReviewSubmitted={handleReviewSubmitted}
+                />
+              </div>
             ))}
             {hasMore && (
               <div ref={loadingRef} className={S.loadingContainer}>

@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import { useToggle } from '@/hooks/useToggle';
 import { useState } from 'react';
 import ConfirmModal from '../@shared/modal/ConfirmModal';
+import { useToastStore } from '@/stores/useToastStore';
+import classNames from 'classnames';
 
 const signupConfig: ValidationConfig = {
   email: {
@@ -39,7 +41,8 @@ export default function SignupForm() {
   const router = useRouter();
   const { toggleValue, toggleDispatch } = useToggle();
   const [errorMessage, setErrorMessage] = useState('');
-  const { register, handleSubmit, errors } = useValidForm({ validationConfig: signupConfig });
+  const { register, handleSubmit, errors, isValid } = useValidForm({ validationConfig: signupConfig });
+  const { addToast } = useToastStore(state => state.action);
 
   const handleSignupFormSubmit = async (formData: FieldValues) => {
     if (formData.email && formData.password && formData.nickname) {
@@ -47,6 +50,7 @@ export default function SignupForm() {
       try {
         await signup({ email, password, nickname });
         router.replace('/login');
+        addToast({ type: 'success', message: '회원가입이 완료되었습니다!' });
       } catch (error) {
         if (error instanceof AxiosError) {
           const message = error.response?.data.message;
@@ -93,7 +97,14 @@ export default function SignupForm() {
         register={register.passwordConfirmation}
         type="password"
       />
-      <Button buttonColor="gray" borderRadius="radius6" textSize="md" padding="padding8">
+      <Button
+        buttonColor="gray"
+        borderRadius="radius6"
+        textSize="md"
+        padding="padding8"
+        disabled={!isValid}
+        className={classNames({ [S.active]: isValid })}
+      >
         회원가입 하기
       </Button>
       <ConfirmModal
